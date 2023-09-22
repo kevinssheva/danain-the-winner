@@ -19,3 +19,12 @@
   border: 1px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
+
+.gradient-background {
+  background: radial-gradient(
+    231% 135.8% at 0.9% 2.98%,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  backdrop-filter: blur(21px);
+}
