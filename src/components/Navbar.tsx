@@ -5,6 +5,7 @@ import Button from "./Button";
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import MenuIcon from "./MenuIcon";
 
 const data = [
   {
@@ -26,6 +27,7 @@ const Navbar = () => {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [isTransparent, setIsTransparent] = useState(true);
   const pathName = usePathname();
+  const [isOpen, setIsOpen] = useState(false);
 
   const isActive = useMemo(() => {
     return (link: string) => link === pathName;
@@ -67,9 +69,13 @@ const Navbar = () => {
 
   return (
     <div
-      className={`fixed w-full py-4 top-0 z-50 px-[5%]
-      ${isTransparent ? "bg-transparent " : "bg-background shadow-lg"}
-      ${isVisible ? "translate-y-0" : " -translate-y-full"} transition`}
+      className={`fixed w-full py-4 top-0 z-50 px-[7%]
+      ${
+        isTransparent && !isOpen ? "bg-transparent " : "bg-background shadow-lg"
+      }
+      ${
+        isVisible || isOpen ? "translate-y-0" : " -translate-y-full"
+      } transition`}
     >
       <div className="flex justify-between items-center">
         <Link href="/">
@@ -78,10 +84,10 @@ const Navbar = () => {
             alt="logo"
             width={100}
             height={100}
-            className="w-10"
+            className="w-8 md:w-9 lg:w-10"
           />
         </Link>
-        <ul className="flex">
+        <ul className="md:flex hidden">
           {data.map((item) => (
             <li
               key={item.name}
@@ -103,9 +109,39 @@ const Navbar = () => {
             </li>
           ))}
         </ul>
-        <div className="flex">
+        <MenuIcon
+          isOpen={isOpen}
+          handleToggle={() => setIsOpen((prev) => !prev)}
+        />
+        <div className="md:flex hidden">
           <Button text="Login" isPrimary onClick={() => {}} />
         </div>
+      </div>
+      <div
+        className={`w-full h-screen absolute bg-background left-0 top-0 -z-10 origin-top ${
+          isOpen ? "scale-y-100" : "scale-y-0"
+        } transition-all duration-300 px-[7%] pt-24 pb-10 flex flex-col justify-between`}
+      >
+        <ul className="flex flex-col items-start gap-6">
+          {data.map((item) => (
+            <li
+              key={item.name}
+              className={`${
+                isActive(item.link)
+                  ? "border-b-[2px] border-white font-semibold"
+                  : "font-normal"
+              } transition relative group pb-1`}
+            >
+              <Link
+                href={item.link}
+                className={`font-montserrat text-xl text-white`}
+              >
+                {item.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <Button text="Login" fullWidth onClick={() => {}} />
       </div>
     </div>
   );
