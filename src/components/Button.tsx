@@ -31,7 +31,7 @@ const Button: React.FC<ButtonProps> = ({
             : "bg-white text-black"
         }
         ${!isPrimary && "border-white border-[3px]"}
-        ${isBig ? "py-3 px-6" : "py-2 px-4"}
+        ${isBig ? "py-3 px-6" : "py-2 px-8"}
         font-bold
         ${isBig ? "text-lg lg:text-xl" : "text-sm lg:text-base"}
         ${isBig ? "rounded-xl" : "rounded-md"}

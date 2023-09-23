@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Inter, Montserrat } from "next/font/google";
+import Navbar from "@/components/Navbar";
 
 const neuropolitical = localFont({
   src: "./../../public/fonts/neuropolitical.otf",
@@ -36,6 +37,7 @@ export default function RootLayout({
       <body
         className={`${neuropolitical.variable} ${inter.variable} ${montserrat.variable}`}
       >
+        <Navbar />
         {children}
       </body>
     </html>
