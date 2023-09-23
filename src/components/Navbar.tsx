@@ -70,9 +70,7 @@ const Navbar = () => {
   return (
     <div
       className={`fixed w-full py-4 top-0 z-50 px-[7%]
-      ${
-        isTransparent && !isOpen ? "bg-transparent " : "bg-background shadow-lg"
-      }
+      ${isTransparent ? "bg-transparent " : "bg-background shadow-lg"}
       ${
         isVisible || isOpen ? "translate-y-0" : " -translate-y-full"
       } transition`}
@@ -118,7 +116,7 @@ const Navbar = () => {
         </div>
       </div>
       <div
-        className={`w-full h-screen absolute bg-background left-0 top-0 -z-10 origin-top ${
+        className={`w-full md:hidden h-screen absolute bg-background left-0 top-0 -z-10 origin-top ${
           isOpen ? "scale-y-100" : "scale-y-0"
         } transition-all duration-300 px-[7%] pt-24 pb-10 flex flex-col justify-between`}
       >
