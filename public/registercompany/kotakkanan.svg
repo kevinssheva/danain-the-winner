@@ -1,0 +1,53 @@
+<svg width="885" height="427" viewBox="0 0 885 427" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_f_170_7700)">
+<ellipse cx="577.621" cy="43.1268" rx="142.749" ry="142.749" transform="rotate(-90 577.621 43.1268)" fill="#3C459A" fill-opacity="0.5"/>
+</g>
+<mask id="mask0_170_7700" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="-302" width="1157" height="691">
+<rect y="-302" width="1156.45" height="690.254" fill="url(#paint0_radial_170_7700)"/>
+</mask>
+<g mask="url(#mask0_170_7700)">
+<rect x="148.772" y="-5.05845" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="243.938" y="-5.05844" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="339.103" y="-5.05844" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="434.269" y="-5.05844" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="529.435" y="-5.05844" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="624.601" y="-5.05844" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="719.767" y="-5.05844" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="814.933" y="-5.05844" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="148.772" y="90.1074" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="243.938" y="90.1075" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="339.103" y="90.1075" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="434.269" y="90.1075" width="95.1659" height="95.1659" fill="white" fill-opacity="0.25" stroke="white" stroke-width="1.20463"/>
+<rect x="529.435" y="90.1075" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="624.601" y="90.1075" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="719.767" y="90.1075" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="814.933" y="90.1075" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="148.772" y="185.273" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="243.938" y="185.273" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="339.103" y="185.273" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="434.269" y="185.273" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="529.435" y="185.273" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="624.601" y="185.273" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="719.767" y="185.273" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="814.933" y="185.273" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="148.772" y="280.439" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="243.938" y="280.439" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="339.103" y="280.439" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="434.269" y="280.439" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="529.435" y="280.439" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="624.601" y="280.439" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="719.767" y="280.439" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="814.933" y="280.439" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+</g>
+<defs>
+<filter id="filter0_f_170_7700" x="193.946" y="-340.548" width="767.35" height="767.35" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="120.463" result="effect1_foregroundBlur_170_7700"/>
+</filter>
+<radialGradient id="paint0_radial_170_7700" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(578.223 43.1269) rotate(90) scale(425.464 712.819)">
+<stop stop-color="#D9D9D9" stop-opacity="0.2"/>
+<stop offset="0.802083" stop-color="#D9D9D9" stop-opacity="0"/>
+</radialGradient>
+</defs>
+</svg>
