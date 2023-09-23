@@ -7,6 +7,7 @@ interface ButtonProps {
   fullWidth?: boolean;
   icon?: IconType;
   onClick: () => void;
+  isBig?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -16,6 +17,7 @@ const Button: React.FC<ButtonProps> = ({
   fullWidth,
   icon: Icon,
   onClick,
+  isBig,
 }) => {
   return (
     <button
@@ -29,10 +31,10 @@ const Button: React.FC<ButtonProps> = ({
             : "bg-white text-black"
         }
         ${!isPrimary && "border-white border-[3px]"}
-        py-2 px-4
+        ${isBig ? "py-3 px-6" : "py-2 px-4"}
         font-bold
-        text-sm lg:text-base
-        rounded-md
+        ${isBig ? "text-lg lg:text-xl" : "text-sm lg:text-base"}
+        ${isBig ? "rounded-xl" : "rounded-md"}
         flex items-center justify-center gap-2
         font-montserrat
         shadow-[0px_2px_1px_0px_rgba(255,255,255,0.25)_inset,0px_-4px_2px_0px_rgba(0,0,0,0.25)_inset,0px_0px_1px_4px_rgba(255,255,255,0.10),0px_0px_180px_0px_rgba(0,0,0,0.00)]

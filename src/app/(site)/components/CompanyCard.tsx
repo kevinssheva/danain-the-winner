@@ -1,6 +1,21 @@
 import Image from "next/image";
+import Category from "./Category";
 
-const CompanyCard = () => {
+interface CompanyCardProps {
+  name: string;
+  owner: string;
+  position: string;
+  description: string;
+  imageURL: string;
+}
+
+const CompanyCard: React.FC<CompanyCardProps> = ({
+  name,
+  owner,
+  position,
+  description,
+  imageURL,
+}) => {
   return (
     <div
       className="
@@ -19,7 +34,7 @@ const CompanyCard = () => {
     >
       <div className="w-full bg-sky-200 h-full overflow-hidden relative group-hover:brightness-75 transition-all">
         <Image
-          src={"/landing/company_1.jpg"}
+          src={imageURL}
           fill={true}
           alt=""
           className="object-cover w-full h-full"
@@ -28,10 +43,7 @@ const CompanyCard = () => {
       {/* <div className="w-full bg-background h-[25%] overflow-hidden"></div> */}
       <div
         className="
-        bg-[rgba(255,255,255,0.5)]
-        shadow-[0_1px_12px_rgba(0,0,0,0.25)]
-        backdrop-blur-[20px]
-        border-[1px] border-[rgba(255,255,255,0.3)]
+        white-glass
         absolute
         px-4 py-2
         inset-x-0
@@ -42,21 +54,20 @@ const CompanyCard = () => {
       
       "
       >
-        <h1 className="font-semibold text-xl">Company Name</h1>
+        <h1 className="font-semibold text-xl">{name}</h1>
         <div className="flex mt-1 items-center gap-3 mb-5">
           <div className="w-1/5 aspect-square bg-white rounded-full"></div>
           <div className="flex flex-col flex-1 gap-1">
-            <p>Full Name</p>
-            <p>Position</p>
+            <p>{owner}</p>
+            <p>{position}</p>
           </div>
         </div>
-        <p className="line-clamp-4 hidden group-hover:block">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum
-          reiciendis, quia eos ea debitis harum, quasi animi magnam ipsam
-          accusamus nihil error similique autem laudantium, asperiores odit
-          doloremque soluta consectetur consequuntur dolorem deserunt minima
-          culpa! Commodi nobis ducimus voluptate iste?
-        </p>
+        <p className="line-clamp-4 hidden group-hover:block">{description}</p>
+        <div className="flex flex-wrap gap-2 mt-4">
+          <Category name="Technology" color="#A31AD3" />
+          <Category name="Food Waste" color="#4C80B0" />
+          <Category name="Online" color="#DDBB0A" />
+        </div>
       </div>
     </div>
   );

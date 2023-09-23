@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const About = () => {
   return (
-    <div className="min-h-screen relative container mx-auto py-20 text-center">
+    <div className="min-h-screen relative container mx-auto py-20 text-center z-20">
       <h1 className="font-neuro text-5xl">How does it Work?</h1>
       <p className="text-lg my-10">
         <span className="font-bold text-primary">Danain</span> streamlines the

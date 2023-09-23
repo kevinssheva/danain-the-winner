@@ -21,7 +21,7 @@ const Hero = () => {
             Seamlessly connecting visionary businesses with eager investors.
             Empowering growth and fostering innovation together
           </p>
-          <Button text="GET STARTED" onClick={() => {}} />
+          <Button text="GET STARTED" onClick={() => {}} isBig/>
         </div>
         <Image
           src={"/landing/CryptoHero.svg"}
