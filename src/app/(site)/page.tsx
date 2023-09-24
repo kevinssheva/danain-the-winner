@@ -9,14 +9,14 @@ import GetStarted from "./components/GetStarted";
 
 export default function Home() {
   return (
-    <div className="bg-background px-[5%] relative overflow-hidden">
+    <div className="bg-background px-[7%] relative overflow-hidden">
       <Hero />
       <About />
       <Explore />
       <Benefit />
       <Testimoni />
       <GetStarted />
-      <div className="absolute w-[90rem] -top-[110vh] -left-[55%] z-10">
+      <div className="absolute w-[90rem] -top-[110vh] -left-[70%] md:-left-[55%] z-10">
         <Image
           src={"/landing/LightLeft.svg"}
           width={100}
@@ -25,7 +25,7 @@ export default function Home() {
           className="w-full"
         />
       </div>
-      <div className="absolute w-[90rem] top-[50vh] -right-[30%] z-10">
+      <div className="absolute w-[90rem] top-[50vh] -right-[180%] lg:-right-[30%] z-10">
         <Image
           src={"/landing/Glow2.svg"}
           width={100}

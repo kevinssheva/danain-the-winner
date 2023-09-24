@@ -3,19 +3,20 @@ import Image from "next/image";
 const About = () => {
   return (
     <div className="min-h-screen relative container mx-auto py-20 text-center z-20">
-      <h1 className="font-neuro text-5xl">How does it Work?</h1>
-      <p className="text-lg my-10">
-        <span className="font-bold text-primary">Danain</span> streamlines the
-        investment process by seamlessly connecting visionary companies with
-        discerning investors. Through easy registration, companies create
-        profiles, showcase projects, and engage with potential investors. danain
-        serves as a bridge, enabling meaningful connections where entrepreneurs
-        present their innovative ventures, and investors explore opportunities
-        aligned with their interests. This facilitates transparent discussions
-        and negotiations, ultimately leading to successful funding
-        collaborations that drive business growth and innovation.
+      <h1 className="font-neuro text-4xl md:text-5xl">How does it Work?</h1>
+      <p className="text-base lg:text-lg my-5 lg:my-10 font-montserrat">
+        <span className="font-bold font-montserrat text-primary">Danain</span>{" "}
+        streamlines the investment process by seamlessly connecting visionary
+        companies with discerning investors. Through easy registration,
+        companies create profiles, showcase projects, and engage with potential
+        investors. danain serves as a bridge, enabling meaningful connections
+        where entrepreneurs present their innovative ventures, and investors
+        explore opportunities aligned with their interests. This facilitates
+        transparent discussions and negotiations, ultimately leading to
+        successful funding collaborations that drive business growth and
+        innovation.
       </p>
-      <div className="flex justify-around gap-10">
+      <div className="flex flex-wrap justify-around gap-10">
         <div className="flex-1 flex flex-col items-center gap-1 px-7 mt-10">
           <Image
             src={"/landing/Register.svg"}

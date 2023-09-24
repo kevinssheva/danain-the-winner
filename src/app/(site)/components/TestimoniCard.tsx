@@ -12,7 +12,7 @@ const TestimoniCard = ({
   imageURL: string;
 }) => {
   return (
-    <div className="w-full max-w-sm aspect-[385/400] white-glass py-4 px-8 relative">
+    <div className="w-full max-w-sm aspect-[385/400] white-glass py-4 px-8 relative mt-[10%]">
       <div className="w-1/3 aspect-square rounded-full bg-white absolute top-0 -translate-y-1/2 overflow-hidden">
         <div className="w-full h-full relative">
           <Image

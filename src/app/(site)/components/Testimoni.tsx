@@ -3,8 +3,8 @@ import TestimoniCard from "./TestimoniCard";
 const Testimoni = () => {
   return (
     <div className="min-h-screen relative container mx-auto py-20 text-center z-20 ">
-      <h1 className="font-neuro text-5xl">Testimonials</h1>
-      <div className="w-full flex gap-10 justify-center my-32 text-left">
+      <h1 className="font-neuro text-4xl md:text-5xl">Testimonials</h1>
+      <div className="w-full flex flex-wrap gap-10 justify-center my-10 text-left">
         <TestimoniCard
           name="Kevin Lie"
           role="Investor"
