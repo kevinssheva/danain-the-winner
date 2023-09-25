@@ -3,9 +3,9 @@ import Login from "./components/Login";
 
 export default function LoginPage() {
   return (
-    <div className="bg-background h-screen">
-      <div className="bg-[url('/login/kotak-kiri-atas.svg')] h-screen bg-no-repeat">
-        <div className="bg-[url('/login/kotak-kanan-bawah.svg')] h-screen bg-no-repeat bg-right-bottom w-screen">
+    <div className="bg-background h-screen overflow-hidden">
+      <div className="bg-[url('/login/kotak-kiri-atas.svg')] min-h-screen bg-no-repeat">
+        <div className="bg-[url('/login/kotak-kanan-bawah.svg')] min-h-screen bg-no-repeat bg-right-bottom w-screen">
           <Image
             src={"/login/glowkanan-ori.svg"}
             width={500}
