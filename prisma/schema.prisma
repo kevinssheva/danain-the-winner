@@ -16,11 +16,80 @@ enum UserRole {
 }
 
 model User {
-  id String @id @default(uuid()) @db.Uuid
-  fullName String
-  email String @unique
-  password String
-  role UserRole
+  id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  fullName       String
+  email          String   @unique
+  password       String
+  role           UserRole
+  profilePicture String
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  companyId String  @db.Uuid
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  conversationsInitiated Conversation[] @relation("UserOne")
+  conversationsReceived  Conversation[] @relation("UserTwo")
+
+  messages Message[]
+
+  @@index([companyId])
+}
+
+model Company {
+  id           String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  companyName  String
+  companyPlace String
+  pitchDeck    String
+  tagline      String
+
+  coverPhoto       String
+  videoProfile     String
+  pitchDescription String
+  money            String
+  category         String[]
+  website          String
+  instagram        String
+  linkedin         String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  founder User[]
+}
+
+model Conversation {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
+  userOneId String @db.Uuid
+  userOne   User   @relation("UserOne", fields: [userOneId], references: [id], onDelete: Cascade)
+
+  userTwoId String @db.Uuid
+  userTwo   User   @relation("UserTwo", fields: [userTwoId], references: [id], onDelete: Cascade)
+
+  messages Message[]
+
+  @@unique([userOneId, userTwoId])
+  @@index([userTwoId])
+}
+
+model Message {
+  id      String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  content String  @db.Text
+  fileUrl String? @db.Text
+
+  userId String @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  conversationId String       @db.Uuid
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  deleted Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([conversationId])
 }
