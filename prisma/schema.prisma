@@ -21,12 +21,14 @@ model User {
   email          String   @unique
   password       String
   role           UserRole
+  description    String
   profilePicture String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   founder Founder?
+  transaction Transaction[]
 
   conversationsInitiated Conversation[] @relation("UserOne")
   conversationsReceived  Conversation[] @relation("UserTwo")
@@ -68,6 +70,7 @@ model Company {
   updatedAt DateTime @updatedAt
 
   founder Founder[]
+  transaction Transaction[]
 }
 
 model Conversation {
@@ -103,4 +106,28 @@ model Message {
 
   @@index([userId])
   @@index([conversationId])
+}
+
+enum TransactionStatus {
+  ACTIVE
+  INACTIVE
+}
+
+model Transaction {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
+  userId String @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  companyId String @db.Uuid
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  amount String
+  status TransactionStatus
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([companyId])
 }
