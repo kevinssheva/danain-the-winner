@@ -63,3 +63,30 @@
   );
   backdrop-filter: blur(21px);
 }
+
+.investor-button {
+  border-radius: 0.9375rem;
+  border: 1px solid rgba(216, 216, 216, 0);
+  background: linear-gradient(
+      182deg,
+      rgba(129, 138, 26, 0.8) 1.89%,
+      rgba(69, 72, 35, 0.8) 98.11%
+    ),
+    radial-gradient(
+      231% 135.8% at 0.9% 2.98%,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  backdrop-filter: blur(21px);
+}
+
+.company-button {
+  border-radius: 0.9375rem;
+  border: 1px solid rgba(216, 216, 216, 0);
+  background: radial-gradient(
+    231% 135.8% at 0.9% 2.98%,
+    #1a838a 0%,
+    #234448 100%
+  );
+  backdrop-filter: blur(21px);
+}
