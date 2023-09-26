@@ -3,6 +3,7 @@ import Button from "@/components/Button";
 import Image from "next/image";
 import { useState } from "react";
 import Authbutton from "@/components/Authbutton";
+import Link from "next/link";
 
 export default function Registercomp() {
   //buat ditembak ke api
@@ -14,15 +15,15 @@ export default function Registercomp() {
   });
 
   return (
-    <div className="py-24 px-12 flex items-center justify-between">
+    <div className="py-24 px-12 flex flex-col-reverse lg:flex-row items-center justify-between">
       <div className="flex flex-col">
-        <div className="px-32 py-0 ">
-          <h1 className="font-neuro text-5xl mb-2">Registration</h1>
-          <p className="text-3xl font-medium font-inter mb-8">
+        <div className="px-32 py-0">
+          <h1 className="font-neuro text-3xl lg:text-5xl mb-2">Registration</h1>
+          <p className="text-xl lg:text-3xl font-medium font-inter mb-8">
             Hello, Welcome!
           </p>
 
-          <div className="flex gap-8">
+          <div className="flex flex-col lg:flex-row gap-8">
           <Authbutton
             type="facebook"
             text="Login with Facebook"
@@ -41,7 +42,7 @@ export default function Registercomp() {
           <div className="bg-white h-[2px] w-[50%]"></div>
         </div>
 
-          <div className="flex gap-8">
+          <div className="flex lg:flex-row flex-col gap-8">
             <div className="flex flex-col gap-3">
               <div className="flex flex-col w-80 gap-2">
                 <label>Fullname</label>
@@ -100,7 +101,7 @@ export default function Registercomp() {
             />
           </div>
           <p className="text-center">
-            Already have account? <span className="underline">Login</span>
+            Already have account? <Link href="/login" className="underline">Login</Link>
           </p>
         </div>
       </div>
@@ -109,7 +110,7 @@ export default function Registercomp() {
         width={209}
         height={200}
         alt="Danain"
-        className="w-[25%]"
+        className="w-1/2 lg:w-[25%]"
       />
     </div>
   );
