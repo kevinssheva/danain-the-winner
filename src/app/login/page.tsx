@@ -3,9 +3,9 @@ import Login from "./components/Login";
 
 export default function LoginPage() {
   return (
-    <div className="bg-background h-screen">
-      <div className="bg-[url('/login/kotak-kiri-atas.svg')] h-screen bg-no-repeat">
-        <div className="bg-[url('/login/kotak-kanan-bawah.svg')] h-screen bg-no-repeat bg-right-bottom w-screen">
+    <div className="bg-background min-h-screen overflow-x-hidden">
+      <div className="bg-[url('/login/kotak-kiri-atas.svg')] min-h-screen bg-no-repeat">
+        <div className="bg-[url('/login/kotak-kanan-bawah.svg')] min-h-screen bg-no-repeat bg-right-bottom">
           <Image
             src={"/login/glowkanan-ori.svg"}
             width={500}
@@ -17,7 +17,7 @@ export default function LoginPage() {
             src={"/login/glowkiri-ori.svg"}
             width={500}
             height={500}
-            className="absolute bottom-0 left-0"
+            className="absolute bottom-0 left-0 hidden lg:block"
             alt="glow"
           />
           <Login />
