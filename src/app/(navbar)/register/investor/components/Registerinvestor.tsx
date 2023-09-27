@@ -25,12 +25,12 @@ export default function Registerinvestor() {
           <div className="flex gap-8 lg:flex-row flex-col">
             <Authbutton
               type="facebook"
-              text="Login with Facebook"
+              text="Resgister with Facebook"
               onClick={() => console.log("")}
             />
             <Authbutton
               type="google"
-              text="Login with Google"
+              text="Register with Google"
               onClick={() => console.log("")}
             />
           </div>
