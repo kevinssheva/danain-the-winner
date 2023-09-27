@@ -9,10 +9,10 @@ export default function Sidebar() {
   const pathName = usePathname();
   const [open, setOpen] = useState(false);
   const sidebarItems = [
-    { label: "Home", type: "home" },
+    { label: "Dashboard", type: "home" },
     { label: "Portfolio", type: "porto" },
-    { label: "Calculator", type: "calcu" },
-    { label: "Chat", type: "chat" },
+    { label: "Calculator Simulation", type: "calculator" },
+    { label: "Chatting", type: "chat" },
     { label: "User", type: "user" },
     { label: "Logout", type: "logout" },
   ];
@@ -23,7 +23,7 @@ export default function Sidebar() {
 
       <aside
         id="default-sidebar"
-        className={`fixed top-0 left-0 z-10 w-64 h-screen transition-transform ${
+        className={`fixed md:absolute top-0 left-0 z-10 w-64 h-screen transition-transform ${
           open ? "translate-x-0" : "-translate-x-full"
         } md:translate-x-0`}
         aria-label="Sidebar"

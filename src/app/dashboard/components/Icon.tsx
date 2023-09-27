@@ -27,7 +27,7 @@ export default function Icon(props: IconProps) {
           className={`text-lg font-semibold`}
         />
       );
-    } else if (props.type == "calcu") {
+    } else if (props.type == "calculator") {
       return (
         <FaMoneyBillTrendUp
           color={`${props.active ? "#FFFFFF" : "#32D73A"}`}
