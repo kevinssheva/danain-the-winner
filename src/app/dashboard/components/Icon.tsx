@@ -54,8 +54,8 @@ export default function Icon(props: IconProps) {
     } else {
       return (
         <RiLogoutBoxRLine
-          ccolor={`${props.active ? "#FFFFFF" : "#32D73A"}`}
-          fill={`${props.active ? "#FFFFFF" : "#32D73A"}`}
+          ccolor="red"
+          fill="red"
           className={`text-lg font-semibold`}
         />
       );
