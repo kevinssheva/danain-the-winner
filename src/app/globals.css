@@ -41,6 +41,16 @@
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
 
+.sidebar-glass {
+  border-radius: 1.25rem;
+  background: linear-gradient(
+    112deg,
+    rgba(6, 11, 38, 0.94) 59.3%,
+    rgba(26, 31, 55, 0) 100%
+  );
+  backdrop-filter: blur(60px);
+}
+
 .inner-glass {
   background: linear-gradient(
     135deg,

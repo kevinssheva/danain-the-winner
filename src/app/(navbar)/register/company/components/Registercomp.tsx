@@ -26,12 +26,12 @@ export default function Registercomp() {
           <div className="flex flex-col lg:flex-row gap-8">
           <Authbutton
             type="facebook"
-            text="Login with Facebook"
+            text="Register with Facebook"
             onClick={() => console.log("")}
           />
           <Authbutton
             type="google"
-            text="Login with Google"
+            text="Register with Google"
             onClick={() => console.log("")}
           />
         </div>

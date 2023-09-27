@@ -10,7 +10,7 @@ interface MenuIconProps {
 const MenuIcon: React.FC<MenuIconProps> = ({ isOpen, handleToggle }) => {
   return (
     <div
-      className="w-5 aspect-[1/0.75] relative md:hidden"
+      className="w-5 aspect-[1/0.75] relative md:hidden z-50"
       onClick={handleToggle}
     >
       <div
