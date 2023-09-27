@@ -1,7 +1,9 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
-import { compare } from "bcryptjs";
 import { prisma } from "../../../lib/prisma";
+import { compare } from "bcryptjs";
+import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
+import FacebookProvider from "next-auth/providers/facebook";
 
 interface Credentials {
     email: string;
@@ -15,7 +17,18 @@ export const authOptions: NextAuthOptions = {
     providers: [
         CredentialsProvider({
             type: "credentials",
-            credentials: {},
+            credentials: {
+                email: {
+                    label: "Email",
+                    type: "email",
+                    placeholder: "Email",
+                },
+                password: {
+                    label: "Password",
+                    type: "password",
+                    placeholder: "Password",
+                }
+            },
             authorize: async (credentials) => {
                 try {
                     const { email, password } = credentials as Credentials;
@@ -46,6 +59,60 @@ export const authOptions: NextAuthOptions = {
                 }
             },
         }),
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID as string,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+            profile: async (profile) => {
+                const user = await prisma.user.findUnique({
+                    where: {
+                        email: profile.email,
+                    },
+                });
+
+                if (!user) {
+                    const createUser = await prisma.user.create({
+                        data: {
+                            email: profile.email,
+                            fullName: profile.name,
+                            profilePicture: profile.image,
+                            password: "googleaccountonly123321danain1stplacewinner",
+                            role: "UNREGISTERED",
+                        },
+                    });
+
+                    return createUser;
+                }
+
+                return user;
+            }
+        }),
+        FacebookProvider({
+            clientId: process.env.FACEBOOK_CLIENT_ID as string,
+            clientSecret: process.env.FACEBOOK_CLIENT_SECRET as string,
+            profile: async (profile) => {
+                const user = await prisma.user.findUnique({
+                    where: {
+                        email: profile.email,
+                    },
+                });
+
+                if (!user) {
+                    const createUser = await prisma.user.create({
+                        data: {
+                            email: profile.email,
+                            fullName: profile.name,
+                            profilePicture: profile.image,
+                            password: "facebookaccountonly123321danain1stplacewinner",
+                            role: "UNREGISTERED",
+                        },
+                    });
+
+                    return createUser;
+                }
+
+                return user;
+            }
+        })
     ],
     pages: {
         signIn: "/login",
@@ -90,7 +157,7 @@ export const authOptions: NextAuthOptions = {
             return session;
         },
     },
-}
+};
 
 const handler = NextAuth(authOptions);
 

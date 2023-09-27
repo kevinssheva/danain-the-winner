@@ -5,9 +5,7 @@ import { useState } from "react";
 
 export default function Startup() {
   const [menu, setMenu] = useState("Overview");
-  console.log(menu);
   const [Overview, setOverview] = useState(false);
-  console.log(Overview);
 
   function content() {
     if (menu == "Overview") {

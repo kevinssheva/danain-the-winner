@@ -3,15 +3,51 @@ import Authbutton from "@/components/Authbutton";
 import Button from "@/components/Button";
 import Image from "next/image";
 import { useState } from "react";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 export default function Login() {
   const router = useRouter();
-  //buat ditembak ke api
   const [data, setData] = useState({
     email: "",
     password: "",
   });
+
+  const handleLoginWithCredentials = async () => {
+    try {
+      const res = await signIn("credentials", {
+        redirect: false,
+        email: data.email,
+        password: data.password,
+        callbackUrl: "/",
+      });
+
+      if (res?.error) {
+        throw new Error(res.error); // Bisa diganti pake toast.error("Invalid credentials");
+      } else {
+        /* Toast Success */
+        router.push('/');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleLoginWithGoogle = async () => {
+    try {
+      const res = await signIn("google");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleLoginWithFacebook = async () => {
+    try {
+      const res = await signIn("facebook");
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <div className="py-10 lg:py-20 px-8 lg:px-24 flex flex-col lg:flex-row-reverse justify-center lg:justify-between">
@@ -26,19 +62,19 @@ export default function Login() {
         <div className="flex flex-col items-center justify-center md:justify-between md:flex-row gap-8">
           <Authbutton
             type="facebook"
-            text="Login with Facebook"
-            onClick={() => console.log("")}
+            text="Continue with Facebook"
+            onClick={() => handleLoginWithFacebook()}
           />
           <Authbutton
             type="google"
-            text="Login with Google"
-            onClick={() => console.log("")}
+            text="Continue with Google"
+            onClick={() => handleLoginWithGoogle()}
           />
         </div>
 
         <div className="flex gap-8 my-4 items-center justify-center">
           <div className="bg-white h-[2px] w-[50%]"></div>
-          <p className="text-center">OR</p>
+          <p className="text-center">ORz</p>
           <div className="bg-white h-[2px] w-[50%]"></div>
         </div>
 
@@ -67,7 +103,7 @@ export default function Login() {
           <Button
             text="Login"
             isPrimary={true}
-            onClick={() => console.log("")}
+            onClick={() => handleLoginWithCredentials()}
             fullWidth={false}
           />
         </div>

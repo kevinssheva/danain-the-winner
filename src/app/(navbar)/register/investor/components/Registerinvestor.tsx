@@ -4,14 +4,67 @@ import Image from "next/image";
 import { useState } from "react";
 import Authbutton from "@/components/Authbutton";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 export default function Registerinvestor() {
-  //buat ditembak ke api
+  const router = useRouter();
   const [data, setData] = useState({
-    fullname: "",
+    fullName: "",
     email: "",
     password: "",
   });
+
+  const handleRegisterWithCredentials = async () => {
+    try {
+      // send post request to /api/v1/user/register/investor
+      const registerResponse = await fetch(
+        process.env.NEXT_PUBLIC_WEB_URL + "/api/v1/user/register/investor",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
+
+      // if register complete, signin with credentials from res
+      if (registerResponse.status === 201) {
+        const loginResponse = await signIn("credentials", {
+          redirect: false,
+          email: data.email,
+          password: data.password,
+          callbackUrl: "/",
+        });
+
+        if (loginResponse?.error) {
+          throw new Error(loginResponse.error); // Bisa diganti pake toast.error("Invalid credentials");
+        } else {
+          /* Toast Success */
+          router.push("/");
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleRegisterWithGoogle = async () => {
+    try {
+      const res = await signIn("google");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleRegisterWithFacebook = async () => {
+    try {
+      const res = await signIn("facebook");
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <div className="py-20 lg:py-28 lg:pr-8 flex flex-col-reverse lg:flex-row items-center justify-between">
@@ -19,19 +72,19 @@ export default function Registerinvestor() {
         <div className="px-32 py-0 ">
           <h1 className="font-neuro text-3xl lg:text-5xl mb-2">Registration</h1>
           <p className="text-xl lg:text-3xl font-medium font-inter mb-8">
-            Hello, Welcome!
+            Hello, Investors!
           </p>
 
           <div className="flex gap-8 lg:flex-row flex-col">
             <Authbutton
               type="facebook"
-              text="Resgister with Facebook"
-              onClick={() => console.log("")}
+              text="Continue with Facebook"
+              onClick={() => handleRegisterWithFacebook()}
             />
             <Authbutton
               type="google"
-              text="Register with Google"
-              onClick={() => console.log("")}
+              text="Continue with Google"
+              onClick={() => handleRegisterWithGoogle()}
             />
           </div>
 
@@ -50,7 +103,7 @@ export default function Registerinvestor() {
                   type="text"
                   placeholder="Enter your Fullname"
                   onChange={(e) =>
-                    setData({ ...data, fullname: e.target.value })
+                    setData({ ...data, fullName: e.target.value })
                   }
                 />
               </div>
@@ -80,7 +133,7 @@ export default function Registerinvestor() {
             <Button
               text="Register"
               isPrimary={false}
-              onClick={() => console.log("")}
+              onClick={() => handleRegisterWithCredentials()}
               fullWidth={false}
             />
           </div>
