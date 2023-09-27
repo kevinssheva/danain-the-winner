@@ -6,8 +6,13 @@ import Explore from "./components/Explore";
 import Benefit from "./components/Benefit";
 import Testimoni from "./components/Testimoni";
 import GetStarted from "./components/GetStarted";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth/next";
 
-export default function Home() {
+export default async function Home() {
+  const session = await getServerSession(authOptions);
+  console.log("session", session);
+  
   return (
     <div className="bg-background px-[7%] relative overflow-hidden">
       <Hero />

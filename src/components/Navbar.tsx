@@ -4,7 +4,7 @@ import Image from "next/image";
 import Button from "./Button";
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import MenuIcon from "./MenuIcon";
 
 const data = [
@@ -28,6 +28,7 @@ const Navbar = () => {
   const [isTransparent, setIsTransparent] = useState(true);
   const pathName = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
 
   const isActive = useMemo(() => {
     return (link: string) => link === pathName;
@@ -53,7 +54,7 @@ const Navbar = () => {
     // Fungsi ini akan dipanggil setiap kali komponen di-mount
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      console.log(currentScrollY);
+      
       setIsVisible(currentScrollY < prevScrollPos);
       setPrevScrollPos(currentScrollY);
     };
@@ -71,9 +72,8 @@ const Navbar = () => {
     <div
       className={`fixed w-full py-4 top-0 z-50 px-[7%]
       ${isTransparent ? "bg-transparent " : "bg-background shadow-lg"}
-      ${
-        isVisible || isOpen ? "translate-y-0" : " -translate-y-full"
-      } transition`}
+      ${isVisible || isOpen ? "translate-y-0" : " -translate-y-full"
+        } transition`}
     >
       <div className="flex justify-between items-center">
         <Link href="/">
@@ -89,11 +89,10 @@ const Navbar = () => {
           {data.map((item) => (
             <li
               key={item.name}
-              className={`ml-6 ${
-                isActive(item.link)
-                  ? "border-b-[1px] border-white font-semibold"
-                  : "font-normal"
-              } transition relative group`}
+              className={`ml-6 ${isActive(item.link)
+                ? "border-b-[1px] border-white font-semibold"
+                : "font-normal"
+                } transition relative group`}
             >
               <Link
                 href={item.link}
@@ -112,23 +111,21 @@ const Navbar = () => {
           handleToggle={() => setIsOpen((prev) => !prev)}
         />
         <div className="md:flex hidden">
-          <Button text="Login" isPrimary onClick={() => {}} />
+          <Button text="Login" isPrimary onClick={() => { router.push("/login") }} />
         </div>
       </div>
       <div
-        className={`w-full md:hidden h-screen absolute bg-background left-0 top-0 -z-10 origin-top ${
-          isOpen ? "scale-y-100" : "scale-y-0"
-        } transition-all duration-300 px-[7%] pt-24 pb-10 flex flex-col justify-between`}
+        className={`w-full md:hidden h-screen absolute bg-background left-0 top-0 -z-10 origin-top ${isOpen ? "scale-y-100" : "scale-y-0"
+          } transition-all duration-300 px-[7%] pt-24 pb-10 flex flex-col justify-between`}
       >
         <ul className="flex flex-col items-start gap-6">
           {data.map((item) => (
             <li
               key={item.name}
-              className={`${
-                isActive(item.link)
-                  ? "border-b-[2px] border-white font-semibold"
-                  : "font-normal"
-              } transition relative group pb-1`}
+              className={`${isActive(item.link)
+                ? "border-b-[2px] border-white font-semibold"
+                : "font-normal"
+                } transition relative group pb-1`}
             >
               <Link
                 href={item.link}
@@ -139,7 +136,7 @@ const Navbar = () => {
             </li>
           ))}
         </ul>
-        <Button text="Login" fullWidth onClick={() => {}} />
+        <Button text="Login" fullWidth onClick={() => { router.push("/login") }} />
       </div>
     </div>
   );

@@ -4,15 +4,65 @@ import Image from "next/image";
 import { useState } from "react";
 import Authbutton from "@/components/Authbutton";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 export default function Registercomp() {
-  //buat ditembak ke api
+  const router = useRouter();
   const [data, setData] = useState({
-    fullname: "",
-    company: "",
+    fullName: "",
+    companyName: "",
     email: "",
     password: "",
   });
+
+  const handleRegisterWithCrentials = async () => {
+    try {
+      // send post request to /api/v1/user/register/founder
+      const registerResponse = await fetch(process.env.NEXT_PUBLIC_WEB_URL + "/api/v1/user/register/founder", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      // if register complete, signin with credentials from res
+      if (registerResponse.status === 201) {
+        const loginResponse = await signIn("credentials", {
+          redirect: false,
+          email: data.email,
+          password: data.password,
+          callbackUrl: "/",
+        });
+
+        if (loginResponse?.error) {
+          throw new Error(loginResponse.error); // Bisa diganti pake toast.error("Invalid credentials");
+        } else {
+          /* Toast Success */
+          router.push('/');
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleRegisterWithGoogle = async () => {
+    try {
+      const res = await signIn("google");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleRegisterWithFacebook = async () => {
+    try {
+      const res = await signIn("facebook");
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <div className="py-24 px-12 flex flex-col-reverse lg:flex-row items-center justify-between">
@@ -20,38 +70,38 @@ export default function Registercomp() {
         <div className="px-32 py-0">
           <h1 className="font-neuro text-3xl lg:text-5xl mb-2">Registration</h1>
           <p className="text-xl lg:text-3xl font-medium font-inter mb-8">
-            Hello, Welcome!
+            Hello, Founders!
           </p>
 
           <div className="flex flex-col lg:flex-row gap-8">
-          <Authbutton
-            type="facebook"
-            text="Register with Facebook"
-            onClick={() => console.log("")}
-          />
-          <Authbutton
-            type="google"
-            text="Register with Google"
-            onClick={() => console.log("")}
-          />
-        </div>
+            <Authbutton
+              type="facebook"
+              text="Continue with Facebook"
+              onClick={() => handleRegisterWithFacebook()}
+            />
+            <Authbutton
+              type="google"
+              text="Continue with Google"
+              onClick={() => handleRegisterWithGoogle()}
+            />
+          </div>
 
-        <div className="flex gap-8 my-4 items-center justify-center">
-          <div className="bg-white h-[2px] w-[50%]"></div>
-          <p className="text-center">OR</p>
-          <div className="bg-white h-[2px] w-[50%]"></div>
-        </div>
+          <div className="flex gap-8 my-4 items-center justify-center">
+            <div className="bg-white h-[2px] w-[50%]"></div>
+            <p className="text-center">OR</p>
+            <div className="bg-white h-[2px] w-[50%]"></div>
+          </div>
 
           <div className="flex lg:flex-row flex-col gap-8">
             <div className="flex flex-col gap-3">
               <div className="flex flex-col w-80 gap-2">
-                <label>Fullname</label>
+                <label>Full Name</label>
                 <input
                   className={`border border-opacity-0 rounded-2xl py-4 px-8 gradient-background`}
                   type="text"
                   placeholder="Enter your Fullname"
                   onChange={(e) =>
-                    setData({ ...data, fullname: e.target.value })
+                    setData({ ...data, fullName: e.target.value })
                   }
                 />
               </div>
@@ -63,7 +113,7 @@ export default function Registercomp() {
                   type="text"
                   placeholder="Enter your Company Name"
                   onChange={(e) =>
-                    setData({ ...data, company: e.target.value })
+                    setData({ ...data, companyName: e.target.value })
                   }
                 />
               </div>
@@ -96,7 +146,7 @@ export default function Registercomp() {
             <Button
               text="Register"
               isPrimary={true}
-              onClick={() => console.log("")}
+              onClick={() => handleRegisterWithCrentials()}
               fullWidth={false}
             />
           </div>

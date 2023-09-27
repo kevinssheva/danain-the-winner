@@ -1,7 +1,16 @@
 import Image from "next/image";
 import Login from "./components/Login";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth/next";
+import { redirect } from "next/navigation";
 
-export default function LoginPage() {
+export default async function LoginPage() {
+  const session = await getServerSession(authOptions);
+
+  if (session) {
+    redirect("/");
+  }
+
   return (
     <div className="bg-background min-h-screen overflow-x-hidden">
       <div className="bg-[url('/login/kotak-kiri-atas.svg')] min-h-screen bg-no-repeat">

@@ -13,6 +13,7 @@ datasource db {
 enum UserRole {
   INVESTOR
   FOUNDER
+  UNREGISTERED
 }
 
 model User {
@@ -21,13 +22,15 @@ model User {
   email          String   @unique
   password       String
   role           UserRole
-  description    String
-  profilePicture String
+  description    String?
+  profilePicture String?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  lastLogin DateTime @default(now())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 
-  founder Founder?
+  company Company?
+
   transaction Transaction[]
 
   conversationsInitiated Conversation[] @relation("UserOne")
@@ -36,41 +39,32 @@ model User {
   messages Message[]
 }
 
-model Founder {
-  userId    String  @id @db.Uuid
-  user      User    @relation(fields: [userId], references: [id])
-  companyId String  @db.Uuid
-  company   Company @relation(fields: [companyId], references: [id])
-  title     String
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([userId])
-  @@index([companyId])
-}
-
 model Company {
   id           String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   companyName  String
-  companyPlace String
-  pitchDeck    String
-  tagline      String
+  companyPlace String?
+  pitchDeck    String?
+  tagline      String?
 
-  coverPhoto       String
-  videoProfile     String
-  pitchDescription String
-  money            String
+  coverPhoto       String?
+  videoProfile     String?
+  pitchDescription String?
+  money            String?
   category         String[]
-  website          String
-  instagram        String
-  linkedin         String
+  website          String?
+  instagram        String?
+  linkedin         String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  founder Founder[]
+  userId String @db.Uuid
+  user User @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+
   transaction Transaction[]
+
+  @@unique([userId])
+  @@index([userId])
 }
 
 model Conversation {
@@ -119,7 +113,7 @@ model Transaction {
   userId String @db.Uuid
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  companyId String @db.Uuid
+  companyId String  @db.Uuid
   company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
 
   amount String
