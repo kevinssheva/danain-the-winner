@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Button from "@/components/Button";
+import { User } from "@prisma/client";
+import { redirect } from "next/navigation";
 
-export default function Investorhome() {
+export default function Investorhome({ user } : { user: User | null }) {
   return (
     <>
       <div className="flex flex-col md:flex-row gap-4">
@@ -17,7 +19,7 @@ export default function Investorhome() {
               <div className="flex flex-col w-full gap-2">
                 <p className="text-[#8C89B4]">Welcome back,</p>
 
-                <h1 className="text-2xl font-bold">Kevin Lie</h1>
+                <h1 className="text-2xl font-bold">{user?.fullName}</h1>
                 <p className="text-[#8C89B4]">
                   Glad to see you again! <br />
                   Ask me anything.
@@ -27,7 +29,7 @@ export default function Investorhome() {
                 text="See Your Portofolio"
                 isPrimary={true}
                 fullWidth={true}
-                onClick={() => {}}
+                onClick={() => {redirect("/dashboard/portofolio")}}
               />
             </div>
             <Image

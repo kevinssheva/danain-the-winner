@@ -3,7 +3,8 @@ import Image from "next/image";
 import { useState, useEffect, useCallback } from "react";
 import MenuIcon from "@/components/MenuIcon";
 import Icon from "./Icon";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
+import { signOut } from "next-auth/react";
 
 interface SidebarProps {
   role: string;
@@ -12,6 +13,11 @@ interface SidebarProps {
 export default function Sidebar(props: SidebarProps) {
   const pathName = usePathname();
   const [open, setOpen] = useState(false);
+
+  const handleSignOut = async () => {
+    await signOut();
+  };
+
   const sidebarItems =
     props.role === "investor"
       ? [
@@ -89,7 +95,14 @@ export default function Sidebar(props: SidebarProps) {
             {sidebarItems.slice(-2).map((item) => (
               <li key={item.type}>
                 <a
-                  href={`/dashboard/${item.type.toLowerCase()}`}
+                  onClick={() => {
+                    if (item.type === "logout") {
+                      handleSignOut();
+                      redirect("/");
+                    } else {
+                      window.location.href = `/dashboard/${item.type.toLowerCase()}`;
+                    }
+                  }}
                   className={`flex items-center py-3 px-4 rounded-xl ${
                     pathName === `/dashboard/${item.type.toLowerCase()}`
                       ? "bg-gray-700"

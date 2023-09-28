@@ -5,11 +5,9 @@ import { AiOutlineUser } from "react-icons/ai";
 import Companyhome from "./Companyhome";
 import Investorhome from "./Investorhome";
 import Header from "./Header";
+import { User } from "@prisma/client";
 
-export default function Home() {
-  const role = "investor"
-
-
+export default function Home({ user } : { user: User | null }) {
   return (
     <div className="px-[5%] md:pl-80 md:pr-12 md:py-14 py-20">
       <Header page="Dashboard" />
@@ -27,7 +25,7 @@ export default function Home() {
         Here’s what’s happening with your store today.
       </p>
 
-      {role == "investor"? <Investorhome /> : <Companyhome />}
+      {user?.role === "INVESTOR" ? <Investorhome user={user} /> : <Companyhome />}
 
 
       {/* <p className="mt-32">@ 2023, Made with ❤️ by Type Omegans for a better web</p> */}

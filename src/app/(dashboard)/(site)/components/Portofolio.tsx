@@ -1,23 +1,22 @@
+import { Transaction, Company, User } from "@prisma/client";
 import Header from "./Header";
 import Image from "next/image";
 
-export default function Portofolio() {
-  const data = [
-    {
-      picurl: "/dashboard/portofolio/gojek.png",
-      company: "Company A",
-      fund: "$10,000",
-      date: "29 September 2023",
-      status: "Active",
-    },
-    {
-      picurl: "/dashboard/portofolio/gojek.png",
-      company: "Company B",
-      fund: "$15,000",
-      date: "28 September 2023",
-      status: "Inactive",
-    },
-  ];
+export default function Portofolio({ portofolio }: { portofolio: (Transaction & { company?: Company; user?: User } )[] | undefined }) {
+  const formatAmountInRupiah = (amount: string) => {
+    const parsedAmount = parseInt(amount, 10);
+  
+    if (isNaN(parsedAmount)) {
+      return 'Invalid Amount';
+    }
+  
+    const formattedAmount = new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+    }).format(parsedAmount);
+  
+    return formattedAmount;
+  }
 
   return (
     <div className="px-[5%] md:pl-80 md:pr-12 md:py-14 py-20 z-50">
@@ -27,30 +26,32 @@ export default function Portofolio() {
           <thead className="mb-12">
             <tr className="text-sm lg:text-lg">
               <th className="px-8"></th>
-              <th className="px-8">Company</th>
+              <th className="px-8">
+                {portofolio?.[0]?.user?.role === "FOUNDER" ? "Company" : "Investor"}
+              </th>
               <th className="px-8">Fund Investment</th>
               <th className="px-8 ">Investment Date</th>
               <th className="px-8">Status</th>
             </tr>
           </thead>
           <tbody className="text-base lg:text-xl">
-            {data.map((item, index) => (
+            {portofolio?.map((item, index) => (
               <tr key={index} className="border-b border-[#FDFDFD] h-28">
                 <td className="justify-center flex h-28">
                   <Image
-                    src={item.picurl}
+                    src={item.company?.coverPhoto ?? ''}
                     width={50}
                     height={50}
                     alt={`row${index + 1}`}
                     className="self-center"
                   />
                 </td>
-                <td className="px-8">{item.company}</td>
-                <td className="px-8">{item.fund}</td>
-                <td className="px-8">{item.date}</td>
+                <td className="px-8">{portofolio?.[0]?.user?.role === "FOUNDER" ? item.company?.companyName : item.user?.fullName}</td>
+                <td className="px-8">{formatAmountInRupiah(item.amount)}</td>
+                <td className="px-8">{item.createdAt.toLocaleDateString()}</td>
                 <td className="px-8">
                   <div className="bg-[#D9D9D9] flex rounded-xl justify-center items-center-lg gap-4 px-4 py-2">
-                    {item.status == "Active" ? (
+                    {item.status === "ACTIVE" ? (
                       <Image
                         src={"/dashboard/portofolio/blue.svg"}
                         width={20}
