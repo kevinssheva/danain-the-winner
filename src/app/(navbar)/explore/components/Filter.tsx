@@ -20,6 +20,9 @@ import Image from "next/image";
 import { BsChevronDown } from "react-icons/bs";
 
 interface FilterProps {
+  showSort: boolean;
+  toogleOpen: () => void;
+  toogleClose: () => void;
   setCategoryExplore: (query: string[]) => void;
 }
 
@@ -96,7 +99,12 @@ const categoryData = [
   },
 ];
 
-const Filter = ({ setCategoryExplore }: FilterProps) => {
+const Filter = ({
+  showSort,
+  toogleOpen,
+  toogleClose,
+  setCategoryExplore
+}: FilterProps) => {
   const swiperRef = useRef<SwiperType>();
   const [activeCategory, setActiveCategory] = useState<string[]>([]);
 
@@ -152,7 +160,14 @@ const Filter = ({ setCategoryExplore }: FilterProps) => {
   const isCategoryActive = useMemo(() => {
     return (category: string) => activeCategory.includes(category);
   }, [activeCategory]);
-
+  
+  const toogleShow = () => {
+    if (showSort) {
+      toogleClose();
+    } else {
+      toogleOpen();
+    }
+  };
   return (
     <div className="flex items-center w-full gap-5">
       <div className="flex-1 flex items-center gap-3 overflow-hidden">
@@ -206,9 +221,16 @@ const Filter = ({ setCategoryExplore }: FilterProps) => {
           <FaArrowCircleRight />
         </div>
       </div>
-      <div className="px-4 bg-white rounded-md py-3 flex items-center justify-between gap-3">
-        <p className="text-black text-sm font-bold font-montserrat">Sort</p>
-        <FaChevronDown color="black" fill="black" />
+      <div
+        className="px-4 bg-white rounded-md py-3 flex items-center justify-between gap-3"
+        onClick={toogleShow}
+      >
+        <p className="text-black text-sm font-bold font-montserrat">Filters</p>
+        <FaChevronDown
+          color="black"
+          fill="black"
+          className={`${showSort ? "rotate-180" : "rotate-0"} transition duration-300`}
+        />
       </div>
     </div>
   );
