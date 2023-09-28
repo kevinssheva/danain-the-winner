@@ -1,36 +1,9 @@
-"use client";
-import Button from "@/components/Button";
 import Image from "next/image";
-import { AiOutlineUser } from "react-icons/ai";
+import Button from "@/components/Button";
 
-export default function Home() {
+export default function Companyhome() {
   return (
-    <div className=" px-4 md:pl-80 md:pr-12 md:py-5">
-      <div className="flex justify-between items-center mb-10 md:mb-16">
-        <p className="text-white text-base">
-          <span className="text-[#A0AEC0]">Pages </span>/ Dashboard <br />{" "}
-          Dashboard
-        </p>
-        <AiOutlineUser
-          className="text-white text-3xl"
-          color="#32D73A"
-          fill="#32D73A"
-        />
-      </div>
-
-      <div className="flex">
-        <p className="text-lg">Welcome Back,</p>
-        <Image
-          src={"/dashboard/investor/tangan.svg"}
-          width={23}
-          height={50}
-          alt="Wave hand"
-        />
-      </div>
-      <p className="text-[#A0AEC0] mb-7">
-        Here’s what’s happening with your store today.
-      </p>
-
+    <>
       <div className="flex flex-col lg:flex-row gap-4">
         <div className="flex flex-col gap-8">
           <div
@@ -48,7 +21,9 @@ export default function Home() {
               className="w-[50%]"
             />
             <div className="text-center">
-              <p className="text-lg lg:text-2xl text-[#8C89B4]">Funds Collected</p>
+              <p className="text-lg lg:text-2xl text-[#8C89B4]">
+                Funds Collected
+              </p>
               <h1 className="text-lg lg:text-3xl font-bold">{"$632.000"}</h1>
             </div>
             <Image
@@ -146,6 +121,6 @@ export default function Home() {
           onClick={() => {}}
         />
       </div>
-    </div>
+    </>
   );
 }
