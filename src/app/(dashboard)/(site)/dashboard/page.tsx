@@ -1,6 +1,6 @@
 import Image from "next/image";
-import Sidebar from "./components/Sidebar";
-import Home from "./components/Home";
+import Sidebar from "../components/Sidebar";
+import Home from "../components/Home";
 
 export default function Page() {
   return (
@@ -17,7 +17,6 @@ export default function Page() {
         <div className="h-full min-h-screen bg-[url('/dashboard/investor/glowtengah.svg')] bg-no-repeat">
           <div className="h-full min-h-screen bg-none md:bg-[url('/dashboard/investor/glowbawah.svg')] bg-no-repeat bg-right-bottom">
           <div className="h-full min-h-screen bg-[url('/dashboard/investor/kotakkiri.svg')] bg-no-repeat bg-left-bottom">
-            <Sidebar />
             <Home />
           </div>
           </div>
