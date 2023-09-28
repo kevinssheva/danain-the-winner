@@ -1,13 +1,15 @@
 import Image from "next/image";
 import Category from "./Category";
+import { Category as CategoryInterface } from "@prisma/client";
 
 interface CompanyCardProps {
-  name: string;
-  headline: string;
-  description: string;
-  companyImage: string;
-  ownerImage: string;
-  price: string;
+  name?: string;
+  headline?: string;
+  description?: string
+  companyImage?: string;
+  ownerImage?: string
+  price?: string;
+  categories?: CategoryInterface[];
 }
 
 const CompanyCard: React.FC<CompanyCardProps> = ({
@@ -17,7 +19,57 @@ const CompanyCard: React.FC<CompanyCardProps> = ({
   companyImage,
   ownerImage,
   price,
+  categories
 }) => {
+
+  function formatNumber(number: string) {
+    // Convert the number to string
+    const numberString = number;
+
+    const [integerPart, decimalPart = ''] = numberString.split('.');
+
+    const formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+    const formattedNumber = decimalPart ? `${formattedInteger}.${decimalPart}` : formattedInteger;
+
+    return formattedNumber;
+  }
+
+  const deconvertCategoryName = (categoryName: string) => {
+    switch (categoryName) {
+      case "Energy":
+        return "Energy";
+      case "Games":
+        return "Games";
+      case "ARNVR":
+        return "AR & VR";
+      case "FNB":
+        return "Food & Beverage";
+      case "ClimateChange":
+        return "Climate Change";
+      case "Education":
+        return "Education";
+      case "TravelNTourism":
+        return "Travel & Tourism";
+      case "FintechNFinance":
+        return "Fintech & Finance";
+      case "Technology":
+        return "Technology";
+      case "HealthNFitness":
+        return "Health & Fitness";
+      case "Agriculture":
+        return "Agriculture";
+      case "Sport":
+        return "Sport";
+      case "AI":
+        return "AI";
+      case "Sustainability":
+        return "Sustainability";
+      default:
+        return "";
+    }
+  }
+
   return (
     <div
       className="
@@ -32,7 +84,7 @@ const CompanyCard: React.FC<CompanyCardProps> = ({
     >
       <div className="w-full flex-1 overflow-hidden relative group-hover:brightness-75 transition-all">
         <Image
-          src={companyImage}
+          src={companyImage || "/landing/company_1.jpg"}
           fill={true}
           alt=""
           className="object-cover w-full h-full object-top"
@@ -55,7 +107,7 @@ const CompanyCard: React.FC<CompanyCardProps> = ({
         <div className="absolute w-[18%] aspect-square bg-white p-1 rounded-full overflow-hidden top-0 -translate-y-1/2 right-0 -translate-x-1/3">
           <div className="w-full h-full relative rounded-full overflow-hidden">
             <Image
-              src={ownerImage}
+              src={ownerImage || "/profile.jpg"}
               alt=""
               className="object-cover w-full h-full"
               fill={true}
@@ -70,14 +122,14 @@ const CompanyCard: React.FC<CompanyCardProps> = ({
         </h1>
         <p className="line-clamp-3 group-hover:line-clamp-4 text-sm">{description}</p>
         <div className="flex gap-2 mb-5 mt-auto">
-          <Category name="Technology" color="#A31AD3" />
-          <Category name="Food Waste" color="#4C80B0" />
-          <Category name="Online" color="#DDBB0A" />
+          {categories?.map((category) => (
+            <Category key={category.id} name={deconvertCategoryName(category.name)} color={category.color} />
+          ))}
         </div>
         <div className="absolute -bottom-full w-full px-4 left-0 group-hover:bottom-0 transition-all">
           <div className="border-b-[1px] border-white" />
           <p className="text-sm sm:text-base font-bold font-montserrat my-3">
-            {price} <span className="font-normal">Valuation Cap</span>
+            Rp{price && formatNumber(price)} <span className="font-normal">Valuation Cap</span>
           </p>
         </div>
       </div>

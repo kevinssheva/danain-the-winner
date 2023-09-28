@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Investor from "../../components/Investor";
+import Calculator from "../../components/Calculator";
 
 export default function Portopage() {
   return (
@@ -24,7 +24,7 @@ export default function Portopage() {
           <div className="bg-[url('/dashboard/portofolio/kotakatas.svg')] h-full bg-no-repeat bg-right-top">
             <div className="bg-none md:bg-[url('/dashboard/portofolio/glowatas.svg')] h-full bg-no-repeat bg-right-top">
               <div className="bg-none md:bg-[url('/dashboard/portofolio/glowkanan.svg')] h-full bg-no-repeat bg-right-bottom">
-                <Investor />
+                <Calculator />
               </div>
             </div>
           </div>

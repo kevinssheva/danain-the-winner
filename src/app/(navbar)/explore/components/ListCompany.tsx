@@ -6,134 +6,27 @@ import { useState } from "react";
 
 const postPerPage = 12;
 
-const ListCompany = () => {
+const ListCompany = ({ filteredCompanies }: any) => {
   const [currentPage, setCurrentPage] = useState(1);
+
   return (
     <div className="w-full flex flex-col items-center gap-10">
       <div className="w-full flex flex-wrap justify-center gap-10">
-        <CompanyCard
-          name="Gojek"
-          headline="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum!"
-          description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque blanditiis ut cum modi, enim ex voluptate et architecto consequatur labore?"
-          companyImage="/landing/company_1.jpg"
-          ownerImage="/profile.jpg"
-          price="$1,000,000"
-        />
-        <CompanyCard
-          name="Gojek"
-          headline="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum!"
-          description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque blanditiis ut cum modi, enim ex voluptate et architecto consequatur labore?"
-          companyImage="/landing/company_1.jpg"
-          ownerImage="/profile.jpg"
-          price="$1,000,000"
-        />
-        <CompanyCard
-          name="Gojek"
-          headline="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum!"
-          description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque blanditiis ut cum modi, enim ex voluptate et architecto consequatur labore?"
-          companyImage="/landing/company_1.jpg"
-          ownerImage="/profile.jpg"
-          price="$1,000,000"
-        />
-        <CompanyCard
-          name="Gojek"
-          headline="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum!"
-          description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque blanditiis ut cum modi, enim ex voluptate et architecto consequatur labore?"
-          companyImage="/landing/company_1.jpg"
-          ownerImage="/profile.jpg"
-          price="$1,000,000"
-        />
-        <CompanyCard
-          name="Gojek"
-          headline="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum!"
-          description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque blanditiis ut cum modi, enim ex voluptate et architecto consequatur labore?"
-          companyImage="/landing/company_1.jpg"
-          ownerImage="/profile.jpg"
-          price="$1,000,000"
-        />
-        <CompanyCard
-          name="Gojek"
-          headline="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum!"
-          description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque blanditiis ut cum modi, enim ex voluptate et architecto consequatur labore?"
-          companyImage="/landing/company_1.jpg"
-          ownerImage="/profile.jpg"
-          price="$1,000,000"
-        />
-        <CompanyCard
-          name="Gojek"
-          headline="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum!"
-          description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque blanditiis ut cum modi, enim ex voluptate et architecto consequatur labore?"
-          companyImage="/landing/company_1.jpg"
-          ownerImage="/profile.jpg"
-          price="$1,000,000"
-        />
-        <CompanyCard
-          name="Gojek"
-          headline="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum!"
-          description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque blanditiis ut cum modi, enim ex voluptate et architecto consequatur labore?"
-          companyImage="/landing/company_1.jpg"
-          ownerImage="/profile.jpg"
-          price="$1,000,000"
-        />
-        <CompanyCard
-          name="Gojek"
-          headline="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum!"
-          description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque blanditiis ut cum modi, enim ex voluptate et architecto consequatur labore?"
-          companyImage="/landing/company_1.jpg"
-          ownerImage="/profile.jpg"
-          price="$1,000,000"
-        />
-        <CompanyCard
-          name="Gojek"
-          headline="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum!"
-          description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque blanditiis ut cum modi, enim ex voluptate et architecto consequatur labore?"
-          companyImage="/landing/company_1.jpg"
-          ownerImage="/profile.jpg"
-          price="$1,000,000"
-        />
-        <CompanyCard
-          name="Gojek"
-          headline="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum!"
-          description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque blanditiis ut cum modi, enim ex voluptate et architecto consequatur labore?"
-          companyImage="/landing/company_1.jpg"
-          ownerImage="/profile.jpg"
-          price="$1,000,000"
-        />
-        <CompanyCard
-          name="Gojek"
-          headline="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum!"
-          description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque blanditiis ut cum modi, enim ex voluptate et architecto consequatur labore?"
-          companyImage="/landing/company_1.jpg"
-          ownerImage="/profile.jpg"
-          price="$1,000,000"
-        />
-        <CompanyCard
-          name="Gojek"
-          headline="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum!"
-          description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque blanditiis ut cum modi, enim ex voluptate et architecto consequatur labore?"
-          companyImage="/landing/company_1.jpg"
-          ownerImage="/profile.jpg"
-          price="$1,000,000"
-        />
-        <CompanyCard
-          name="Gojek"
-          headline="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum!"
-          description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque blanditiis ut cum modi, enim ex voluptate et architecto consequatur labore?"
-          companyImage="/landing/company_1.jpg"
-          ownerImage="/profile.jpg"
-          price="$1,000,000"
-        />
-        <CompanyCard
-          name="Gojek"
-          headline="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum!"
-          description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque blanditiis ut cum modi, enim ex voluptate et architecto consequatur labore?"
-          companyImage="/landing/company_1.jpg"
-          ownerImage="/profile.jpg"
-          price="$1,000,000"
-        />
+        {filteredCompanies?.map((company: any) => (
+          <CompanyCard
+            key={company.id}
+            name={company.companyName}
+            headline={company.tagline}
+            description={company.companyDescription}
+            companyImage={company.coverPhoto}
+            ownerImage={company.user.profilePicture}
+            price={company.money}
+            categories={company.categories}
+          />
+        ))}
       </div>
       <Pagination
-        totalDataCount={200}
+        totalDataCount={filteredCompanies?.length || 0}
         currentPage={currentPage}
         pageSize={postPerPage}
         onPageChange={(page) => {
