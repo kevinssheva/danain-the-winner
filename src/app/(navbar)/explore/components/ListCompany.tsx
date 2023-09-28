@@ -1,6 +1,6 @@
 "use client";
 
-import CompanyCard from "@/app/(site)/components/CompanyCard";
+import CompanyCard from "../../(site)/components/CompanyCard";
 import Pagination from "@/components/Pagination/Pagination";
 import { useState } from "react";
 

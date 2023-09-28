@@ -30,7 +30,7 @@ const Input: React.FC<InputProps> = ({
         onChange={onChange}
         disabled={disabled}
         className={`
-        px-4 md:px-6 py-[0.6rem]
+        ${Icon ? "px-12 md:px-14" : "px-4 md:px-6"} py-[0.6rem]
         rounded-xl
         border-[1px] border-slate-600
         text-base
@@ -41,12 +41,18 @@ const Input: React.FC<InputProps> = ({
       `}
       />
       <label
-        className="absolute top-0 left-4 md:left-6 hidden h-full items-center gap-2 peer-placeholder-shown:flex peer-focus:hidden"
+        className={`absolute top-0 ${
+          Icon ? "left-12 md:left-14" : "left-4 md:left-6"
+        } hidden h-full items-center gap-2 peer-placeholder-shown:flex peer-focus:hidden`}
         htmlFor={name}
       >
-        {Icon && <Icon size={20} />}
         <p className="font-light font-montserrat">{placeholder}</p>
       </label>
+      {Icon && (
+        <div className="absolute h-full flex items-center top-0 left-4 md:left-6">
+          <Icon size={24} />
+        </div>
+      )}
     </div>
   );
 };
