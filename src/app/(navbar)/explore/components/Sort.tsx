@@ -34,7 +34,7 @@ const Sort = ({ isShow }: { isShow: boolean }) => {
     setMaxPrice(values[1]);
   };
   return (
-    <div className="w-full mx-auto mt-1 glass rounded-xl p-5 flex justify-between gap-10">
+    <div className="w-full mx-auto mt-1 glass rounded-2xl p-5 flex justify-between gap-10 overflow-hidden">
       <div className="flex-1 flex flex-col gap-4">
         <p className="text-xl font-semibold">Valuation</p>
         <div className="flex gap-10 items-center">
