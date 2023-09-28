@@ -7,7 +7,7 @@ export default function Portopage() {
   const role = "company";
 
   return (
-    <div className="bg-background h-[450vh]">
+    <div className="bg-background h-[275vh]">
       <div className="bg-[url('/dashboard/portofolio/kotakkanan.svg')] h-full bg-no-repeat bg-right">
         <div className="bg-[url('/dashboard/portofolio/kotakbawah.svg')] h-full bg-no-repeat bg-left-bottom">
           <div className="bg-[url('/dashboard/portofolio/glowbawah.svg')] h-full bg-no-repeat bg-left">
