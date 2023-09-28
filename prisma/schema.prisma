@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,23 +11,6 @@ enum UserRole {
   INVESTOR
   FOUNDER
   UNREGISTERED
-}
-
-enum Category {
-  Energy
-  Games
-  ARNVR
-  FNB
-  ClimateChange
-  Education
-  TravelNTourism
-  FintechNFinance
-  Technology
-  HealthNFitness
-  Agriculture
-  Sport
-  AI
-  Sustainability
 }
 
 model User {
@@ -48,7 +28,7 @@ model User {
 
   company Company?
 
-  transaction Transaction[]
+  transactions Transaction[]
 
   conversationsInitiated Conversation[] @relation("UserOne")
   conversationsReceived  Conversation[] @relation("UserTwo")
@@ -57,17 +37,17 @@ model User {
 }
 
 model Company {
-  id           String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  companyName  String
-  companyPlace String?
-  pitchDeck    String?
-  tagline      String?
+  id                 String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  companyName        String
+  companyPlace       String?
+  companyDescription String?
+  pitchDeck          String?
+  tagline            String?
 
   coverPhoto       String?
   videoProfile     String?
   pitchDescription String?
   money            String?
-  category         Category[]
   website          String?
   instagram        String?
   linkedin         String?
@@ -78,10 +58,18 @@ model Company {
   userId String @db.Uuid
   user   User   @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
 
-  transaction Transaction[]
+  transactions Transaction[]
+  categories   Category[]
 
   @@unique([userId])
   @@index([userId])
+}
+
+model Category {
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name      String
+  color     String    @default("#000000")
+  companies Company[]
 }
 
 model Conversation {
