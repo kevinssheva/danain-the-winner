@@ -8,11 +8,16 @@ import Testimoni from "./components/Testimoni";
 import GetStarted from "./components/GetStarted";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth/next";
+import { UserSession } from "@/components/UserFetcher";
+
+interface Session {
+  user: UserSession | null;
+}
 
 export default async function Home() {
-  const session = await getServerSession(authOptions);
-  console.log("session", session);
-  
+  const session = await getServerSession(authOptions) as Session;
+  const { role } = session?.user as UserSession;
+
   return (
     <div className="bg-background px-[7%] relative overflow-hidden">
       <Hero />

@@ -7,6 +7,12 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import MenuIcon from "./MenuIcon";
 import { BsPersonCircle } from "react-icons/bs";
+import { UserSession } from "./UserFetcher";
+import { signOut } from "next-auth/react";
+
+interface NavbarProps {
+  user: UserSession | null;
+}
 
 const data = [
   {
@@ -29,15 +35,14 @@ const userMenu = [
     link: "/profile",
   },
 ];
-const Navbar = () => {
+
+const Navbar = ({ user }: NavbarProps) => {
   const [isVisible, setIsVisible] = useState(true);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [isTransparent, setIsTransparent] = useState(true);
   const pathName = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
-
-  const [user, setUser] = useState("Kevin");
 
   const isActive = useMemo(() => {
     return (link: string) => link === pathName;
@@ -77,13 +82,16 @@ const Navbar = () => {
     };
   }, [prevScrollPos]);
 
+  const handleSignOut = async () => {
+    await signOut();
+  };
+
   return (
     <div
       className={`fixed w-full py-4 top-0 z-50 px-[7%]
       ${isTransparent ? "bg-transparent " : "bg-background shadow-lg"}
-      ${
-        isVisible || isOpen ? "translate-y-0" : " -translate-y-full"
-      } transition`}
+      ${isVisible || isOpen ? "translate-y-0" : " -translate-y-full"
+        } transition`}
     >
       <div className="flex justify-between items-center">
         <Link href="/">
@@ -99,11 +107,10 @@ const Navbar = () => {
           {data.map((item) => (
             <li
               key={item.name}
-              className={`ml-6 ${
-                isActive(item.link)
-                  ? "border-b-[1px] border-white font-semibold"
-                  : "font-normal"
-              } transition relative group`}
+              className={`ml-6 ${isActive(item.link)
+                ? "border-b-[1px] border-white font-semibold"
+                : "font-normal"
+                } transition relative group`}
             >
               <Link
                 href={item.link}
@@ -123,10 +130,10 @@ const Navbar = () => {
         />
         <div className="md:flex hidden">
           {user ? (
-            <div className="border-2 relative border-white px-5 py-1 rounded-full group bg-background">
+            <div className="border-2 relative border-white px-5 py-1 rounded-full group bg-background cursor-pointer">
               <div className="w-full flex gap-2">
                 <p>
-                  Hi, <span className="font-bold">{user}</span>
+                  Hi, <span className="font-bold">{user.fullName}</span>
                 </p>
                 <BsPersonCircle size={24} />
               </div>
@@ -145,7 +152,10 @@ const Navbar = () => {
                         </Link>
                       </li>
                     ))}
-                    <li className="cursor-pointer py-2 px-5 font-montserrat hover:underline">
+                    <li
+                      onClick={handleSignOut}
+                      className="cursor-pointer py-2 px-5 font-montserrat hover:underline"
+                    >
                       Logout
                     </li>
                   </ul>
@@ -165,19 +175,17 @@ const Navbar = () => {
         </div>
       </div>
       <div
-        className={`w-full md:hidden h-screen absolute bg-background left-0 top-0 -z-10 origin-top ${
-          isOpen ? "scale-y-100" : "scale-y-0"
-        } transition-all duration-300 px-[7%] pt-24 pb-10 flex flex-col justify-between`}
+        className={`w-full md:hidden h-screen absolute bg-background left-0 top-0 -z-10 origin-top ${isOpen ? "scale-y-100" : "scale-y-0"
+          } transition-all duration-300 px-[7%] pt-24 pb-10 flex flex-col justify-between`}
       >
         <ul className="flex flex-col items-start gap-6">
           {data.map((item) => (
             <li
               key={item.name}
-              className={`${
-                isActive(item.link)
-                  ? "border-b-[2px] border-white font-semibold"
-                  : "font-normal"
-              } transition relative group pb-1`}
+              className={`${isActive(item.link)
+                ? "border-b-[2px] border-white font-semibold"
+                : "font-normal"
+                } transition relative group pb-1`}
             >
               <Link
                 href={item.link}
@@ -190,11 +198,10 @@ const Navbar = () => {
           {userMenu.map((item) => (
             <li
               key={item.name}
-              className={`${
-                isActive(item.link)
-                  ? "border-b-[2px] border-white font-semibold"
-                  : "font-normal"
-              } transition relative group pb-1`}
+              className={`${isActive(item.link)
+                ? "border-b-[2px] border-white font-semibold"
+                : "font-normal"
+                } transition relative group pb-1`}
             >
               <Link
                 href={item.link}
@@ -204,14 +211,19 @@ const Navbar = () => {
               </Link>
             </li>
           ))}
-          <li className="text-xl font-montserrat">Logout</li>
+          <li
+            onClick={handleSignOut}
+            className="text-xl font-montserrat"
+          >
+            Logout
+          </li>
         </ul>
         {user ? (
           <div className="border-2 border-white px-5 py-2 rounded-full group bg-background">
             <div className="w-full flex gap-3 text-xl">
               <BsPersonCircle size={24} />
               <p>
-                Hi, <span className="font-bold">{user}</span>
+                Hi, <span className="font-bold">{user.fullName}</span>
               </p>
             </div>
           </div>

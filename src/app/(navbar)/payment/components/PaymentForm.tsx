@@ -11,10 +11,10 @@ import Complete from "./Complete";
 
 const PaymentForm = () => {
   const [amount, setAmount] = useState("");
-  const [dataInfo, setDataInfo] = useState({
-    name: "",
-    address: "",
-  });
+  // const [dataInfo, setDataInfo] = useState({
+  //   name: "",
+  //   address: "",
+  // });
   const [paymentType, setPaymentType] = useState("BANK" as "BANK" | "CREDIT");
 
   const [bankData, setBankData] = useState({
@@ -42,12 +42,12 @@ const PaymentForm = () => {
     setAmount(sanitizedPrice);
   };
 
-  const handleDataInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDataInfo((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
+  // const handleDataInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setDataInfo((prev) => ({
+  //     ...prev,
+  //     [e.target.name]: e.target.value,
+  //   }));
+  // };
 
   const handleTypeChange = (type: "BANK" | "CREDIT") => {
     setPaymentType(type);
@@ -91,7 +91,7 @@ const PaymentForm = () => {
           />
         </div>
         {/* INVESTMENT INFO */}
-        <div className="w-full max-w-md z-20">
+        {/* <div className="w-full max-w-md z-20">
           <li className="list-decimal text-xl md:text-2xl font-bold font-montserrat my-3">
             Investor Info
           </li>
@@ -111,7 +111,7 @@ const PaymentForm = () => {
               icon={HiOutlineHome}
             />
           </div>
-        </div>
+        </div> */}
         {/* PAYMENT */}
         <PaymentType
           type={paymentType}
