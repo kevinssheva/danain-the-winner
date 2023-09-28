@@ -1,4 +1,4 @@
-import { BiHomeAlt2, BiBook } from "react-icons/bi";
+import { BiHomeAlt2, BiBook, BiGroup } from "react-icons/bi";
 import { FaMoneyBillTrendUp } from "react-icons/fa6";
 import { BsChatSquareText } from "react-icons/bs";
 import { AiOutlineUser } from "react-icons/ai";
@@ -19,7 +19,7 @@ export default function Icon(props: IconProps) {
           className={`text-lg font-semibold`}
         />
       );
-    } else if (props.type == "porto") {
+    } else if (props.type == "portofolio") {
       return (
         <BiBook
           color={`${props.active ? "#FFFFFF" : "#32D73A"}`}
@@ -43,9 +43,17 @@ export default function Icon(props: IconProps) {
           className={`text-lg font-semibold`}
         />
       );
-    } else if (props.type == "user") {
+    } else if (props.type == "profile") {
       return (
         <AiOutlineUser
+          color={`${props.active ? "#FFFFFF" : "#32D73A"}`}
+          fill={`${props.active ? "#FFFFFF" : "#32D73A"}`}
+          className={`text-lg font-semibold`}
+        />
+      );
+    } else if (props.type == "investors") {
+      return (
+        <BiGroup
           color={`${props.active ? "#FFFFFF" : "#32D73A"}`}
           fill={`${props.active ? "#FFFFFF" : "#32D73A"}`}
           className={`text-lg font-semibold`}

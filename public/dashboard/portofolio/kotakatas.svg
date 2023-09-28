@@ -1,0 +1,31 @@
+<svg width="449" height="568" viewBox="0 0 449 568" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0_506_2543" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="-184" width="1947" height="723">
+<rect y="-184" width="1947" height="723" fill="url(#paint0_radial_506_2543)"/>
+</mask>
+<g mask="url(#mask0_506_2543)">
+<rect x="250.061" y="-76.8752" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="345.227" y="-76.8752" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="440.393" y="-76.8752" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="250.061" y="18.2908" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="345.227" y="18.2908" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="440.393" y="18.2908" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="250.061" y="113.456" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="345.227" y="113.456" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="440.393" y="113.456" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="250.061" y="208.622" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="345.227" y="208.622" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="440.393" y="208.622" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="250.061" y="303.788" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="345.227" y="303.788" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="440.393" y="303.788" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="250.061" y="398.954" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="345.227" y="398.954" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+<rect x="440.393" y="398.954" width="95.1659" height="95.1659" stroke="white" stroke-width="1.20463"/>
+</g>
+<defs>
+<radialGradient id="paint0_radial_506_2543" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(973.5 177.5) rotate(90) scale(445.648 1200.11)">
+<stop stop-color="#D9D9D9" stop-opacity="0.2"/>
+<stop offset="0.802083" stop-color="#D9D9D9" stop-opacity="0"/>
+</radialGradient>
+</defs>
+</svg>
