@@ -5,20 +5,32 @@ import MenuIcon from "@/components/MenuIcon";
 import Icon from "./Icon";
 import { usePathname } from "next/navigation";
 
-export default function Sidebar() {
+interface SidebarProps {
+  role: string;
+}
+
+export default function Sidebar(props: SidebarProps) {
   const pathName = usePathname();
   const [open, setOpen] = useState(false);
-  const sidebarItems = [
-    { label: "Dashboard", type: "home" },
-    { label: "Portfolio", type: "porto" },
-    { label: "Calculator Simulation", type: "calculator" },
-    { label: "Chatting", type: "chat" },
-    { label: "User", type: "user" },
-    { label: "Logout", type: "logout" },
-  ];
-
+  const sidebarItems =
+    props.role === "investor"
+      ? [
+          { label: "Dashboard", type: "home" },
+          { label: "Portfolio", type: "portofolio" },
+          { label: "Calculator Simulation", type: "calculator" },
+          { label: "Chatting", type: "chat" },
+          { label: "Profile", type: "profile" },
+          { label: "Logout", type: "logout" },
+        ]
+      : [
+          { label: "Dashboard", type: "home" },
+          { label: "Investors", type: "investors" },
+          { label: "Chatting", type: "chat" },
+          { label: "Profile", type: "profile" },
+          { label: "Sign out", type: "logout" },
+        ];
   return (
-    <div className="py-8 px-[5%] overflow-hidden">
+    <div className="fixed md:static z-50 py-8 md:py-0 px-[5%] overflow-hidden">
       <MenuIcon isOpen={open} handleToggle={() => setOpen((prev) => !prev)} />
 
       <aside
@@ -43,10 +55,10 @@ export default function Sidebar() {
           />
 
           <ul className="space-y-2 mt-4 font-medium font-inter">
-            {sidebarItems.slice(0, 4).map((item) => (
+            {sidebarItems.slice(0, -2).map((item) => (
               <li key={item.type}>
                 <a
-                  href="#"
+                  href={item.type ==="home"? "/dashboard" : `/dashboard/${item.type.toLowerCase()}`}
                   className={`flex items-center py-3 px-4 rounded-xl ${
                     item.type === "home"
                       ? pathName === "/dashboard"
@@ -77,7 +89,7 @@ export default function Sidebar() {
             {sidebarItems.slice(-2).map((item) => (
               <li key={item.type}>
                 <a
-                  href="#"
+                  href={`/dashboard/${item.type.toLowerCase()}`}
                   className={`flex items-center py-3 px-4 rounded-xl ${
                     pathName === `/dashboard/${item.type.toLowerCase()}`
                       ? "bg-gray-700"
