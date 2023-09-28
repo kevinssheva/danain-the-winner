@@ -16,6 +16,23 @@ enum UserRole {
   UNREGISTERED
 }
 
+enum Category {
+  Energy
+  Games
+  ARNVR
+  FNB
+  ClimateChange
+  Education
+  TravelNTourism
+  FintechNFinance
+  Technology
+  HealthNFitness
+  Agriculture
+  Sport
+  AI
+  Sustainability
+}
+
 model User {
   id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   fullName       String
@@ -26,8 +43,8 @@ model User {
   profilePicture String?
 
   lastLogin DateTime @default(now())
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   company Company?
 
@@ -40,7 +57,7 @@ model User {
 }
 
 model Company {
-  id           String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id           String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   companyName  String
   companyPlace String?
   pitchDeck    String?
@@ -50,7 +67,7 @@ model Company {
   videoProfile     String?
   pitchDescription String?
   money            String?
-  category         String[]
+  category         Category[]
   website          String?
   instagram        String?
   linkedin         String?
@@ -59,7 +76,7 @@ model Company {
   updatedAt DateTime @updatedAt
 
   userId String @db.Uuid
-  user User @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
 
   transaction Transaction[]
 
