@@ -11,12 +11,12 @@ import { getServerSession } from "next-auth/next";
 import { UserSession } from "@/components/UserFetcher";
 
 interface Session {
-  user: UserSession | null;
+  user: UserSession | null | undefined;
 }
 
 export default async function Home() {
   const session = await getServerSession(authOptions) as Session;
-  const { role } = session?.user as UserSession;
+  // const { role } = session?.user as UserSession;
 
   return (
     <div className="bg-background px-[7%] relative overflow-hidden">
