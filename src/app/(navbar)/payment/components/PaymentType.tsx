@@ -7,65 +7,54 @@ import { AiFillBank, AiFillCreditCard } from "react-icons/ai";
 import PaymentCard from "./PaymentCard";
 import { BsCreditCard2Front } from "react-icons/bs";
 
-const Payment = () => {
-  const [type, setType] = useState("BANK");
-  const [bankData, setBankData] = useState({
-    accountType: "CHECKING", //radio button
-    name: "",
-    bankName: "",
-    accountNumber: "",
-  });
-
-  const [creditData, setCreditData] = useState({
-    cardNumber: "",
-    expirationDate: "",
-  });
-
-  const handleBankDataChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setBankData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+interface PaymentTypeProps {
+  type: "BANK" | "CREDIT";
+  handleTypeChange: (type: "BANK" | "CREDIT") => void;
+  bankData: {
+    accountType: "CHECKING" | "SAVING";
+    ownerName: string;
+    bankName: string;
+    accountNumber: string;
   };
-
-  const handleCreditDataChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCreditData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+  handleBankDataChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleAccountTypeChange: (type: "CHECKING" | "SAVING") => void;
+  creditData: {
+    cardNumber: string;
+    expirationDate: string;
   };
+  handleCreditDataChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
 
+const PaymentType: React.FC<PaymentTypeProps> = ({
+  type,
+  handleTypeChange,
+  bankData,
+  handleBankDataChange,
+  handleAccountTypeChange,
+  creditData,
+  handleCreditDataChange,
+}) => {
   const bankBodyElement = (
     <>
-      <div className="flex items-center justify-between font-montserrat">
+      <div className="flex flex-col md:flex-row items-start md:items-center gap-2 justify-between font-montserrat">
         Account Type
         <div className="flex gap-5">
           <RadioButton
             name="Checking"
             checked={bankData.accountType === "CHECKING"}
-            onChange={() =>
-              setBankData((prev) => ({
-                ...prev,
-                accountType: "CHECKING",
-              }))
-            }
+            onChange={() => handleAccountTypeChange("CHECKING")}
           />
           <RadioButton
             name="Saving"
             checked={bankData.accountType === "SAVING"}
-            onChange={() =>
-              setBankData((prev) => ({
-                ...prev,
-                accountType: "SAVING",
-              }))
-            }
+            onChange={() => handleAccountTypeChange("SAVING")}
           />
         </div>
       </div>
       <Input
-        name="name"
+        name="bankName"
         placeholder="Account Name"
-        value={bankData.name}
+        value={bankData.ownerName}
         onChange={handleBankDataChange}
       />
       <Input
@@ -102,23 +91,23 @@ const Payment = () => {
   );
 
   return (
-    <div className="w-full">
-      <li className="list-decimal text-2xl font-bold font-montserrat">
+    <div className="w-full z-20">
+      <li className="list-decimal text-xl md:text-2xl font-bold font-montserrat my-3">
         Payment
       </li>
-      <div className="flex gap-7 items-start">
+      <div className="flex flex-col md:flex-row gap-7 justify-start items-center md:items-start h-[30rem] md:h-[22rem]">
         <PaymentCard
           title="Bank Account"
           icon={AiFillBank}
           isOpened={type === "BANK"}
-          onClick={() => setType("BANK")}
+          onClick={() => handleTypeChange("BANK")}
           body={bankBodyElement}
         />
         <PaymentCard
           title="Credit Card"
           icon={BsCreditCard2Front}
           isOpened={type === "CREDIT"}
-          onClick={() => setType("CREDIT")}
+          onClick={() => handleTypeChange("CREDIT")}
           body={creditCardBodyElement}
         />
       </div>
@@ -126,4 +115,4 @@ const Payment = () => {
   );
 };
 
-export default Payment;
+export default PaymentType;

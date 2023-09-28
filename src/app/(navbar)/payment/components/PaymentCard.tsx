@@ -18,7 +18,7 @@ const PaymentCard: React.FC<PaymentCardProps> = ({
 }) => {
   return (
     <div
-      className={`flex-1 glass py-5 px-5 rounded-xl flex flex-col overflow-hidden`}
+      className={`md:flex-1 glass py-5 px-5 w-full rounded-xl flex flex-col overflow-hidden`}
       onClick={onClick}
     >
       <RadioButton
@@ -34,7 +34,7 @@ const PaymentCard: React.FC<PaymentCardProps> = ({
         } transition-all duration-300 ease-in-out`}
       >
         <div className="overflow-hidden">
-          <div className="pt-8 flex flex-col gap-4 pb-10">{body}</div>
+          <div className="pt-8 flex flex-col gap-4 pb-3 md:pb-10">{body}</div>
         </div>
       </div>
     </div>

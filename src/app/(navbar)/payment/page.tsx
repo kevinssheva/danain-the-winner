@@ -1,77 +1,60 @@
-"use client";
-
-import Input from "@/components/Input";
-import { useState } from "react";
-import { AiOutlineDollar } from "react-icons/ai";
-import { BiDollar } from "react-icons/bi";
-import Payment from "./components/Payment";
-import LegalStuff from "./components/LegalStuff";
+import PaymentForm from "./components/PaymentForm";
+import Image from "next/image";
 
 const Page = () => {
-  const [amount, setAmount] = useState("");
-  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Remove any non-numeric characters except decimal point
-    let sanitizedPrice = e.target.value.replace(/[^0-9.]/g, "");
-
-    // Add commas as thousands separators
-    sanitizedPrice = sanitizedPrice.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-
-    // Update the state with the formatted price
-    setAmount(sanitizedPrice);
-  };
   return (
-    <div className="bg-background min-h-screen px-[7%] py-32">
-      <div className="container mx-auto">
+    <div className="bg-background min-h-screen px-[7%] py-32 relative overflow-hidden">
+      <div className="container mx-auto z-10">
         <div className="flex flex-col gap-3">
-          <h1 className="font-light text-3xl">INVEST IN</h1>
-          <h1 className="font-bold text-4xl">ZenniHome</h1>
+          <h1 className="font-light text-2xl md:text-3xl">INVEST IN</h1>
+          <h1 className="font-bold text-3xl md:text-4xl">ZenniHome</h1>
         </div>
-        <div className="flex flex-col w-full">
-          <ul className="list-decimal">
-            <div className="w-1/2">
-              <li className="list-decimal text-2xl font-bold font-montserrat">
-                Investment Amount
-              </li>
-              <Input
-                name="price"
-                placeholder="Enter Amount"
-                value={amount}
-                onChange={handlePriceChange}
-                icon={BiDollar}
-              />
-            </div>
-            <div className="w-1/2">
-              <li className="list-decimal text-2xl font-bold font-montserrat">
-                Investor Info
-              </li>
-              <div className="flex flex-col gap-4">
-                <Input
-                  name="price"
-                  placeholder="Enter Amount"
-                  value={amount}
-                  onChange={handlePriceChange}
-                  icon={BiDollar}
-                />
-                <Input
-                  name="price"
-                  placeholder="Enter Amount"
-                  value={amount}
-                  onChange={handlePriceChange}
-                  icon={BiDollar}
-                />
-                <Input
-                  name="price"
-                  placeholder="Enter Amount"
-                  value={amount}
-                  onChange={handlePriceChange}
-                  icon={BiDollar}
-                />
-              </div>
-            </div>
-            <Payment />
-            <LegalStuff />
-          </ul>
-        </div>
+        <PaymentForm />
+      </div>
+      <div className="hidden lg:block absolute w-[34rem] top-0 right-[5%] z-[15]">
+        <Image
+          src={"/payment/Illustration.svg"}
+          width={100}
+          height={100}
+          alt=""
+          className="w-full"
+        />
+      </div>
+      <div className="absolute w-[40rem] md:w-[50rem] top-0 -right-[90%] lg:-right-[10%] z-10 opacity-60">
+        <Image
+          src={"/payment/Glow1.svg"}
+          width={100}
+          height={100}
+          alt=""
+          className="w-full"
+        />
+      </div>
+      <div className="absolute w-[40rem] md:w-[60rem] top-[120vh] -right-[20%] md:-right-[10%] z-10">
+        <Image
+          src={"/payment/Grid.svg"}
+          width={100}
+          height={100}
+          alt=""
+          className="w-full"
+        />
+      </div>
+      <div className="absolute w-[30rem] md:w-[60rem] top-[30vh] -left-[30%] z-10 opacity-50 md:opacity-80">
+        <Image
+          src={"/payment/Glow2.svg"}
+          width={100}
+          height={100}
+          alt=""
+          className="w-full"
+        />
+      </div>
+      <div className="absolute w-[35rem] -bottom-[20vh] -right-[0] z-10 opacity-60">
+        <Image
+          src={"/payment/Glow3.svg"}
+          width={100}
+          height={100}
+          alt=""
+          className="w-full"
+        />
       </div>
     </div>
   );

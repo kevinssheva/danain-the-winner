@@ -17,8 +17,10 @@ const RadioButton: React.FC<RadioButtonProps> = ({
 }) => {
   return (
     <div
-      className={`${isBig && "font-semibold text-xl"} flex items-center ${
-        isBig ? "gap-5" : "gap-2"
+      className={`${
+        isBig && "font-semibold text-lg md:text-xl"
+      } flex items-center ${
+        isBig ? "gap-2 md:gap-5" : "gap-1 md:gap-2"
       } cursor-pointer`}
       onClick={onChange}
     >

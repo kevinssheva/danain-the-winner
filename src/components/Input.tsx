@@ -33,7 +33,7 @@ const Input: React.FC<InputProps> = ({
         ${Icon ? "px-12 md:px-14" : "px-4 md:px-6"} py-[0.6rem]
         rounded-xl
         border-[1px] border-slate-600
-        text-base
+        text-sm md:text-base
         w-full
         gradient-background
         peer

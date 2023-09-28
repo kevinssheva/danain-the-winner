@@ -4,15 +4,22 @@ import { BsCheck } from "react-icons/bs";
 import { FaCheck } from "react-icons/fa";
 import { useState } from "react";
 
-const LegalStuff = () => {
-  const [checked, setChecked] = useState(false);
+interface LegalStuffProps {
+  isLegalChecked: boolean;
+  handleLegalCheck: () => void;
+}
+
+const LegalStuff: React.FC<LegalStuffProps> = ({
+  isLegalChecked,
+  handleLegalCheck,
+}) => {
   return (
-    <div className="w-1/2">
-      <li className="list-decimal text-2xl font-bold font-montserrat">
-        Payment
+    <div className="w-full max-w-md z-20">
+      <li className="list-decimal text-xl md:text-2xl font-bold font-montserrat my-3">
+        Legal Stuff
       </li>
-      <div className="w-full glass rounded-xl">
-        <ul className="text-sm flex flex-col gap-5 p-5">
+      <div className="w-full max-w-md glass rounded-xl">
+        <ul className="text-xs md:text-sm flex flex-col gap-5 p-5">
           <li>
             I've read the Investor FAQ. I understand startups are risky and can
             afford to lose my entire investment.
@@ -48,17 +55,17 @@ const LegalStuff = () => {
         <div className="w-full py-3 px-5 bg-[#D4F4EA] rounded-xl flex items-center gap-3">
           <div
             className="w-[1.2rem] rounded-md aspect-square border-2 cursor-pointer border-green-600 overflow-hidden"
-            onClick={() => setChecked((prev) => !prev)}
+            onClick={handleLegalCheck}
           >
             <div
               className={`w-full h-full pl-[0.1rem] bg-green-600 flex items-center justify-center overflow-hidden rounded-sm ${
-                checked ? "scale-100" : "scale-0"
+                isLegalChecked ? "scale-100" : "scale-0"
               } transition-all duration-200`}
             >
               <FaCheck size={13} />
             </div>
           </div>
-          <p className="text-green-600 text-sm">
+          <p className="text-green-600 text-xs md:text-sm">
             I agree to this and the Terms & Conditions
           </p>
         </div>
