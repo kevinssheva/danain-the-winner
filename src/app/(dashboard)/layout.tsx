@@ -7,7 +7,7 @@ export default function NavbarLayout({
 }) {
   return (
     <>
-      <Sidebar role="investor" />
+      <Sidebar role="company" />
       {children}
     </>
   );
