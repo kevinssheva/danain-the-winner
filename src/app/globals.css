@@ -100,3 +100,10 @@
   );
   backdrop-filter: blur(21px);
 }
+
+.chat-bg {
+  background: var(
+    --sec-button,
+    linear-gradient(87deg, #196d0f -2.33%, #42ea3f 94.89%)
+  );
+}
