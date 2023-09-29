@@ -2,9 +2,17 @@ import Image from "next/image";
 import Calculator from "../../components/Calculator";
 import Profileinvestor from "./components/Profileinvestor";
 import Profilecompany from "./components/Profilecompany";
+import { UserSession } from "@/components/UserFetcher";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth/next";
 
-export default function Portopage() {
-  const role = "company";
+interface Session {
+  user: UserSession | undefined;
+}
+
+export default async function Portopage() {
+  const session = await getServerSession(authOptions) as Session;
+  const role = session.user?.role ?? '';
 
   return (
     <div className="bg-background h-[275vh]">
@@ -14,7 +22,7 @@ export default function Portopage() {
             <div className="bg-[url('/dashboard/portofolio/kotakatas.svg')] h-full bg-no-repeat bg-right-top">
               <div className="bg-none md:bg-[url('/dashboard/portofolio/glowatas.svg')] h-full bg-no-repeat bg-right-top">
                 <div className="bg-none md:bg-[url('/dashboard/portofolio/glowkanan.svg')] h-full bg-no-repeat bg-right-bottom">
-                  {role=="company"? <Profilecompany /> : <Profileinvestor />}
+                  {role==="FOUNDER"? <Profilecompany /> : <Profileinvestor />}
                 </div>
               </div>
             </div>

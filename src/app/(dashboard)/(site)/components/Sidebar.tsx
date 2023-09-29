@@ -16,10 +16,11 @@ export default function Sidebar(props: SidebarProps) {
 
   const handleSignOut = async () => {
     await signOut();
+    redirect("/");
   };
 
   const sidebarItems =
-    props.role === "investor"
+    props.role === "INVESTOR"
       ? [
           { label: "Dashboard", type: "home" },
           { label: "Portfolio", type: "portofolio" },
@@ -98,7 +99,6 @@ export default function Sidebar(props: SidebarProps) {
                   onClick={() => {
                     if (item.type === "logout") {
                       handleSignOut();
-                      redirect("/");
                     } else {
                       window.location.href = `/dashboard/${item.type.toLowerCase()}`;
                     }

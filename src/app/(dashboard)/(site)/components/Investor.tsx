@@ -1,24 +1,37 @@
 import Image from "next/image";
 import Header from "./Header";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth/next";
+import { prisma } from "@/app/lib/prisma";
+import { UserSession } from "@/components/UserFetcher";
+import { User } from "@prisma/client";
 
-export default function Investor() {
-  const data = [
-    {
-      picurl: "/dashboard/portofolio/gibs.jpg",
-      fullname: "Clara Alrosa",
-      fund: "$10,000",
-      date: "29 September 2023",
-      status: "Active",
+interface Session {
+  user: UserSession | undefined;
+}
+
+export default async function Investor() {
+  const session = await getServerSession(authOptions) as Session;
+
+  const company = await prisma.company.findFirst({
+    where: {
+      userId: (session?.user as User).id,
     },
-    {
-      picurl: "/dashboard/portofolio/gibs.jpg",
-      fullname: "Gibran Fasha",
-      fund: "$15,000",
-      date: "28 September 2023",
-      status: "Inactive",
+  });
+  console.log(company)
+  if (!company) {
+    return <div>Company not found</div>;
+  }
+
+  const portofolio = await prisma.transaction.findMany({
+    where: {
+      companyId: company.id,
     },
-  ];
-  
+    include: {
+      user: true,
+    }
+  });
+
   return (
     <div className="px-[5%] md:pl-80 md:pr-12 md:py-14 py-20 z-50">
       <Header page="Portofolio" />
@@ -27,30 +40,30 @@ export default function Investor() {
           <thead className="mb-12">
             <tr className="text-sm lg:text-lg">
               <th className="px-8"></th>
-              <th className="px-8">Fullname</th>
+              <th className="px-8">Full Name</th>
               <th className="px-8">Fund Investment</th>
               <th className="px-8 ">Investment Date</th>
               <th className="px-8">Status</th>
             </tr>
           </thead>
           <tbody className="text-base lg:text-xl">
-            {data.map((item, index) => (
+            {portofolio.map((item, index) => (
               <tr key={index} className="border-b border-[#FDFDFD] h-28">
                 <td className="justify-center flex h-28">
                   <Image
-                    src={item.picurl}
+                    src={item.user.profilePicture ?? ''}
                     width={50}
                     height={50}
                     alt={`row${index + 1}`}
                     className="self-center rounded-full object-cover"
                   />
                 </td>
-                <td className="px-8">{item.fullname}</td>
-                <td className="px-8">{item.fund}</td>
-                <td className="px-8">{item.date}</td>
+                <td className="px-8">{item.user.fullName}</td>
+                <td className="px-8">{item.amount}</td>
+                <td className="px-8">{item.createdAt.toLocaleDateString()}</td>
                 <td className="px-8">
                   <div className="bg-[#D9D9D9] flex rounded-xl justify-center items-center-lg gap-4 px-4 py-2">
-                    {item.status == "Active" ? (
+                    {item.status === "ACTIVE" ? (
                       <Image
                         src={"/dashboard/portofolio/blue.svg"}
                         width={20}
