@@ -5,13 +5,16 @@ import {
   BsFillFileEarmarkArrowUpFill,
 } from "react-icons/bs";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Input from "@/components/Input";
 import { MdAddPhotoAlternate } from "react-icons/md";
 import { FaInstagram, FaLinkedin } from "react-icons/fa6";
 import Button from "@/components/Button";
+import dynamic from "next/dynamic";
+import axios from "axios";
 
 export default function Profilecompany() {
+  const ReactQuill = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [tagline, setTagline] = useState("");
@@ -23,6 +26,7 @@ export default function Profilecompany() {
   const [website, setWebsite] = useState("");
   const [instagram, setInstagram] = useState("");
   const [linkedin, setLinkedin] = useState("");
+  const [pitchdesc, setPitchdesc] = useState("");
 
   const listCategory = [
     "Sport",
@@ -38,6 +42,31 @@ export default function Profilecompany() {
     "Sustainability",
     "Others",
   ];
+
+  useEffect(() => {
+    const getCompany = async () => {
+      try {
+        const company = await axios.get("/api/v1/dashboard/company/profile")
+
+        setName(company.data.company.companyName || '');
+        setAddress(company.data.company.companyPlace || '');
+        setTagline(company.data.company.tagline || '');
+        setFounder(company.data.company.founder || '');
+        setVideo(company.data.company.videoProfile || '');
+        setMinimum(company.data.company.minimum || '');
+        setMaximum(company.data.company.money || '');
+        setCategory(company.data.company.category || []);
+        setWebsite(company.data.company.website || '');
+        setInstagram(company.data.company.instagram || '');
+        setLinkedin(company.data.company.linkedin || '');
+        setPitchdesc(company.data.company.pitchDescription || '');
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
+    getCompany();
+  }, [])
 
   const handleCheckboxChange = (e: any) => {
     const value = e.target.value;
@@ -167,18 +196,17 @@ export default function Profilecompany() {
         </div>
 
         <div className="md:w-1/2 flex flex-col gap-4">
-          <div>
+          <div className="h-52">
             <label>Pitch Description</label>
-            <Image
-              src={"/dashboard/dummy.svg"}
-              width={500}
-              height={100}
-              alt="coin"
-              className=""
+            <ReactQuill
+              theme="snow"
+              value={pitchdesc}
+              onChange={(e) => setPitchdesc(e)}
+              className="overflow-y-auto max-h-40"
             />
           </div>
 
-          <div>
+          <div className="">
             <label className="">Minimum Raise</label>
             <p className="text-[#9C8740]">
               You must hit at least this number or your campaign will fail
@@ -275,7 +303,7 @@ export default function Profilecompany() {
         </div>
       </div>
       <div className="flex justify-center items-center mt-16">
-        <Button text="Submit" isPrimary={true} onClick={() => {}} />
+        <Button text="Submit" isPrimary={true} onClick={() => { }} />
       </div>
     </div>
   );

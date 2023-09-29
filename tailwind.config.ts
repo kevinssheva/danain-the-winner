@@ -17,8 +17,31 @@ const config: Config = {
         background: "#090B32",
         primary: "#62D13B",
       },
+      keyframes: {
+        float: {
+          "0%, 100%": {
+            transform: "translateY(0)",
+          },
+          "50%": {
+            transform: "translateY(-10px)",
+          },
+        },
+        inverseFloat: {
+          "0%, 100%": {
+            transform: "translateY(0)",
+          },
+          "50%": {
+            transform: "translateY(10px)",
+          },
+        },
+        // You can define more custom keyframe animations here
+      },
+      animation: {
+        float: "float 3s ease-in-out infinite",
+        inverseFloat: "inverseFloat 3s ease-in-out infinite",
+        // You can define more custom animation here
+      },
     },
   },
-  plugins: [],
 };
 export default config;
