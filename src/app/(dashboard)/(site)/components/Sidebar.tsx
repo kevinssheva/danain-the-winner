@@ -24,6 +24,7 @@ export default function Sidebar(props: SidebarProps) {
         ]
       : [
           { label: "Dashboard", type: "home" },
+          { label: "Company Profile", type: "companyprofile" },
           { label: "Investors", type: "investors" },
           { label: "Chatting", type: "chat" },
           { label: "Profile", type: "profile" },
@@ -58,7 +59,11 @@ export default function Sidebar(props: SidebarProps) {
             {sidebarItems.slice(0, -2).map((item) => (
               <li key={item.type}>
                 <a
-                  href={item.type ==="home"? "/dashboard" : `/dashboard/${item.type.toLowerCase()}`}
+                  href={
+                    item.type === "home"
+                      ? "/dashboard"
+                      : `/dashboard/${item.type.toLowerCase()}`
+                  }
                   className={`flex items-center py-3 px-4 rounded-xl ${
                     item.type === "home"
                       ? pathName === "/dashboard"

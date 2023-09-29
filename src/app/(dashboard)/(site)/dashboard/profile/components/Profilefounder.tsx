@@ -6,8 +6,10 @@ import Input from "@/components/Input";
 import { useRef, useState } from "react";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import Button from "@/components/Button";
+import { FaInstagram, FaLinkedin } from "react-icons/fa6";
+import { BsFillFileEarmarkArrowUpFill } from "react-icons/bs";
 
-export default function Profileinvestor() {
+export default function Profilefounder() {
   //tinggal ditembak ke api
   const data = {
     fullname: "Gibs",
@@ -16,6 +18,8 @@ export default function Profileinvestor() {
     oldpassword: "",
     newpassword: "",
     confirmnewpassword: "",
+    instagram: "",
+    linkedin: "",
   };
 
   function reset() {
@@ -25,6 +29,8 @@ export default function Profileinvestor() {
     setOldpassword(data.oldpassword);
     setNewpassword(data.newpassword);
     setConfirmnewpassword(data.confirmnewpassword);
+    setInstagram(data.instagram);
+    setLinkedin(data.linkedin);
   }
 
   const [fullname, setFullname] = useState(data.fullname);
@@ -33,6 +39,8 @@ export default function Profileinvestor() {
   const [oldpassword, setOldpassword] = useState("");
   const [newpassword, setNewpassword] = useState("");
   const [confirmnewpassword, setConfirmnewpassword] = useState("");
+  const [instagram, setInstagram] = useState("");
+  const [linkedin, setLinkedin] = useState("");
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -121,6 +129,50 @@ export default function Profileinvestor() {
             placeholder="Enter Your Address"
             onChange={(e) => setAlamat(e.target.value)}
           />
+        </div>
+
+        <div className="flex flex-col md:gap-8 md:flex-row">
+          <div className="flex flex-col gap-4 w-full">
+            <div>
+              <label>Instagram</label>
+              <Input
+                placeholder="Please enter your username"
+                name="ig"
+                value={instagram}
+                onChange={(e) => setInstagram(e.target.value)}
+                icon={FaInstagram}
+              />
+            </div>
+
+            <div>
+              <label>Linkedin</label>
+              <Input
+                placeholder="Please enter your username"
+                name="ig"
+                value={linkedin}
+                onChange={(e) => setLinkedin(e.target.value)}
+                icon={FaLinkedin}
+              />
+            </div>
+          </div>
+
+          <div className="mt-4 md:mt-0 w-full">
+            <label>CV</label>
+            <div className="flex items-center justify-center w-full">
+              <label
+                htmlFor="dropzone-file"
+                className="input-bg-startup flex flex-col items-center justify-center w-full h-36 border border-gray-300 rounded-lg cursor-pointer"
+              >
+                <div className="flex flex-col gap-4 items-center justify-center pt-5 pb-6">
+                  <p className="text-white">Please upload your CV file</p>
+                  <p className="text-[#D8D8D8]">format : .pdf</p>
+
+                  <BsFillFileEarmarkArrowUpFill className="text-5xl" />
+                </div>
+                <input id="dropzone-file" type="file" className="hidden" />
+              </label>
+            </div>
+          </div>
         </div>
 
         <h2 className="text-xl font-semibold">Change Password</h2>
