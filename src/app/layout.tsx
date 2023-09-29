@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Inter, Montserrat } from "next/font/google";
 import Navbar from "@/components/Navbar";
+import ToasterContext from "./context/ToasterContext";
 
 const neuropolitical = localFont({
   src: "./../../public/fonts/neuropolitical.otf",
@@ -37,6 +38,7 @@ export default function RootLayout({
       <body
         className={`${neuropolitical.variable} ${inter.variable} ${montserrat.variable}`}
       >
+        <ToasterContext />
         {children}
       </body>
     </html>
