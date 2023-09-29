@@ -2,10 +2,47 @@
 import Button from "@/components/Button";
 import Image from "next/image";
 import { useState } from "react";
+import { Company, Question } from "@prisma/client";
+import { UserSession } from "@/components/UserFetcher";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { formatDistanceToNow } from "date-fns";
 
-export default function Startup() {
+interface Session {
+  user: UserSession | null | undefined;
+}
+
+interface CompanyWithQuestions extends Company {
+  questions?: Question[];
+}
+
+export default function Startup({ company, session }: { company: CompanyWithQuestions, session: Session }) {
   const [menu, setMenu] = useState("Overview");
   const [Overview, setOverview] = useState(false);
+  const [question, setQuestion] = useState("");
+  const router = useRouter();
+  const { user } = session;
+
+  const handleAddQuestion = async () => {
+    if (!user) return alert("You must login first.");
+
+    const res = await axios.post(process.env.NEXT_PUBLIC_WEB_URL + `/api/v1/question/${company.id}`, {
+      question,
+      userId: user.id,
+    });
+
+    if (res.status == 201) {
+      setQuestion("");
+      router.refresh();
+    }
+  }
+
+  // Sort company questions by latest
+  const sortedQuestions = company?.questions?.slice().sort((a: Question, b: Question) => {
+    const dateA = new Date(a.createdAt).getTime();
+    const dateB = new Date(b.createdAt).getTime();
+    return dateB - dateA;
+  });
 
   function content() {
     if (menu == "Overview") {
@@ -13,33 +50,24 @@ export default function Startup() {
         <div className="bg-[#D9D9D9]/40 p-9 rounded-2xl w-[840px]">
           <h1 className="font-medium text-3xl">Business Description</h1>
           <p className="text-xl">
-            <br />
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam aut
-            omnis ducimus praesentium obcaecati accusamus corporis consequatur
-            illum nulla ullam laborum debitis, unde porro velit, maiores nobis
-            quis harum explicabo.
-            <br />
-            <br />
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam aut
-            omnis ducimus praesentium obcaecati accusamus corporis consequatur
-            illum nulla ullam laborum debitis, unde porro velit, maiores nobis
-            <br />
-            <br />
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis
-            illum pariatur, doloribus optio, tempora quasi repellat molestias
-            exercitationem explicabo nobis aspernatur dignissimos accusamus
-            obcaecati expedita modi enim velit possimus corporis?
+            {company.companyDescription}
           </p>
         </div>
       );
     } else if (menu == "Pitch Deck") {
       return (
-        <iframe
-          src="https://drive.google.com/file/d/1dKk8TUrmkBvDwyxQiGTU1wk93gE-r5pd/preview"
-          width="840"
-          height="480"
-          allow="autoplay"
-        ></iframe>
+        company.videoProfile ?
+          (<iframe
+            src="https://drive.google.com/file/d/1dKk8TUrmkBvDwyxQiGTU1wk93gE-r5pd/preview"
+            width="840"
+            height="480"
+            allow="autoplay"
+          ></iframe>
+          ) : (
+            <div className="flex flex-col">
+              <p>No Video Profile Available.</p>
+            </div>
+          )
       );
     } else if (menu == "Updates") {
       return (
@@ -61,29 +89,25 @@ export default function Startup() {
               className={`border border-opacity-0 w-2/3 rounded-full py-4 px-8 gradient-background`}
               type="text"
               placeholder="Enter your question"
+              value={question}
+              onChange={(e) => setQuestion(e.target.value)}
             />
-            <Button text="Send" isPrimary={true} fullWidth={false} onClick={() => console.log("")} />
+            <Button text="Send" isPrimary={true} fullWidth={false} onClick={handleAddQuestion} />
           </div>
 
           <p className="font-medium text-lg font-inter mt-14 mb-7">Sort by latest</p>
 
           <div className="flex flex-col gap-4">
-            <div className="bg-[#D9D9D9]/40 px-6 py-1 rounded-2xl">
-                <p className="font-medium text-lg">Name</p>
-                <p className="text-sm">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
-            </div>
-            <div className="bg-[#D9D9D9]/40 px-6 py-1 rounded-2xl">
-                <p className="font-medium text-lg">Name</p>
-                <p className="text-sm">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
-            </div>
-            <div className="bg-[#D9D9D9]/40 px-6 py-1 rounded-2xl">
-                <p className="font-medium text-lg">Name</p>
-                <p className="text-sm">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
-            </div>
-            <div className="bg-[#D9D9D9]/40 px-6 py-1 rounded-2xl">
-                <p className="font-medium text-lg">Name</p>
-                <p className="text-sm">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
-            </div>
+            {sortedQuestions ? (sortedQuestions.map((question: any) => (
+              <div key={question.id} className="bg-[#D9D9D9]/40 px-6 py-1 rounded-2xl">
+                <p className="font-medium text-lg">{question.user.fullName} <span className="text-sm text-gray-600 dark:text-gray-400">{formatDistanceToNow(new Date(question.createdAt))} ago</span></p>
+                <p className="text-sm">{question.question}</p>
+              </div>
+            ))) : (
+              <div className="bg-[#D9D9D9]/40 px-6 py-1 rounded-2xl">
+                <p className="font-medium text-lg">No Question Available.</p>
+              </div>
+            )}
           </div>
         </div>
       );
@@ -92,38 +116,34 @@ export default function Startup() {
 
   return (
     <div className="py-36 px-24">
-      <h1 className="text-4xl font-medium">Business Title</h1>
-      <p className="text-2xl font-medium mb-12">Company Name</p>
+      <h1 className="text-4xl font-medium">{company.companyName}</h1>
+      <p className="text-2xl font-medium mb-12">{company.tagline}</p>
 
       <div className="flex gap-10 mb-6">
         <button
-          className={`w-40 text-center cursor-pointer z-50 py-1 rounded-xl font-inter font-medium text-lg ${
-            menu == "Overview" ? "bg-[#0038FF]/60" : "bg-[#3E73C3]"
-          }`}
+          className={`w-40 text-center cursor-pointer z-50 py-1 rounded-xl font-inter font-medium text-lg ${menu == "Overview" ? "bg-[#0038FF]/60" : "bg-[#3E73C3]"
+            }`}
           onClick={() => setMenu("Overview")}
         >
           Overview
         </button>
         <button
-          className={`w-40 text-center cursor-pointer z-50 py-1 rounded-xl font-inter font-medium text-lg ${
-            menu == "Pitch Deck" ? "bg-[#0038FF]/60" : "bg-[#3E73C3]"
-          }`}
+          className={`w-40 text-center cursor-pointer z-50 py-1 rounded-xl font-inter font-medium text-lg ${menu == "Pitch Deck" ? "bg-[#0038FF]/60" : "bg-[#3E73C3]"
+            }`}
           onClick={() => setMenu("Pitch Deck")}
         >
           Pitch Deck
         </button>
         <button
-          className={`w-40 text-center cursor-pointer z-50 py-1 rounded-xl font-inter font-medium text-lg ${
-            menu == "Updates" ? "bg-[#0038FF]/60" : "bg-[#3E73C3]"
-          }`}
+          className={`w-40 text-center cursor-pointer z-50 py-1 rounded-xl font-inter font-medium text-lg ${menu == "Updates" ? "bg-[#0038FF]/60" : "bg-[#3E73C3]"
+            }`}
           onClick={() => setMenu("Updates")}
         >
           Updates
         </button>
         <button
-          className={`w-40 text-center cursor-pointer z-50 py-1 rounded-xl font-inter font-medium text-lg ${
-            menu == "question" ? "bg-[#0038FF]/60" : "bg-[#3E73C3]"
-          }`}
+          className={`w-40 text-center cursor-pointer z-50 py-1 rounded-xl font-inter font-medium text-lg ${menu == "question" ? "bg-[#0038FF]/60" : "bg-[#3E73C3]"
+            }`}
           onClick={() => setMenu("question")}
         >
           Ask a Question
