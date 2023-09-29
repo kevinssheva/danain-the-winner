@@ -4,7 +4,7 @@ import Header from "../../../components/Header";
 import Image from "next/image";
 import { FaArrowLeft } from "react-icons/fa6";
 import Input from "@/components/Input";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BsFillSendFill, BsSend } from "react-icons/bs";
 import Chatin from "./Chatin";
 import Chatout from "./Chatout";
@@ -43,6 +43,14 @@ export default function Chat() {
       setCurrentChat("");
     }
   };
+
+  const bottomRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({
+      behavior: "smooth",
+    });
+  }, [data]);
 
   return (
     <div className="px-[5%] md:pl-80 md:pr-12 md:py-14 py-20 z-50 text-white">
@@ -103,9 +111,8 @@ export default function Chat() {
             </div>
           </div>
 
-          <div className="h-80 md:max-h-80 overflow-y-auto">
-            <div className="py-3 px-2 md:px-10 h-full flex gap-4 flex-col justify-end overflow-y-auto">
-              {/* gotta map these with the real data my g */}
+          <div className="h-80 md:max-h-80 overflow-y-auto py-3 px-2 md:px-10 flex w-full">
+            <div className="w-full h-fit flex gap-4 flex-col">
               {data.map((messageData, index) => {
                 if (messageData.type === "in") {
                   return <Chatin key={index} message={messageData.message} />;
@@ -114,6 +121,7 @@ export default function Chat() {
                 }
                 return null; // Handle other types if needed
               })}
+              <div ref={bottomRef} className="pt-1" />
             </div>
           </div>
 
