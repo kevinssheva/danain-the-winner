@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.4",
+    "@types/date-fns": "^2.6.0",
     "prisma": "^5.3.1"
   }
 }
