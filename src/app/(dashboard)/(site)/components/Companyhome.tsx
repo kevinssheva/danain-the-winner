@@ -1,7 +1,10 @@
+"use client";
 import Image from "next/image";
 import Button from "@/components/Button";
+import {useRouter} from "next/navigation"
 
 export default function Companyhome() {
+  const router = useRouter()
   return (
     <>
       <div className="flex flex-col lg:flex-row gap-4">
@@ -56,7 +59,7 @@ export default function Companyhome() {
                 text="See Your Investors"
                 isPrimary={true}
                 fullWidth={true}
-                onClick={() => {}}
+                onClick={() => {router.push("/dashboard/investors")}}
               />
             </div>
             <Image
@@ -70,7 +73,7 @@ export default function Companyhome() {
         </div>
 
         <div className="bg-[#1A1F37] max-w-xl py-16 flex flex-col-reverse lg:flex-row gap-4 px-6 rounded-xl">
-          <div className="flex flex-col text-justify justify-between">
+          <div className="flex flex-col gap-4 lg:gap-0 text-justify justify-between">
             <p className="text-[#8C89B4]">
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the {"industry's"} standard dummy
@@ -83,7 +86,7 @@ export default function Companyhome() {
               text="Chat Now!"
               isPrimary={true}
               fullWidth={true}
-              onClick={() => {}}
+              onClick={() => {router.push("/dashboard/chat")}}
             />
           </div>
           <Image
@@ -91,35 +94,65 @@ export default function Companyhome() {
             width={250}
             height={500}
             alt="Chat"
+            className="self-center"
           />
         </div>
       </div>
 
-      <div className="p-10 bg-[#1A1F37] max-w-[34.5rem] mt-16 rounded-xl">
-        <div className="flex flex-col lg:flex-row gap-8 mb-8">
-          <Image
-            src={"/dashboard/investor/review.svg"}
-            width={235}
-            height={500}
-            alt="Review"
-          />
-          <div>
-            <h1 className="text-4xl text-center font-semibold">
-              Review your pitch deck file with AI
-            </h1>
-            <p className="text-[#8C89B4] text-justify">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the {"industry's"} standard dummy
-              text ever.
-            </p>
+      <div className="mt-16 flex flex-col xl:flex-row gap-4">
+        <div
+          className="p-10 rounded-xl xl:w-1/2"
+          style={{
+            background:
+              "linear-gradient(89deg, rgba(14, 13, 57, 0.00) 1.82%, #1A1F37 21%, #1A1F37 31%);",
+          }}
+        >
+          <div className="flex flex-col lg:flex-row gap-8 mb-8">
+            <Image
+              src={"/dashboard/investor/review.svg"}
+              width={235}
+              height={500}
+              alt="Review"
+              className="self-center"
+            />
+            <div className="flex flex-col gap-2 lg:gap-0 justify-between">
+              <h1 className="text-4xl text-center font-semibold">
+                Review your pitch deck file with AI
+              </h1>
+              <p className="text-[#8C89B4] text-justify">
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the {"industry's"} standard dummy
+                text ever.
+              </p>
+            </div>
           </div>
+          <Button
+            text="Coming Soon"
+            isPrimary={true}
+            fullWidth={true}
+            onClick={() => {}}
+          />
         </div>
-        <Button
-          text="Coming Soon"
-          isPrimary={true}
-          fullWidth={true}
-          onClick={() => {}}
-        />
+
+        <div
+          className="p-10 xl:w-1/2 rounded-xl flex flex-col-reverse lg:flex-row"
+          style={{
+            background:
+              "linear-gradient(89deg, rgba(14, 13, 57, 0.00) 25.82%, #1A1F37 51%, #1A1F37 51%);",
+          }}
+        >
+          <div className="flex flex-col gap-4 lg:gap-0 justify-between">
+            <h1 className="text-4xl font-semibold">Complete your Company Profile Now!</h1>
+            <p className="font-normal text-[#A0AEC0]">
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the
+            </p>
+
+            <Button isPrimary={true} fullWidth={true} text="Complete Now" onClick={() => {router.push("/dashboard/profile")}} />
+          </div>
+
+          <Image src={"/dashboard/investor/welcomeinv.svg"} width={235} height={500} alt="Complete" className="self-center"/>
+        </div>
       </div>
     </>
   );

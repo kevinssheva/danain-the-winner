@@ -7,7 +7,7 @@ import Investorhome from "./Investorhome";
 import Header from "./Header";
 
 export default function Home() {
-  const role = "investor"
+  const role = "company"
 
 
   return (
