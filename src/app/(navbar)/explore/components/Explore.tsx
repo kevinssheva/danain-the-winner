@@ -13,9 +13,11 @@ const Explore = () => {
   const [showSort, setShowSort] = useState(false);
   const [renderSort, setRenderSort] = useState(false);
   const router = useRouter();
-  const swr = useSWR
   const [query, setQuery] = useState<string | null>("");
   const [category, setCategory] = useState<string[]>([]);
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(5000000000);
+  const [sort, setSort] = useState("" as "HIGHEST" | "LOWEST");
 
   const { data, error, isLoading } = useSWR(
     process.env.NEXT_PUBLIC_WEB_URL +
@@ -48,7 +50,7 @@ const Explore = () => {
       setShowSort(true);
     }, 100);
   }, []);
- 
+
   return (
     <div className="container mx-auto my-20 z-20">
       <Search setQueryExplore={setQuery} />
@@ -60,15 +62,14 @@ const Explore = () => {
           setCategoryExplore={setCategory}
         />
         <div
-          className={`${showSort ? "scale-y-100" : "scale-y-0"} ${
-            renderSort ? "block" : "hidden"
-          } transition duration-300 origin-top`}
+          className={`${showSort ? "scale-y-100" : "scale-y-0"} ${renderSort ? "block" : "hidden"
+            } transition duration-300 origin-top`}
         >
-          <Sort isShow />
+          <Sort isShow setMinPriceExplore={setMinPrice} setMaxPriceExplore={setMaxPrice} setSortExplore={setSort} />
         </div>
       </div>
       {data?.filteredCompanies?.length > 0 ?
-        <ListCompany filteredCompanies={data?.filteredCompanies} /> :
+        <ListCompany filteredCompanies={data?.filteredCompanies} minPrice={minPrice} maxPrice={maxPrice} sort={sort} /> :
         isLoading ?
           <div className="text-center">Loading...</div> :
           error ?

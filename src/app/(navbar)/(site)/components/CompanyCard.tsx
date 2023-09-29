@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Category from "./Category";
 import { Category as CategoryInterface } from "@prisma/client";
+import { useState } from "react";
 
 interface CompanyCardProps {
   name?: string;
@@ -21,6 +22,8 @@ const CompanyCard: React.FC<CompanyCardProps> = ({
   price,
   categories
 }) => {
+  const [imageLoadedCP, setImageLoadedCP] = useState(false);
+  const [imageLoadedOP, setImageLoadedOP] = useState(false);
 
   function formatNumber(number: string) {
     // Convert the number to string
@@ -82,12 +85,18 @@ const CompanyCard: React.FC<CompanyCardProps> = ({
         cursor-pointer
       "
     >
-      <div className="w-full flex-1 overflow-hidden relative group-hover:brightness-75 transition-all">
+      <div className="w-full flex-1 overflow-hidden relative group-hover:brightness-75 transition-all"
+        style={{
+          // Apply blur filter when the image is not loaded
+          filter: imageLoadedCP ? "none" : "blur(8px)",
+        }}
+      >
         <Image
           src={companyImage || "/landing/company_1.jpg"}
           fill={true}
           alt=""
           className="object-cover w-full h-full object-top"
+          onLoad={() => setImageLoadedCP(true)}
         />
       </div>
       {/* <div className="w-full bg-background h-[25%] overflow-hidden"></div> */}
@@ -105,12 +114,18 @@ const CompanyCard: React.FC<CompanyCardProps> = ({
       "
       >
         <div className="absolute w-[18%] aspect-square bg-white p-1 rounded-full overflow-hidden top-0 -translate-y-1/2 right-0 -translate-x-1/3">
-          <div className="w-full h-full relative rounded-full overflow-hidden">
+          <div className="w-full h-full relative rounded-full overflow-hidden"
+            style={{
+              // Apply blur filter when the image is not loaded
+              filter: imageLoadedOP ? "none" : "blur(8px)",
+            }}
+          >
             <Image
               src={ownerImage || "/profile.jpg"}
               alt=""
               className="object-cover w-full h-full"
               fill={true}
+              onLoad={() => setImageLoadedOP(true)}
             />
           </div>
         </div>

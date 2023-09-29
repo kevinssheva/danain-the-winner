@@ -22,7 +22,10 @@ const Search = ({ setQueryExplore }: SearchProps) => {
           icon={AiOutlineSearch}
         />
       </div>
-      <div onClick={() => setQueryExplore(query)} className="w-[7%] gradient-background rounded-xl border-[1px] border-slate-600 flex items-center justify-center cursor-pointer">
+      <div
+        onClick={() => setQueryExplore(query)}
+        className="w-[7%] gradient-background rounded-xl border-[1px] border-slate-600 flex items-center justify-center cursor-pointer transform transition-transform hover:scale-110"
+      >
         <AiOutlineSearch size={24} />
       </div>
     </div>
