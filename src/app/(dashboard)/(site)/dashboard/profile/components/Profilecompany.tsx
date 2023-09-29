@@ -5,13 +5,15 @@ import {
   BsFillFileEarmarkArrowUpFill,
 } from "react-icons/bs";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Input from "@/components/Input";
 import { MdAddPhotoAlternate } from "react-icons/md";
 import { FaInstagram, FaLinkedin } from "react-icons/fa6";
 import Button from "@/components/Button";
+import dynamic from "next/dynamic";
 
 export default function Profilecompany() {
+  const ReactQuill = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }),[]);
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [tagline, setTagline] = useState("");
@@ -23,6 +25,7 @@ export default function Profilecompany() {
   const [website, setWebsite] = useState("");
   const [instagram, setInstagram] = useState("");
   const [linkedin, setLinkedin] = useState("");
+  const [pitchdesc, setPitchdesc] = useState("");
 
   const listCategory = [
     "Sport",
@@ -167,18 +170,17 @@ export default function Profilecompany() {
         </div>
 
         <div className="md:w-1/2 flex flex-col gap-4">
-          <div>
+          <div className="h-52">
             <label>Pitch Description</label>
-            <Image
-              src={"/dashboard/dummy.svg"}
-              width={500}
-              height={100}
-              alt="coin"
-              className=""
+            <ReactQuill
+              theme="snow"
+              value={pitchdesc}
+              onChange={(e) => setPitchdesc(e)}
+              className="overflow-y-auto max-h-40"
             />
           </div>
 
-          <div>
+          <div className="">
             <label className="">Minimum Raise</label>
             <p className="text-[#9C8740]">
               You must hit at least this number or your campaign will fail

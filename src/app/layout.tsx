@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Inter, Montserrat } from "next/font/google";
 import Navbar from "@/components/Navbar";
+import 'react-quill/dist/quill.snow.css'
 import ToasterContext from "./context/ToasterContext";
 
 const neuropolitical = localFont({

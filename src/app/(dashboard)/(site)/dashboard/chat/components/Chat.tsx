@@ -69,7 +69,7 @@ export default function Chat() {
           {["Gibran Fasha", "Abraham Megantoro", "Vania", "Iyal"].map(
             (name, index) => (
               <div className="py-1 border-t" key={index}>
-                <div className="flex gap-4 cursor-pointer hover:bg-white/10 rounded-xl p-3 items-center">
+                <div className="flex flex-row md:flex-col lg:flex-row gap-4 cursor-pointer hover:bg-white/10 rounded-xl p-3 items-center">
                   <Image
                     src={`/dashboard/portofolio/gibs.jpg`}
                     width={50}
