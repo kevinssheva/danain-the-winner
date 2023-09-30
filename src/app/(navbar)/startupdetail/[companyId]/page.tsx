@@ -1,7 +1,7 @@
 import Startup from "./components/Startup";
 import Image from "next/image";
 import axios from "axios";
-import { Company, Question, User, Transaction } from "@prisma/client";
+import { Company, Question, User, Transaction, Category } from "@prisma/client";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth/next";
 import { UserSession } from "@/components/UserFetcher";
@@ -11,6 +11,7 @@ interface Session {
 }
 
 interface CompanyExtends extends Company {
+  categories: Category[];
   questions?: Question[];
   user: User;
 }

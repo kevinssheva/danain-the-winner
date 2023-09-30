@@ -1,23 +1,26 @@
 "use client";
 import { useState } from "react";
-import { Company, Question, User } from "@prisma/client";
+import { Category, Company, Question, User } from "@prisma/client";
 import { UserSession } from "@/components/UserFetcher";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import InvestBox from "./InvestBox";
 import Overview from "./Overview";
-import { AiOutlineDownload, AiOutlineInstagram } from "react-icons/ai";
+import { AiOutlineDownload } from "react-icons/ai";
+import { HiOutlineChevronLeft } from "react-icons/hi";
 import VideoProfile from "./VideoProfile";
 import PitchDeck from "./PitchDeck";
 import AskQuestion from "./AskQuestion";
 import FounderProfile from "./FounderProfile";
 import toast from "react-hot-toast";
+import Link from "next/link";
 
 interface Session {
   user: UserSession | null | undefined;
 }
 
 interface CompanyExtends extends Company {
+  categories: Category[];
   questions?: Question[];
   user: User;
 }
@@ -58,8 +61,12 @@ export default function Startup({
   };
 
   return (
-    <div className="py-20 container mx-auto z-20">
-      <h1 className="text-3xl md:text-4xl font-bold">{company.companyName}</h1>
+    <div className="md:py-14 container mx-auto z-20">
+      <Link href="/explore" className="flex cursor-pointer items-center gap-2 font-montserrat text-sm md:text-lg">
+        <HiOutlineChevronLeft className="text-lg md:text-4xl" />
+        Back to Explore
+      </Link>
+      <h1 className="text-3xl md:text-4xl font-bold mt-10 md:mt-12">{company.companyName}</h1>
       <p className="text-base md:text-xl font-normal mb-12 opacity-80 font-montserrat">
         {company.tagline}
       </p>
@@ -84,7 +91,10 @@ export default function Startup({
 
       <div className="w-full flex flex-col lg:flex-row gap-5 justify-start items-start">
         {menu === 0 && (
-          <Overview description={company.companyDescription ?? "Not Yet"} />
+          <Overview
+            description={company.companyDescription ?? "Not Yet"}
+            categories={company.categories}
+          />
         )}
         {menu === 1 && <VideoProfile link={company.videoProfile || ""} />}
         {menu === 2 && <PitchDeck link={company.pitchDeck || ""} />}
@@ -119,7 +129,9 @@ export default function Startup({
 
       {menu === 2 && (
         <div className="w-full flex flex-col gap-4 items-start mt-10">
-          <h1 className="font-semibold font-poppins text-2xl md:text-3xl">Description</h1>
+          <h1 className="font-semibold font-poppins text-2xl md:text-3xl">
+            Description
+          </h1>
           <p className="font-montserrat text-base md:text-lg">
             {company.pitchDescription ?? "No pitch description available."}
           </p>
