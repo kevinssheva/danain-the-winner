@@ -4,8 +4,13 @@ import Home from "../components/Home";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth/next";
 import { prisma } from "@/app/lib/prisma";
-import { User } from "@prisma/client";
+import { User, Company, Transaction } from "@prisma/client";
 import { redirect } from "next/navigation";
+
+interface CompanyWithTransactions extends Company {
+  transactions: Transaction[];
+  user: User;
+}
 
 export default async function Page() {
   const session = await getServerSession(authOptions);
@@ -44,7 +49,7 @@ export default async function Page() {
         <div className="h-full min-h-screen bg-[url('/dashboard/investor/glowtengah.svg')] bg-no-repeat">
           <div className="h-full min-h-screen bg-none md:bg-[url('/dashboard/investor/glowbawah.svg')] bg-no-repeat bg-right-bottom">
             <div className="h-full min-h-screen bg-[url('/dashboard/investor/kotakkiri.svg')] bg-no-repeat bg-left-bottom">
-              <Home user={user} company={company} />
+              <Home user={user} company={company as CompanyWithTransactions} />
             </div>
           </div>
         </div>

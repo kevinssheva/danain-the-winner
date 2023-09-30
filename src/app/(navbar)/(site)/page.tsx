@@ -20,7 +20,7 @@ export default async function Home() {
 
   return (
     <div className="bg-background px-[7%] relative overflow-hidden">
-      <Hero role={role}/>
+      <Hero role={role} userId={session?.user?.id} />
       <About />
       <Explore />
       <Benefit />

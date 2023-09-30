@@ -2,21 +2,46 @@
 
 import useRegistrationModal from "@/app/hooks/useRegistrationModal";
 import Modal from "./Modal";
+import axios from "axios";
+import toast from "react-hot-toast";
 
-const RegistrationModal = () => {
+const RegistrationModal = ({ role, userId }: { role: string, userId: string | undefined }) => {
   const registrationModal = useRegistrationModal();
 
   const handleClose = () => {
     registrationModal.onClose();
   };
 
-  const handleInvestor = () => {
-    handleClose();
+  const handleInvestor = async () => {
+    if (!userId) return toast.error("You must login first!");
+    // patch user role to investor
+    const res = await axios.patch(process.env.NEXT_PUBLIC_WEB_URL + `/api/v1/user/${userId}`, {
+      role: "INVESTOR",
+    });
+
+    if (res.status == 201) {
+      toast.success("Registration success!", {
+        duration: 3000,
+      });
+      handleClose();
+    }
   };
 
-  const handleCompany = () => {
-    handleClose();
+  const handleCompany = async () => {
+    if (!userId) return toast.error("You must login first!");
+    // patch user role to company
+    const res = await axios.patch(process.env.NEXT_PUBLIC_WEB_URL + `/api/v1/user/${userId}`, {
+      role: "FOUNDER",
+    });
+
+    if (res.status == 201) {
+      toast.success("Registration success!", {
+        duration: 3000,
+      });
+      handleClose();
+    }
   };
+  
   const bodyElement = (
     <div className="w-full flex flex-col items-center gap-3">
       <p className="italic">Please select a role to register</p>

@@ -7,7 +7,12 @@ import Investorhome from "./Investorhome";
 import Header from "./Header";
 import { User, Company, Transaction } from "@prisma/client";
 
-export default function Home({ user, company }: { user: User | null, company?: Company & { transactions: Transaction[]} & { user: User } | null}) {
+interface CompanyWithTransactions extends Company {
+  transactions: Transaction[];
+  user: User;
+}
+
+export default function Home({ user, company }: { user: User | null, company: CompanyWithTransactions}) {
   return (
     <div className="px-[5%] md:pl-80 md:pr-12 md:py-14 py-20">
       <Header page="Dashboard" />
