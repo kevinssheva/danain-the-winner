@@ -1,27 +1,11 @@
+"use client";
 import Image from "next/image";
 import Button from "@/components/Button";
-import { prisma } from "@/app/lib/prisma";
-import { User } from "@prisma/client";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { getServerSession } from "next-auth/next";
-import { redirect } from "next/navigation";
+import { Company, Transaction } from "@prisma/client";
+import { useRouter } from "next/navigation";
 
-export default async function Companyhome() {
-  const session = await getServerSession(authOptions);
-
-  const company = await prisma.company.findFirst({
-    where: {
-      userId: (session?.user as User).id,
-    },
-    include: {
-      user: true,
-      transactions: true
-    }
-  });
-
-  if (!company) {
-    redirect("/");
-  }
+export default function Companyhome({ company }: { company: Company | null | undefined }) {
+  const router = useRouter();
 
   const formatAmountInRupiah = (amount: string) => {
     const parsedAmount = parseInt(amount, 10);
@@ -38,7 +22,7 @@ export default async function Companyhome() {
     return formattedAmount;
   }
 
-  const totalAmount = company?.transactions?.reduce((sum, transaction) => {
+  const totalAmount = company?.transactions?.reduce((sum: number, transaction: Transaction) => {
     const transactionAmount = parseInt(transaction.amount, 10);
 
     if (!isNaN(transactionAmount)) {
@@ -69,7 +53,7 @@ export default async function Companyhome() {
               <p className="text-lg lg:text-2xl text-[#8C89B4]">
                 Funds Collected
               </p>
-              <h1 className="text-lg lg:text-3xl font-bold">{formatAmountInRupiah(totalAmount.toString())}</h1>
+              <h1 className="text-lg lg:text-3xl font-bold">{formatAmountInRupiah(totalAmount?.toString())}</h1>
             </div>
             <Image
               src={"/dashboard/investor/wallet2.svg"}
@@ -101,7 +85,7 @@ export default async function Companyhome() {
                 text="See Your Investors"
                 isPrimary={true}
                 fullWidth={true}
-                onClick={() => { redirect("/dashboard/investor") }}
+                onClick={() => { router.push("/dashboard/investor") }}
               />
             </div>
             <Image
@@ -128,7 +112,7 @@ export default async function Companyhome() {
               text="Chat Now!"
               isPrimary={true}
               fullWidth={true}
-              onClick={() => { redirect("/dashboard/chat") }}
+              onClick={() => { router.push("/dashboard/chat") }}
             />
           </div>
           <Image
@@ -190,7 +174,7 @@ export default async function Companyhome() {
               industry. Lorem Ipsum has been the
             </p>
 
-            <Button isPrimary={true} fullWidth={true} text="Complete Now" onClick={() => { redirect("/dashboard/profile") }} />
+            <Button isPrimary={true} fullWidth={true} text="Complete Now" onClick={() => { router.push("/dashboard/profile") }} />
           </div>
 
           <Image src={"/dashboard/investor/welcomeinv.svg"} width={235} height={500} alt="Complete" className="self-center" />
