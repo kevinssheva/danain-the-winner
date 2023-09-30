@@ -1,34 +1,91 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# TypeOmegans
 
-## Getting Started
+TypeOmegans is a group of people consisting of the best civilians on earth. We are an undergraduate student from Bandung Institute of Technology. TypeOmegnas consists of 5 members :
 
-First, run the development server:
+- Abraham Megantoro Samudera
+- Gibran Fasha Ghazanfar
+- Lie, Kevin Sebastian Sheva Tjahyana
+- Mochamad Syahrial Alzaidan
+- Vania Salsabila
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+Together, we are eager to make impactful changes in the world.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# Danain
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+TypeOmegans presents "Danain," a web platform that facilitates connections between investors and startup companies. We firmly believe that innovation should receive the proper funding and support.
 
-## Learn More
+Through Danain, we aim to unlock doors for sustainable business growth and productive collaboration within the startup ecosystem. Let's come together to shape a brighter future for innovation!
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# API Documentation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Messaging
+- `GET /v1/message`
+  - **Description:** Retrieve messages.
 
-## Deploy on Vercel
+### Company
+- `GET /v1/company`
+  - **Description:** Get a list of companies.
+- `GET /v1/company/{id}`
+  - **Description:** Get details of a specific company by ID.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Dashboard
+- `GET /v1/dashboard/company/profile`
+  - **Description:** Get the company's dashboard profile.
+- `GET /v1/dashboard/company/transaction`
+  - **Description:** Get transaction details from the company's dashboard.
+- `GET /v1/dashboard/company/investor/profile`
+  - **Description:** Get investor profile from the company's dashboard.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Question
+- `GET /v1/question/{id}`
+  - **Description:** Get a question by ID.
+
+### Transaction
+- `GET /v1/transaction`
+  - **Description:** Get transaction details.
+- `GET /v1/transaction/{companyid}`
+  - **Description:** Get transactions for a specific company.
+- `GET /v1/transaction/{companyid}/{userid}`
+  - **Description:** Get transactions for a specific company and user.
+
+### User
+- `GET /v1/user`
+  - **Description:** Get a list of users.
+- `GET /v1/user/{userid}`
+  - **Description:** Get details of a specific user by ID.
+
+### Authentication
+- `GET /auth`
+  - **Description:** Authenticate and get authentication details.
+
+## POST Endpoints
+
+### Transaction
+- `POST /v1/transaction`
+  - **Description:** Create a new transaction.
+
+### User
+- `POST /v1/user/register/founder`
+  - **Description:** Register a new user as a founder.
+- `POST /v1/user/register/investor`
+  - **Description:** Register a new user as an investor.
+
+### Authentication
+- `POST /auth`
+  - **Description:** Authenticate and obtain an authentication token.
+
+## PATCH Endpoints
+
+### Dashboard
+- `PATCH /v1/dashboard/company/founder/profile`
+  - **Description:** Update founder profile in the company's dashboard.
+- `PATCH /v1/dashboard/company/investor/profile`
+  - **Description:** Update investor profile in the company's dashboard.
+
+### User
+- `PATCH /v1/user/{userid}`
+  - **Description:** Update user details.
