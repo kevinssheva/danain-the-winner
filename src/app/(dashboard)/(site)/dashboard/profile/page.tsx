@@ -13,7 +13,7 @@ interface Session {
 
 export default async function Portopage() {
   const session = await getServerSession(authOptions) as Session;
-  const role = session.user?.role ?? '';
+  const role = session?.user?.role ?? '';
 
   return (
     <div className="bg-background h-[275vh]">
