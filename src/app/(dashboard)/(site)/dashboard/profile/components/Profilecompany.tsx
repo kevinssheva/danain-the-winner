@@ -65,20 +65,20 @@ export default function Profilecompany() {
 
   useEffect(() => {
     if (data) {
-      setName(data.company.companyName || "");
-      setAddress(data.company.companyPlace || "");
-      setTagline(data.company.tagline || "");
-      setFounder(data.company.user.fullName || "");
-      setVideo(data.company.videoProfile || "");
-      setMinimum(data.company.minimum || "");
-      setMaximum(data.company.money || "");
-      setCategory(data.company.categories || []);
-      setWebsite(data.company.website || "");
-      setInstagram(data.company.instagram || "");
-      setLinkedin(data.company.linkedin || "");
-      setPitchdesc(data.company.pitchDescription || "");
-      setPhoto(data.company.coverPhoto || "");
-      setPitchDeck(data.company.pitchDeck || "");
+      setName(data?.company?.companyName || '');
+      setAddress(data?.company?.companyPlace || '');
+      setTagline(data?.company?.tagline || '');
+      setFounder(data?.company?.user?.fullName || '');
+      setVideo(data?.company?.videoProfile || '');
+      setMinimum(data?.company?.minimum || '');
+      setMaximum(data?.company?.money || '');
+      setCategory(data?.company?.categories || []);
+      setWebsite(data?.company?.website || '');
+      setInstagram(data?.company?.instagram || '');
+      setLinkedin(data?.company?.linkedin || '');
+      setPitchdesc(data?.company?.pitchDescription || '');
+      setPhoto(data?.company?.coverPhoto || '')
+      setPitchDeck(data?.company?.pitchDeck || '')
     }
   }, [data]);
 
@@ -178,9 +178,7 @@ export default function Profilecompany() {
       >
         <div>
           <p className="text-[#A0AEC0] text-sm md:text-base">Welcome back,</p>
-          <h1 className="text-3xl md:text-5xl font-semibold">
-            {data.company.companyName}
-          </h1>
+          <h1 className="text-3xl md:text-5xl font-semibold">{data.company.companyName}</h1>
           <p className="text-[#A0AEC0] text-sm md:text-base mb-8">
             Glad to see you again! <br />
             Ask me anything.

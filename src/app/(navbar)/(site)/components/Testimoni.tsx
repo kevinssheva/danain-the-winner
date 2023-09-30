@@ -72,7 +72,7 @@ const Testimoni = () => {
           <h1 className="font-neuro text-4xl md:text-6xl">Testimonials</h1>
           <p className="text-base md:text-xl font-montserrat">
             This is what our users have to say about their extraordinary
-            experiences partnering with us and how we've assisted them in
+            experiences partnering with us and how we&apos;ve assisted them in
             achieving their goals.
           </p>
         </div>

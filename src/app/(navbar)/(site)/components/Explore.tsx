@@ -83,7 +83,7 @@ const Explore = () => {
       </h1>
       <div className="w-full flex gap-10 mt-10 mb-16 justify-center flex-wrap">
         {dataCompany.map((company) => (
-          <Link href={`/startupdetail/${company.id}`}>
+          <Link key={company.id} href={`/startupdetail/${company.id}`}>
             <CompanyCard
               key={company.id}
               name={company.name}
@@ -102,7 +102,7 @@ const Explore = () => {
           <Button
             text="Explore More Startup"
             isPrimary
-            onClick={() => {}}
+            onClick={() => { }}
             isGradient
             isBig
           />
