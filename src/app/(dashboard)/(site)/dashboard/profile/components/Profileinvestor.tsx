@@ -3,7 +3,7 @@ import Header from "../../../components/Header";
 import { MdModeEditOutline, MdPassword } from "react-icons/md";
 import Image from "next/image";
 import Input from "@/components/Input";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import Button from "@/components/Button";
 
@@ -34,6 +34,23 @@ export default function Profileinvestor() {
   const [newpassword, setNewpassword] = useState("");
   const [confirmnewpassword, setConfirmnewpassword] = useState("");
 
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleEditImageClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleFileInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files && event.target.files[0];
+    if (file) {
+      console.log("Selected file:", file);
+    }
+  };
+
   return (
     <div className="px-[5%] md:pl-80 md:pr-12 md:py-14 py-20 z-50 text-white">
       <Header page="Profile" />
@@ -52,13 +69,22 @@ export default function Profileinvestor() {
             alt="Ava"
             className="absolute right-6 sm:right-12 rounded-full"
           />
-          <Image
-            src="/dashboard/edit.svg"
-            width={30}
-            height={30}
-            alt="edit"
-            className="relative mt-14 cursor-pointer"
-          />
+          <div>
+            <Image
+              src="/dashboard/edit.svg"
+              width={30}
+              height={30}
+              alt="edit"
+              className="relative mt-14 cursor-pointer"
+              onClick={handleEditImageClick}
+            />
+            <input
+              type="file"
+              ref={fileInputRef}
+              className="hidden"
+              onChange={handleFileInputChange}
+            />
+          </div>
         </div>
       </div>
 

@@ -1,6 +1,6 @@
 import { BiHomeAlt2, BiBook, BiGroup } from "react-icons/bi";
 import { FaMoneyBillTrendUp } from "react-icons/fa6";
-import { BsChatSquareText } from "react-icons/bs";
+import { BsChatSquareText, BsBuildings } from "react-icons/bs";
 import { AiOutlineUser } from "react-icons/ai";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 
@@ -59,7 +59,16 @@ export default function Icon(props: IconProps) {
           className={`text-lg font-semibold`}
         />
       );
-    } else {
+    } else if (props.type == "companyprofile") {
+      return (
+        <BsBuildings
+          color={`${props.active ? "#FFFFFF" : "#32D73A"}`}
+          fill={`${props.active ? "#FFFFFF" : "#32D73A"}`}
+          className={`text-lg font-semibold`}
+        />
+      );
+    }
+    else {
       return (
         <RiLogoutBoxRLine
           ccolor="red"

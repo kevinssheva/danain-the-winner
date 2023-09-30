@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const Benefit = () => {
   return (
-    <div className="min-h-screen relative container mx-auto py-20 text-center z-20">
+    <div className="min-h-[70vh] relative container mx-auto py-20 text-center z-20">
       <h1 className="font-neuro text-4xl md:text-5xl">Why Invest on danain?</h1>
       <div className="flex flex-wrap justify-around gap-10 my-10">
         <div className="flex-1 flex flex-col items-center gap-1 px-7 mt-10">

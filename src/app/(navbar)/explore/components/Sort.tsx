@@ -5,7 +5,14 @@ import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import { useEffect, useState } from "react";
 
-const Sort = ({ isShow }: { isShow: boolean }) => {
+interface SortProps {
+  isShow: boolean;
+  setMinPriceExplore: (query: number) => void;
+  setMaxPriceExplore: (query: number) => void;
+  setSortExplore: (query: "HIGHEST" | "LOWEST") => void;
+}
+
+const Sort = ({ isShow, setMinPriceExplore, setMaxPriceExplore, setSortExplore }: SortProps) => {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(5000000000);
   const [showModal, setShowModal] = useState(false);
@@ -31,15 +38,17 @@ const Sort = ({ isShow }: { isShow: boolean }) => {
   const handlePriceChange = (values: number | number[]) => {
     if (typeof values === "number") return;
     setMinPrice(values[0]);
+    setMinPriceExplore(values[0]);
     setMaxPrice(values[1]);
+    setMaxPriceExplore(values[1]);
   };
   return (
-    <div className="w-full mx-auto mt-1 glass rounded-xl p-5 flex justify-between gap-10">
+    <div className="w-full mx-auto mt-1 glass rounded-2xl p-5 flex justify-between gap-10 overflow-hidden">
       <div className="flex-1 flex flex-col gap-4">
         <p className="text-xl font-semibold">Valuation</p>
         <div className="flex gap-10 items-center">
           <div className="w-1/4 flex border-white justify-between border-[1px] py-2 px-3 rounded-lg items-center">
-            <p className="font-montserrat">Rp. {formatPrice(minPrice)}</p>
+            <p className="font-montserrat">Rp {formatPrice(minPrice)}</p>
             <p className="text-sm opacity-60">min</p>
           </div>
           <Slider
@@ -62,7 +71,7 @@ const Sort = ({ isShow }: { isShow: boolean }) => {
           />
           <div className="w-1/4 flex border-white justify-between border-[1px] py-2 px-3 rounded-lg items-center">
             <p className="text-sm opacity-60">max</p>
-            <p className="font-montserrat">Rp. {formatPrice(maxPrice)}</p>
+            <p className="font-montserrat">Rp {formatPrice(maxPrice)}</p>
           </div>
         </div>
       </div>
@@ -72,12 +81,12 @@ const Sort = ({ isShow }: { isShow: boolean }) => {
           <RadioButton
             name="Highest"
             checked={sort === "HIGHEST"}
-            onChange={() => setSort("HIGHEST")}
+            onChange={() => { setSort("HIGHEST"); setSortExplore("HIGHEST"); }}
           />
           <RadioButton
             name="Lowest"
             checked={sort === "LOWEST"}
-            onChange={() => setSort("LOWEST")}
+            onChange={() => { setSort("LOWEST"); setSortExplore("LOWEST"); }}
           />
         </div>
       </div>

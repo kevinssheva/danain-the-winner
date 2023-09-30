@@ -1,9 +1,12 @@
+"use client"
 import Image from "next/image";
 import Button from "@/components/Button";
+import { useRouter } from "next/navigation";
 import { User } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 export default function Investorhome({ user } : { user: User | null }) {
+  const router = useRouter()
   return (
     <>
       <div className="flex flex-col md:flex-row gap-4">
@@ -51,7 +54,7 @@ export default function Investorhome({ user } : { user: User | null }) {
                 text="Chat Now!"
                 isPrimary={true}
                 fullWidth={true}
-                onClick={() => {}}
+                onClick={() => {router.push("dashboard/chat")}}
               />
             </div>
             <Image
@@ -99,7 +102,7 @@ export default function Investorhome({ user } : { user: User | null }) {
               text="Use feature"
               isPrimary={true}
               fullWidth={false}
-              onClick={() => {}}
+              onClick={() => {router.push("/dashboard/calculator")}}
             />
           </div>
         </div>
@@ -132,7 +135,7 @@ export default function Investorhome({ user } : { user: User | null }) {
               text="Explore Now"
               isPrimary={true}
               fullWidth={false}
-              onClick={() => {}}
+              onClick={() => {router.push("/explore")}}
             />
           </div>
         </div>

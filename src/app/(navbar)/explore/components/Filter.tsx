@@ -222,7 +222,7 @@ const Filter = ({
         </div>
       </div>
       <div
-        className="px-4 bg-white rounded-md py-3 flex items-center justify-between gap-3"
+        className="px-4 bg-white rounded-md py-3 flex items-center justify-between gap-3 cursor-pointer"
         onClick={toogleShow}
       >
         <p className="text-black text-sm font-bold font-montserrat">Filters</p>

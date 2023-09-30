@@ -2,6 +2,7 @@ import Image from "next/image";
 import Calculator from "../../components/Calculator";
 import Profileinvestor from "./components/Profileinvestor";
 import Profilecompany from "./components/Profilecompany";
+import Profilefounder from "./components/Profilefounder";
 
 export default function Portopage() {
   const role = "company";
@@ -14,7 +15,7 @@ export default function Portopage() {
             <div className="bg-[url('/dashboard/portofolio/kotakatas.svg')] h-full bg-no-repeat bg-right-top">
               <div className="bg-none md:bg-[url('/dashboard/portofolio/glowatas.svg')] h-full bg-no-repeat bg-right-top">
                 <div className="bg-none md:bg-[url('/dashboard/portofolio/glowkanan.svg')] h-full bg-no-repeat bg-right-bottom">
-                  {role=="company"? <Profilecompany /> : <Profileinvestor />}
+                  {role=="company"? <Profilefounder /> : <Profileinvestor />}
                 </div>
               </div>
             </div>

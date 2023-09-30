@@ -44,7 +44,7 @@ export default async function Home() {
           className="w-full"
         />
       </div>
-      <div className="absolute w-[50rem] bottom-0 left-0 z-10">
+      <div className="absolute w-[30rem] md:w-[50rem] -bottom-[10rem] left-0 z-10">
         <Image
           src={"/landing/Glow3.svg"}
           width={100}
