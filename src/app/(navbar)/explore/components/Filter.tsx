@@ -103,7 +103,7 @@ const Filter = ({
   showSort,
   toogleOpen,
   toogleClose,
-  setCategoryExplore
+  setCategoryExplore,
 }: FilterProps) => {
   const swiperRef = useRef<SwiperType>();
   const [activeCategory, setActiveCategory] = useState<string[]>([]);
@@ -145,22 +145,24 @@ const Filter = ({
     });
 
     return convertedCategory;
-  }
+  };
 
   const toggleCategory = (category: string) => {
     if (activeCategory.includes(category)) {
       setActiveCategory(activeCategory.filter((item) => item !== category));
-      setCategoryExplore(convertCategory(activeCategory.filter((item) => item !== category)))
+      setCategoryExplore(
+        convertCategory(activeCategory.filter((item) => item !== category))
+      );
     } else {
       setActiveCategory([...activeCategory, category]);
-      setCategoryExplore(convertCategory([...activeCategory, category]))
+      setCategoryExplore(convertCategory([...activeCategory, category]));
     }
   };
 
   const isCategoryActive = useMemo(() => {
     return (category: string) => activeCategory.includes(category);
   }, [activeCategory]);
-  
+
   const toogleShow = () => {
     if (showSort) {
       toogleClose();
@@ -169,8 +171,8 @@ const Filter = ({
     }
   };
   return (
-    <div className="flex items-center w-full gap-5">
-      <div className="flex-1 flex items-center gap-3 overflow-hidden">
+    <div className="flex flex-col lg:flex-row items-center w-full gap-5">
+      <div className="flex-1 w-full flex items-center gap-3 overflow-hidden">
         <div
           onClick={() => swiperRef.current?.slidePrev()}
           className={`text-2xl`}
@@ -189,10 +191,11 @@ const Filter = ({
           {categoryData.map((category) => (
             <SwiperSlide key={category.name}>
               <div
-                className={`relative flex flex-col items-center justify-start gap-2 h-full cursor-pointer ${isCategoryActive(category.name)
-                  ? "shadow-lg shadow-white/70"
-                  : "hover:scale-[105%]"
-                  } transition pb-2 px-1`}
+                className={`relative flex flex-col items-center justify-start gap-2 h-full cursor-pointer ${
+                  isCategoryActive(category.name)
+                    ? "shadow-lg shadow-white/70"
+                    : "hover:scale-[105%]"
+                } transition pb-2 px-1`}
                 onClick={() => toggleCategory(category.name)}
               >
                 <Image
@@ -200,15 +203,17 @@ const Filter = ({
                   alt={category.name}
                   width={100}
                   height={100}
-                  className={`h-[40%] aspect-[4/3] ${category.isBig ? "p-[0.3rem]" : "p-[0.1rem]"
-                    }`}
+                  className={`h-[40%] aspect-[4/3] ${
+                    category.isBig ? "md:p-[0.3rem]" : "md:p-[0.1rem]"
+                  }`}
                 />
                 <div className="flex-1 flex items-center">
                   <p className="text-xs font-montserrat">{category.name}</p>
                 </div>
                 <div
-                  className={`${isCategoryActive(category.name) ? "block" : "hidden"
-                    } absolute w-full h-1 bottom-0 rounded-md bg-white`}
+                  className={`${
+                    isCategoryActive(category.name) ? "block" : "hidden"
+                  } absolute w-full h-1 bottom-0 rounded-md bg-white`}
                 ></div>
               </div>
             </SwiperSlide>
@@ -222,14 +227,16 @@ const Filter = ({
         </div>
       </div>
       <div
-        className="px-4 bg-white rounded-md py-3 flex items-center justify-between gap-3 cursor-pointer"
+        className="w-full lg:w-auto px-4 bg-white rounded-md py-3 flex items-center justify-between gap-3 cursor-pointer"
         onClick={toogleShow}
       >
         <p className="text-black text-sm font-bold font-montserrat">Filters</p>
         <FaChevronDown
           color="black"
           fill="black"
-          className={`${showSort ? "rotate-180" : "rotate-0"} transition duration-300`}
+          className={`${
+            showSort ? "rotate-180" : "rotate-0"
+          } transition duration-300`}
         />
       </div>
     </div>

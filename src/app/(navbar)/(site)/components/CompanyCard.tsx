@@ -112,7 +112,7 @@ const CompanyCard: React.FC<CompanyCardProps> = ({
         px-4 pb-2 pt-6
         h-[55%]
         group-hover:h-[75%]
-        group-hover:pb-[2.7rem]
+        group-hover:pb-[4rem]
         transition-all
         flex flex-col
         relative
@@ -157,7 +157,7 @@ const CompanyCard: React.FC<CompanyCardProps> = ({
           <div className="border-b-[1px] border-white" />
           <p className="text-sm sm:text-base font-bold font-montserrat my-3">
             Rp {price && formatNumber(String(price))}{" "}
-            <span className="font-normal">Money Raised</span><br />
+            <span className="font-normal font-montserrat">Money Raised</span><br />
             <span className="font-light text-gray-400 text-sm tracking-tight font-poppins">from {totalInvestors} investors</span>
           </p>
         </div>
