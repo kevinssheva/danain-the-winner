@@ -5,14 +5,12 @@ const Description = () => {
         What is <span className="text-primary font-neuro">danain</span>
       </h1>
       <p className="text-xl font-montserrat">
-        Danain adalah platform website yang memungkinkan investor dan perusahaan
-        startup untuk berjumpa. Kami percaya, inovasi seharusnya mendapatkan
-        pendanaan yang pantas, dan kami akan memfasilitasi perjalanannya.
+        Danain is a website platform that allows investors and startup companies to meet.
+        We believe innovation should get the funding it deserves, and we will facilitate its journey.
         <br />
         <br />
-        Melalui Danain, kami membuka pintu bagi pertumbuhan bisnis yang
-        berkelanjutan dan kolaborasi produktif di dunia startup. Mari bergabung
-        bersama kami dalam mewujudkan masa depan yang lebih cerah untuk inovasi!
+        Through Danain, we open the door to sustainable business growth and productive collaboration in the startup world.
+        Come join us in creating a brighter future for innovation!
       </p>
     </div>
   );

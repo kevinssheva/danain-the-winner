@@ -9,12 +9,14 @@ const FounderProfile = ({
   description,
   instagram,
   linkedIn,
+  cv
 }: {
   name: string;
   imageURL?: string;
   description?: string;
   instagram?: string;
   linkedIn?: string;
+  cv?: string;
 }) => {
   return (
     <div className="w-full">
@@ -60,7 +62,7 @@ const FounderProfile = ({
         </div>
         <div className="flex-1 flex flex-col ">
           <h1 className="font-poppins font-semibold text-6xl leading-tight">
-            Hello, I'm
+            <span className="text-5xl font-light">Hello, I&apos;m</span>
             <br /> {name}
           </h1>
           <p className="font-montserrat text-xl mt-5">
@@ -70,10 +72,15 @@ const FounderProfile = ({
             <button className="bg-[#1019FF] text-white px-10 py-3 rounded-md font-semibold font-poppins">
               Say Hello!
             </button>
-            <button className="bg-white border-[1px] border-[#1019FF] text-[#1019FF] px-8 py-3 rounded-md font-semibold font-poppins flex items-center gap-3">
+            {cv ? (<button
+              onClick={() => window.open(cv)}
+              className="bg-white border-[1px] border-[#1019FF] text-[#1019FF] px-8 py-3 rounded-md font-semibold font-poppins flex items-center gap-3"
+            >
               <AiOutlineDownload color="blue" fill="blue" size={24} />
               Download CV
-            </button>
+            </button>) : (
+              <p className="font-montserrat text-lg">No CV file download available.</p>
+            )}
           </div>
         </div>
       </div>

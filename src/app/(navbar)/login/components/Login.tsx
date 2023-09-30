@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function Login() {
   const router = useRouter();
@@ -23,9 +24,10 @@ export default function Login() {
       });
 
       if (res?.error) {
-        throw new Error(res.error); // Bisa diganti pake toast.error("Invalid credentials");
+        toast.error(res.error);
+        throw new Error(res.error);
       } else {
-        /* Toast Success */
+        toast.success("Login success!");
         router.push('/');
       }
     } catch (error) {

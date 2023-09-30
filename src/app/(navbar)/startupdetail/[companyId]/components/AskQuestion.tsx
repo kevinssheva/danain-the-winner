@@ -41,8 +41,8 @@ const AskQuestion = ({
           Sort by Latest
         </div>
         <div className="w-full flex-col gap-4 flex">
-          {sortedQuestions?.map((item: any) => (
-            <div className="glass px-6 py-3 rounded-2xl">
+          {sortedQuestions?.map((item: any, index) => (
+            <div key={index} className="glass px-6 py-3 rounded-2xl">
               <div className="flex justify-between mb-2">
                 <p className="font-semibold font-poppins text-xl">
                   {item.user.fullName}
