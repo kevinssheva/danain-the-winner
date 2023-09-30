@@ -44,7 +44,7 @@ export default async function Page() {
         <div className="h-full min-h-screen bg-[url('/dashboard/investor/glowtengah.svg')] bg-no-repeat">
           <div className="h-full min-h-screen bg-none md:bg-[url('/dashboard/investor/glowbawah.svg')] bg-no-repeat bg-right-bottom">
             <div className="h-full min-h-screen bg-[url('/dashboard/investor/kotakkiri.svg')] bg-no-repeat bg-left-bottom">
-              <Home user={user} company={company || null || undefined} />
+              <Home user={user} company={company} />
             </div>
           </div>
         </div>

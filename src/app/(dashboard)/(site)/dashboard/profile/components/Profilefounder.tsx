@@ -3,44 +3,60 @@ import Header from "../../../components/Header";
 import { MdModeEditOutline, MdPassword } from "react-icons/md";
 import Image from "next/image";
 import Input from "@/components/Input";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import Button from "@/components/Button";
 import { FaInstagram, FaLinkedin } from "react-icons/fa6";
 import { BsFillFileEarmarkArrowUpFill } from "react-icons/bs";
+import fetcher from "@/app/lib/fetcher";
+import useSWR from "swr";
+import axios from "axios";
+import Loader from "@/components/Loader";
 
 export default function Profilefounder() {
-  //tinggal ditembak ke api
-  const data = {
-    fullname: "Gibs",
-    email: "gibranalrosa@gmail.com",
-    alamat: "Jl. Kebon Jeruk Raya No. 27",
-    oldpassword: "",
-    newpassword: "",
-    confirmnewpassword: "",
-    instagram: "",
-    linkedin: "",
-  };
+  const { data, error, isLoading } = useSWR(
+    process.env.NEXT_PUBLIC_WEB_URL +
+    `/api/v1/dashboard/investor/profile`,
+    fetcher
+  );
 
-  function reset() {
-    setFullname(data.fullname);
-    setEmail(data.email);
-    setAlamat(data.alamat);
-    setOldpassword(data.oldpassword);
-    setNewpassword(data.newpassword);
-    setConfirmnewpassword(data.confirmnewpassword);
-    setInstagram(data.instagram);
-    setLinkedin(data.linkedin);
+  const reset = () => {
+    setFullname(data.user.fullName);
+    setEmail(data.user.email);
+    setDescription(data.user.description);
+    setOldpassword("");
+    setNewpassword("");
+    setConfirmnewpassword("");
+    setInstagram(data.user.instagram);
+    setLinkedin(data.user.linkedIn);
+    setCv(data.user.cv);
+    setProfilePicture(data.user.profilePicture);
   }
 
-  const [fullname, setFullname] = useState(data.fullname);
-  const [email, setEmail] = useState(data.email);
-  const [alamat, setAlamat] = useState(data.alamat);
+  const [fullname, setFullname] = useState("");
+  const [email, setEmail] = useState("");
+  const [description, setDescription] = useState("");
   const [oldpassword, setOldpassword] = useState("");
   const [newpassword, setNewpassword] = useState("");
   const [confirmnewpassword, setConfirmnewpassword] = useState("");
   const [instagram, setInstagram] = useState("");
   const [linkedin, setLinkedin] = useState("");
+  const [cv, setCv] = useState("");
+  const [profilePicture, setProfilePicture] = useState("");
+  const [cvFile, setCvFile] = useState<File | null>(null);
+  const [profilePictureFile, setProfilePictureFile] = useState<File | null>(null);
+
+  useEffect(() => {
+    if (data) {
+      setFullname(data.user.fullName);
+      setEmail(data.user.email);
+      setDescription(data.user.description);
+      setInstagram(data.user.instagram);
+      setLinkedin(data.user.linkedIn);
+      setCv(data.user.cv);
+      setProfilePicture(data.user.profilePicture);
+    }
+  }, [data]);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -50,14 +66,60 @@ export default function Profilefounder() {
     }
   };
 
+  const handleImageInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files && event.target.files[0];
+    if (file) {
+      setProfilePictureFile(file);
+    }
+  };
+
   const handleFileInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const file = event.target.files && event.target.files[0];
     if (file) {
-      console.log("Selected file:", file);
+      setCvFile(file);
     }
-  };
+  }
+
+  // make loader in the middle of page
+  if (isLoading) return (<div className="flex justify-center items-center h-screen"><Loader /></div>);
+
+  const handleSubmit = async () => {
+    const formData = new FormData();
+    formData.append('fullname', fullname);
+    formData.append('email', email);
+    formData.append('description', description);
+    formData.append('instagram', instagram);
+    formData.append('linkedin', linkedin);
+    formData.append('oldpassword', oldpassword);
+    formData.append('newpassword', newpassword);
+    formData.append('confirmnewpassword', confirmnewpassword);
+
+    if (cvFile) {
+      formData.append('cv', cvFile);
+    }
+
+    if (profilePictureFile) {
+      formData.append('profilePicture', profilePictureFile);
+    }
+
+    try {
+      const response = await axios.patch("/api/v1/dashboard/founder/profile", formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+
+      if (response.status === 200) {
+        alert("Profile updated successfully")
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
     <div className="px-[5%] md:pl-80 md:pr-12 md:py-14 py-20 z-50 text-white">
@@ -71,7 +133,7 @@ export default function Profilefounder() {
 
         <div className="">
           <Image
-            src={"/dashboard/portofolio/gibs.jpg"}
+            src={profilePicture ?? ''}
             width={80}
             height={80}
             alt="Ava"
@@ -90,7 +152,7 @@ export default function Profilefounder() {
               type="file"
               ref={fileInputRef}
               className="hidden"
-              onChange={handleFileInputChange}
+              onChange={handleImageInputChange}
             />
           </div>
         </div>
@@ -121,13 +183,13 @@ export default function Profilefounder() {
         </div>
 
         <div className="w-full">
-          <label>Address</label>
+          <label>Description</label>
           <Input
             type="text"
-            value={alamat}
-            name="address"
+            value={description}
+            name="description"
             placeholder="Enter Your Address"
-            onChange={(e) => setAlamat(e.target.value)}
+            onChange={(e) => setDescription(e.target.value)}
           />
         </div>
 
@@ -138,7 +200,7 @@ export default function Profilefounder() {
               <Input
                 placeholder="Please enter your username"
                 name="ig"
-                value={instagram}
+                value={instagram.split("/").pop() ?? ''}
                 onChange={(e) => setInstagram(e.target.value)}
                 icon={FaInstagram}
               />
@@ -149,7 +211,7 @@ export default function Profilefounder() {
               <Input
                 placeholder="Please enter your username"
                 name="ig"
-                value={linkedin}
+                value={linkedin.split("/").pop() ?? ''}
                 onChange={(e) => setLinkedin(e.target.value)}
                 icon={FaLinkedin}
               />
@@ -158,18 +220,26 @@ export default function Profilefounder() {
 
           <div className="mt-4 md:mt-0 w-full">
             <label>CV</label>
-            <div className="flex items-center justify-center w-full">
+            <div className=" items-center justify-center w-full">
+              <a
+                href={cv}
+
+                className="underline text-blue-500 hover:text-blue-700"
+                target="_blank"
+                rel="noopener noreferrer">
+                {cv.split("/").pop()}
+              </a>
               <label
                 htmlFor="dropzone-file"
                 className="input-bg-startup flex flex-col items-center justify-center w-full h-36 border border-gray-300 rounded-lg cursor-pointer"
               >
-                <div className="flex flex-col gap-4 items-center justify-center pt-5 pb-6">
+                <div className="flex flex-col gap-2 items-center justify-center pt-5 pb-6">
                   <p className="text-white">Please upload your CV file</p>
-                  <p className="text-[#D8D8D8]">format : .pdf</p>
+                  <p className="text-[#D8D8D8]">format .pdf</p>
 
                   <BsFillFileEarmarkArrowUpFill className="text-5xl" />
                 </div>
-                <input id="dropzone-file" type="file" className="hidden" />
+                <input id="dropzone-file" type="file" className="hidden" onChange={handleFileInputChange} />
               </label>
             </div>
           </div>
@@ -216,7 +286,7 @@ export default function Profilefounder() {
               reset();
             }}
           />
-          <Button text="Save Changes" isPrimary={true} onClick={() => {}} />
+          <Button text="Save Changes" isPrimary={true} onClick={() => { handleSubmit() }} />
         </div>
       </div>
     </div>

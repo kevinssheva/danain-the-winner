@@ -5,9 +5,9 @@ import { AiOutlineUser } from "react-icons/ai";
 import Companyhome from "./Companyhome";
 import Investorhome from "./Investorhome";
 import Header from "./Header";
-import { User, Company } from "@prisma/client";
+import { User, Company, Transaction } from "@prisma/client";
 
-export default function Home({ user, company }: { user: User | null, company?: Company }) {
+export default function Home({ user, company }: { user: User | null, company?: Company & { transactions: Transaction[]} & { user: User } | null}) {
   return (
     <div className="px-[5%] md:pl-80 md:pr-12 md:py-14 py-20">
       <Header page="Dashboard" />

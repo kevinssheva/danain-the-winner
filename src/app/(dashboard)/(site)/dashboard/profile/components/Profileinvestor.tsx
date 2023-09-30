@@ -3,38 +3,50 @@ import Header from "../../../components/Header";
 import { MdModeEditOutline, MdPassword } from "react-icons/md";
 import Image from "next/image";
 import Input from "@/components/Input";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import Button from "@/components/Button";
+import fetcher from "@/app/lib/fetcher";
+import useSWR from "swr";
+import axios from "axios";
+import Loader from "@/components/Loader";
 
 export default function Profileinvestor() {
-  //tinggal ditembak ke api
-  const data = {
-    fullname: "Gibs",
-    email: "gibranalrosa@gmail.com",
-    alamat: "Jl. Kebon Jeruk Raya No. 27",
-    oldpassword: "",
-    newpassword: "",
-    confirmnewpassword: "",
-  };
+  const { data, error, isLoading } = useSWR(
+    process.env.NEXT_PUBLIC_WEB_URL +
+    `/api/v1/dashboard/investor/profile`,
+    fetcher
+  );
 
-  function reset() {
-    setFullname(data.fullname);
-    setEmail(data.email);
-    setAlamat(data.alamat);
-    setOldpassword(data.oldpassword);
-    setNewpassword(data.newpassword);
-    setConfirmnewpassword(data.confirmnewpassword);
+  const reset = () => {
+    setFullname("");
+    setEmail("");
+    setDescription("");
+    setOldpassword("");
+    setNewpassword("");
+    setConfirmnewpassword("");
   }
 
-  const [fullname, setFullname] = useState(data.fullname);
-  const [email, setEmail] = useState(data.email);
-  const [alamat, setAlamat] = useState(data.alamat);
+  const [fullname, setFullname] = useState("");
+  const [email, setEmail] = useState("");
+  const [description, setDescription] = useState("");
   const [oldpassword, setOldpassword] = useState("");
   const [newpassword, setNewpassword] = useState("");
   const [confirmnewpassword, setConfirmnewpassword] = useState("");
+  const [profilePictureFile, setProfilePictureFile] = useState<File | null>(null);
 
+  useEffect(() => {
+    if (data) {
+      setFullname(data.user.fullName);
+      setEmail(data.user.email);
+      setDescription(data.user.description);
+    }
+  }, [data]);
+  
   const fileInputRef = useRef<HTMLInputElement>(null);
+  
+  if (isLoading) return (<div className="flex justify-center items-center h-screen"><Loader /></div>);
+
 
   const handleEditImageClick = () => {
     if (fileInputRef.current) {
@@ -47,9 +59,37 @@ export default function Profileinvestor() {
   ) => {
     const file = event.target.files && event.target.files[0];
     if (file) {
-      console.log("Selected file:", file);
+      setProfilePictureFile(file);
     }
   };
+
+  const handleSubmit = async () => {
+    const formData = new FormData();
+    formData.append('fullname', fullname);
+    formData.append('email', email);
+    formData.append('description', description);
+    formData.append('oldpassword', oldpassword);
+    formData.append('newpassword', newpassword);
+    formData.append('confirmnewpassword', confirmnewpassword);
+
+    if (profilePictureFile) {
+      formData.append('profilePicture', profilePictureFile);
+    }
+
+    try {
+      const response = await axios.patch("/api/v1/dashboard/investor/profile", formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+
+      if(response.status === 200) {
+        alert("Profile updated successfully")
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
     <div className="px-[5%] md:pl-80 md:pr-12 md:py-14 py-20 z-50 text-white">
@@ -113,13 +153,13 @@ export default function Profileinvestor() {
         </div>
 
         <div className="w-full">
-          <label>Address</label>
+          <label>Description</label>
           <Input
             type="text"
-            value={alamat}
-            name="address"
-            placeholder="Enter Your Address"
-            onChange={(e) => setAlamat(e.target.value)}
+            value={description}
+            name="description"
+            placeholder="Enter Your Description"
+            onChange={(e) => setDescription(e.target.value)}
           />
         </div>
 
@@ -164,7 +204,7 @@ export default function Profileinvestor() {
               reset();
             }}
           />
-          <Button text="Save Changes" isPrimary={true} onClick={() => {}} />
+          <Button text="Save Changes" isPrimary={true} onClick={() => {handleSubmit()}} />
         </div>
       </div>
     </div>

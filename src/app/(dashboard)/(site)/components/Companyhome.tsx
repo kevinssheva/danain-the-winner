@@ -1,10 +1,10 @@
 "use client";
 import Image from "next/image";
 import Button from "@/components/Button";
-import { Company, Transaction } from "@prisma/client";
+import { Company, Transaction, User } from "@prisma/client";
 import { useRouter } from "next/navigation";
 
-export default function Companyhome({ company }: { company: Company | null | undefined }) {
+export default function Companyhome({ company }: { company: Company | null | undefined & { transactions: Transaction } & { user: User } | null | undefined}) {
   const router = useRouter();
 
   const formatAmountInRupiah = (amount: string) => {
@@ -179,12 +179,6 @@ export default function Companyhome({ company }: { company: Company | null | und
 
           <Image src={"/dashboard/investor/welcomeinv.svg"} width={235} height={500} alt="Complete" className="self-center" />
         </div>
-        <Button
-          text="Coming Soon"
-          isPrimary={true}
-          fullWidth={true}
-          onClick={() => { }}
-        />
       </div>
     </>
   );

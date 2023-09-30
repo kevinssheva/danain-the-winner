@@ -1,8 +1,27 @@
 import { Transaction, Company, User } from "@prisma/client";
 import Header from "./Header";
 import Image from "next/image";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth/next";
+import { prisma } from "@/app/lib/prisma";
+import { UserSession } from "@/components/UserFetcher";
 
-export default function Portofolio({ portofolio }: { portofolio: (Transaction & { company?: Company; user?: User } )[] | undefined }) {
+interface Session {
+  user: UserSession | undefined;
+}
+
+export default async function Portofolio() {
+  const session = await getServerSession(authOptions) as Session;
+
+  const portofolio = await prisma.transaction.findMany({
+    where: {
+      userId: (session?.user as User).id,
+    },
+    include: {
+      company: true,
+    }
+  });
+
   const formatAmountInRupiah = (amount: string) => {
     const parsedAmount = parseInt(amount, 10);
   
@@ -27,7 +46,7 @@ export default function Portofolio({ portofolio }: { portofolio: (Transaction & 
             <tr className="text-sm lg:text-lg">
               <th className="px-8"></th>
               <th className="px-8">
-                {portofolio?.[0]?.user?.role === "FOUNDER" ? "Company" : "Investor"}
+                Company
               </th>
               <th className="px-8">Fund Investment</th>
               <th className="px-8 ">Investment Date</th>
@@ -46,7 +65,7 @@ export default function Portofolio({ portofolio }: { portofolio: (Transaction & 
                     className="self-center"
                   />
                 </td>
-                <td className="px-8">{portofolio?.[0]?.user?.role === "FOUNDER" ? item.company?.companyName : item.user?.fullName}</td>
+                <td className="px-8">{item.company?.companyName}</td>
                 <td className="px-8">{formatAmountInRupiah(item.amount)}</td>
                 <td className="px-8">{item.createdAt.toLocaleDateString()}</td>
                 <td className="px-8">
