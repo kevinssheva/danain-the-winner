@@ -20,6 +20,7 @@ model User {
   updatedAt              DateTime       @updatedAt
   instagram              String?
   linkedIn               String?
+  cv                     String?
   company                Company?
   conversationsInitiated Conversation[] @relation("UserOne")
   conversationsReceived  Conversation[] @relation("UserTwo")

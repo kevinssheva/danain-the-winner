@@ -22,7 +22,7 @@ export default function Profilecompany() {
   const [video, setVideo] = useState("");
   const [minimum, setMinimum] = useState("");
   const [maximum, setMaximum] = useState("");
-  const [category, setCategory] = useState<string[]>([]);
+  const [category, setCategory] = useState<Array<{ name: string }>>([]);
   const [website, setWebsite] = useState("");
   const [instagram, setInstagram] = useState("");
   const [linkedin, setLinkedin] = useState("");
@@ -30,7 +30,7 @@ export default function Profilecompany() {
 
   const listCategory = [
     "Sport",
-    "Health",
+    "Health & Fitness",
     "Technology",
     "Food & Beverage",
     "Fashion",
@@ -48,18 +48,21 @@ export default function Profilecompany() {
       try {
         const company = await axios.get("/api/v1/dashboard/company/profile")
 
+        console.log(company)
         setName(company.data.company.companyName || '');
         setAddress(company.data.company.companyPlace || '');
         setTagline(company.data.company.tagline || '');
-        setFounder(company.data.company.founder || '');
+        setFounder(company.data.company.user.fullName || '');
         setVideo(company.data.company.videoProfile || '');
         setMinimum(company.data.company.minimum || '');
         setMaximum(company.data.company.money || '');
-        setCategory(company.data.company.category || []);
+        setCategory(company.data.company.categories || []);
         setWebsite(company.data.company.website || '');
         setInstagram(company.data.company.instagram || '');
         setLinkedin(company.data.company.linkedin || '');
         setPitchdesc(company.data.company.pitchDescription || '');
+
+        console.log(category)
       } catch (err) {
         console.log(err)
       }
@@ -246,6 +249,7 @@ export default function Profilecompany() {
                       name="category"
                       className="z-50 w-6 h-6 border-2 border-white bg-transparent rounded-md cursor-pointer"
                       value={item}
+                      checked={category.some(cat => cat.name === item)}
                       onChange={handleCheckboxChange}
                     />
                     <p className="font-semibold">{item}</p>
@@ -284,7 +288,7 @@ export default function Profilecompany() {
             <Input
               placeholder="Please enter your username"
               name="ig"
-              value={instagram}
+              value={instagram.split("/").pop() ?? ''}
               onChange={(e) => setInstagram(e.target.value)}
               icon={FaInstagram}
             />
@@ -295,7 +299,7 @@ export default function Profilecompany() {
             <Input
               placeholder="Please enter your username"
               name="ig"
-              value={linkedin}
+              value={linkedin.split("/").pop() ?? ''}
               onChange={(e) => setLinkedin(e.target.value)}
               icon={FaLinkedin}
             />

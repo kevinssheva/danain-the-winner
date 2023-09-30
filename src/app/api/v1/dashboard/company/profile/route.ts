@@ -16,6 +16,14 @@ export async function GET(req: NextRequest) {
             where: {
                 userId: (session.user as User).id,
             },
+            include: {
+                user: true,
+                categories: {
+                    select: {
+                        name: true
+                    }
+                },
+            }
         });
         return NextResponse.json({ message: "Company successfully retrieved", company }, { status: 200 });
     } catch (err) {
