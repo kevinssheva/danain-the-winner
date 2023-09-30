@@ -29,8 +29,8 @@ export default function Calculator() {
             Waktu Investasi {"(tahun)"}
           </p>
           <Input
-            name="Jumlah"
-            value={amount}
+            name="Waktu"
+            value={time}
             type="number"
             placeholder="0"
             onChange={(e) => {

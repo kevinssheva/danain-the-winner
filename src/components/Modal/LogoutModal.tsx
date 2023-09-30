@@ -4,12 +4,13 @@ import useLogoutModal from "@/app/hooks/useLogoutModal";
 import Modal from "./Modal";
 import Button from "../Button";
 import { signOut } from "next-auth/react";
-import {redirect} from "next/navigation";
+import {useRouter} from "next/navigation";
 
 const LogoutModal = () => {
+  const router = useRouter();
   const handleSignOut = async () => {
     await signOut({ callbackUrl: "/"});
-    redirect("/");
+    router.push("/");
   };
 
   const logoutModal = useLogoutModal();

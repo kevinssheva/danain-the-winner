@@ -107,3 +107,7 @@
     linear-gradient(87deg, #196d0f -2.33%, #42ea3f 94.89%)
   );
 }
+
+.funds-bg {
+  background: var(--dashboard, linear-gradient(127deg, rgba(6, 11, 38, 0.89) 28.26%, rgba(26, 31, 55, 0.50) 91.2%));
+}

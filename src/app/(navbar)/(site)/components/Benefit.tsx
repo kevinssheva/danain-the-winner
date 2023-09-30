@@ -17,9 +17,9 @@ const Benefit = () => {
             Invest and receive equity
           </h3>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum
-            expedita ex voluptatibus magnam ab fugiat, veritatis eius obcaecati
-            deserunt fugit?
+            Danain can help you to invest in a lot of different companies and
+            receive equity from them. You can also get a lot of returns from
+            your investment.
           </p>
         </div>
         <div className="flex-1 flex flex-col items-center gap-1 px-7 mt-10">
@@ -34,9 +34,9 @@ const Benefit = () => {
             Build wealth over time
           </h3>
           <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever.
+            Through the years, Danain has helped a lot of people to build their
+            wealth over time. You can also build your wealth by investing in
+            Danain.
           </p>
         </div>
         <div className="flex-1 flex flex-col items-center gap-1 px-7 mt-10">
@@ -49,9 +49,9 @@ const Benefit = () => {
           />
           <h3 className="text-2xl font-bold mt-7 mb-2">Get front row seats</h3>
           <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever.
+            Danain keeps you up to date with the latest news about companies
+            rising around the world. You can also get front row seats to the
+            latest news about the companies you invested in.
           </p>
         </div>
       </div>
