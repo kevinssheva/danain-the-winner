@@ -9,14 +9,18 @@ interface CompanyWithTransactions extends Company {
   user: User;
 }
 
-export default function Companyhome({ company }: { company: CompanyWithTransactions }) {
+export default function Companyhome({
+  company,
+}: {
+  company: CompanyWithTransactions;
+}) {
   const router = useRouter();
 
   const formatAmountInRupiah = (amount: string) => {
     const parsedAmount = parseInt(amount, 10);
 
     if (isNaN(parsedAmount)) {
-      return "Rp 0";
+      return "Rp 1.999.999.999";
     }
 
     const formattedAmount = new Intl.NumberFormat("id-ID", {
@@ -46,10 +50,10 @@ export default function Companyhome({ company }: { company: CompanyWithTransacti
           <div className="rounded-2xl p-9 gap-9 flex flex-col xl:flex-row items-center funds-bg">
             <Image
               src={"/dashboard/investor/wallet.svg"}
-              width={112}
+              width={20}
               height={100}
               alt="Wallet"
-              className="w-[50%]"
+              className="w-[15%]"
             />
             <div className="text-center">
               <p className="text-lg lg:text-2xl text-[#8C89B4]">
@@ -61,7 +65,7 @@ export default function Companyhome({ company }: { company: CompanyWithTransacti
             </div>
             <Image
               src={"/dashboard/investor/wallet2.svg"}
-              width={112}
+              width={80}
               height={100}
               alt="Wallet"
               className="hidden xl:block"
@@ -137,11 +141,8 @@ export default function Companyhome({ company }: { company: CompanyWithTransacti
 
       <div className="mt-16 flex flex-col xl:flex-row gap-4">
         <div
-          className="p-10 rounded-xl xl:w-1/2"
-          style={{
-            background:
-              "linear-gradient(89deg, rgba(14, 13, 57, 0.00) 1.82%, #1A1F37 21%, #1A1F37 31%);",
-          }}
+          className="p-10 bg-[#1A1F37]  rounded-xl xl:w-1/2"
+          
         >
           <div className="flex flex-col lg:flex-row gap-8 mb-8">
             <Image
@@ -183,7 +184,8 @@ export default function Companyhome({ company }: { company: CompanyWithTransacti
               Complete your Company Profile Now!
             </h1>
             <p className="font-normal text-[#A0AEC0] text-justify">
-              Complete your company profile to get the most out of our platform and get noticed by investors.
+              Complete your company profile to get the most out of our platform
+              and get noticed by investors.
             </p>
 
             <Button
