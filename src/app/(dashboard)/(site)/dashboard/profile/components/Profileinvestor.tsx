@@ -8,6 +8,8 @@ import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import Button from "@/components/Button";
 import fetcher from "@/app/lib/fetcher";
 import useSWR from "swr";
+import axios from "axios";
+import Loader from "@/components/Loader";
 
 export default function Profileinvestor() {
   const { data, error, isLoading } = useSWR(
@@ -31,6 +33,7 @@ export default function Profileinvestor() {
   const [oldpassword, setOldpassword] = useState("");
   const [newpassword, setNewpassword] = useState("");
   const [confirmnewpassword, setConfirmnewpassword] = useState("");
+  const [profilePictureFile, setProfilePictureFile] = useState<File | null>(null);
 
   useEffect(() => {
     if (data) {
@@ -42,7 +45,7 @@ export default function Profileinvestor() {
   
   const fileInputRef = useRef<HTMLInputElement>(null);
   
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return (<div className="flex justify-center items-center h-screen"><Loader /></div>);
 
 
   const handleEditImageClick = () => {
@@ -56,9 +59,37 @@ export default function Profileinvestor() {
   ) => {
     const file = event.target.files && event.target.files[0];
     if (file) {
-      console.log("Selected file:", file);
+      setProfilePictureFile(file);
     }
   };
+
+  const handleSubmit = async () => {
+    const formData = new FormData();
+    formData.append('fullname', fullname);
+    formData.append('email', email);
+    formData.append('description', description);
+    formData.append('oldpassword', oldpassword);
+    formData.append('newpassword', newpassword);
+    formData.append('confirmnewpassword', confirmnewpassword);
+
+    if (profilePictureFile) {
+      formData.append('profilePicture', profilePictureFile);
+    }
+
+    try {
+      const response = await axios.patch("/api/v1/dashboard/investor/profile", formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+
+      if(response.status === 200) {
+        alert("Profile updated successfully")
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
     <div className="px-[5%] md:pl-80 md:pr-12 md:py-14 py-20 z-50 text-white">
@@ -173,7 +204,7 @@ export default function Profileinvestor() {
               reset();
             }}
           />
-          <Button text="Save Changes" isPrimary={true} onClick={() => {}} />
+          <Button text="Save Changes" isPrimary={true} onClick={() => {handleSubmit()}} />
         </div>
       </div>
     </div>

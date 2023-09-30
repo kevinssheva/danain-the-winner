@@ -14,6 +14,7 @@ import dynamic from "next/dynamic";
 import fetcher from "@/app/lib/fetcher";
 import useSWR from "swr";
 import axios from "axios";
+import Loader from "@/components/Loader";
 
 export default function Profilecompany() {
   const ReactQuill = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
@@ -74,7 +75,7 @@ export default function Profilecompany() {
     }
   }, [data])
 
-  if (isLoading) return <div>Loading...</div>
+  if (isLoading) return (<div className="flex justify-center items-center h-screen"><Loader /></div>);
 
   const handleCheckboxChange = (e: any) => {
     const value = e.target.value;

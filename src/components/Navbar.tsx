@@ -83,7 +83,7 @@ const Navbar = ({ user }: NavbarProps) => {
   }, [prevScrollPos]);
 
   const handleSignOut = async () => {
-    await signOut();
+    await signOut({ callbackUrl: "/"});
   };
 
   return (

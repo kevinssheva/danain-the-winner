@@ -11,6 +11,7 @@ import { BsFillFileEarmarkArrowUpFill } from "react-icons/bs";
 import fetcher from "@/app/lib/fetcher";
 import useSWR from "swr";
 import axios from "axios";
+import Loader from "@/components/Loader";
 
 export default function Profilefounder() {
   const { data, error, isLoading } = useSWR(
@@ -83,6 +84,9 @@ export default function Profilefounder() {
     }
   }
 
+  // make loader in the middle of page
+  if (isLoading) return (<div className="flex justify-center items-center h-screen"><Loader /></div>);
+
   const handleSubmit = async () => {
     const formData = new FormData();
     formData.append('fullname', fullname);
@@ -90,6 +94,9 @@ export default function Profilefounder() {
     formData.append('description', description);
     formData.append('instagram', instagram);
     formData.append('linkedin', linkedin);
+    formData.append('oldpassword', oldpassword);
+    formData.append('newpassword', newpassword);
+    formData.append('confirmnewpassword', confirmnewpassword);
 
     if (cvFile) {
       formData.append('cv', cvFile);
@@ -100,14 +107,14 @@ export default function Profilefounder() {
     }
 
     try {
-      const response = await axios.patch("/api/v1/dashboard/investor/profile", formData, {
+      const response = await axios.patch("/api/v1/dashboard/founder/profile", formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       })
 
-      if(response.status === 200) {
-        reset();
+      if (response.status === 200) {
+        alert("Profile updated successfully")
       }
     } catch (err) {
       console.log(err);
@@ -279,7 +286,7 @@ export default function Profilefounder() {
               reset();
             }}
           />
-          <Button text="Save Changes" isPrimary={true} onClick={() => {handleSubmit()}} />
+          <Button text="Save Changes" isPrimary={true} onClick={() => { handleSubmit() }} />
         </div>
       </div>
     </div>

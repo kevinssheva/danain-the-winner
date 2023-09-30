@@ -19,11 +19,6 @@ export default function Sidebar(props: SidebarProps) {
   const pathName = usePathname();
   const [open, setOpen] = useState(false);
 
-  const handleSignOut = async () => {
-    await signOut({ callbackUrl: "/"});
-    redirect("/");
-  };
-
   const sidebarItems =
     props.role === "INVESTOR"
       ? [
