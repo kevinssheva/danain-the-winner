@@ -30,7 +30,6 @@ export default async function Page() {
     }
   });
 
-  console.log("session?.user", session?.user)
   return (
     <div className="bg-background min-h-screen">
       <Image
