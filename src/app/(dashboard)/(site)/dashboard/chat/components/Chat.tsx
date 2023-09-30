@@ -1,50 +1,110 @@
 "use client";
-import { BiArrowToLeft } from "react-icons/bi";
 import Header from "../../../components/Header";
 import Image from "next/image";
-import { FaArrowLeft } from "react-icons/fa6";
 import Input from "@/components/Input";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { BsFillSendFill, BsSend } from "react-icons/bs";
 import Chatin from "./Chatin";
 import Chatout from "./Chatout";
-import { type } from "os";
+import { User, Conversation, Message } from "@prisma/client";
+import ChatBar from "./ChatBar";
+import { useChatQuery } from "@/app/hooks/useChatQuery";
+import { useChatSocket } from "@/app/hooks/useChatSocket";
+import { useChatScroll } from "@/app/hooks/useChatScroll";
+import Loader from "@/components/Loader";
+import qs from "query-string";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
-interface Message {
-  message: string;
-  type: "in" | "out";
+type MessageWithUser = Message & {
+  user: User
 }
 
-export default function Chat() {
+interface ChatMessagesProps {
+  otherUser: User;
+  user: User;
+  chatId: string;
+  apiUrl: string;
+  socketUrl: string;
+  socketQuery: Record<string, string>;
+  query: Record<string, string>;
+  paramKey: "channelId" | "conversationId";
+  paramValue: string;
+}
+
+export default function Chat({
+  otherUser,
+  user,
+  chatId,
+  apiUrl,
+  socketUrl,
+  socketQuery,
+  query,
+  paramKey,
+  paramValue,
+}: ChatMessagesProps) {
+  const router = useRouter()
+  const queryKey = `chat:${chatId}`;
+  const addKey = `chat:${chatId}:messages`;
+  const updateKey = `chat:${chatId}:messages:update`
+
+  const chatRef = useRef<HTMLDivElement>(null);
+  const bottomRef = useRef<HTMLDivElement>(null);
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    status,
+  } = useChatQuery({
+    queryKey,
+    apiUrl,
+    paramKey,
+    paramValue,
+  });
+  useChatSocket({ queryKey, addKey, updateKey });
+  useChatScroll({
+    chatRef,
+    bottomRef,
+    loadMore: fetchNextPage,
+    shouldLoadMore: !isFetchingNextPage && !!hasNextPage,
+    count: data?.pages?.[0]?.items?.length ?? 0,
+  })
+
   const [currentChat, setCurrentChat] = useState("");
-  const [data, setData] = useState<Message[]>([
-    {
-      message: "Hello",
-      type: "in",
-    },
-    {
-      message: "Hello there, my Love",
-      type: "out",
-    },
-  ]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentChat(e.target.value);
   };
 
-  const handleSendMessage = () => {
-    if (currentChat.trim() !== "") {
-      const newMessage: Message = {
-        message: currentChat,
-        type: "out",
-      };
+  const onSubmit = async () => {
+    try {
+      const url = qs.stringifyUrl({
+        url: socketUrl,
+        query,
+      });
 
-      setData((prevData: Message[]) => [...prevData, newMessage]);
-      setCurrentChat("");
+      const data = { content: currentChat }
+      await axios.post(url, data);
+
+      setCurrentChat("")
+      router.refresh();
+    } catch (error) {
+      console.log(error);
     }
-  };
+  }
 
-  const bottomRef = useRef<HTMLDivElement>(null);
+  // const handleSendMessage = () => {
+  //   if (currentChat.trim() !== "") {
+  //     const newMessage: Message = {
+  //       message: currentChat,
+  //       type: "out",
+  //     };
+
+  //     setData((prevData: Message[]) => [...prevData, newMessage]);
+  //     setCurrentChat("");
+  //   }
+  // };
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({
@@ -57,32 +117,7 @@ export default function Chat() {
       <Header page="Chatting" />
 
       <div className="flex flex-col md:flex-row gap-8">
-        <div
-          className="rounded-xl backdrop-blur-3xl p-6 md:w-1/3"
-          style={{
-            background:
-              "linear-gradient(127deg, rgba(6, 11, 40, 0.74) 28.26%, rgba(10, 14, 35, 0.71) 91.2%);",
-          }}
-        >
-          <h1 className="font-semibold text-2xl mb-6">Chatting</h1>
-
-          {["Gibran Fasha", "Abraham Megantoro", "Vania", "Iyal"].map(
-            (name, index) => (
-              <div className="py-1 border-t" key={index}>
-                <div className="flex flex-row md:flex-col lg:flex-row gap-4 cursor-pointer hover:bg-white/10 rounded-xl p-3 items-center">
-                  <Image
-                    src={`/dashboard/portofolio/gibs.jpg`}
-                    width={50}
-                    height={50}
-                    className="rounded-full"
-                    alt="Profile Picture"
-                  />
-                  <p>{name}</p>
-                </div>
-              </div>
-            )
-          )}
-        </div>
+        {/* <ChatBar  /> */}
 
         <div
           className="rounded-xl p-10 md:w-2/3 flex flex-col justify-between"
@@ -99,28 +134,67 @@ export default function Chat() {
           >
             {/* <FaArrowLeft className="cursor-pointer" /> */}
             <Image
-              src={`/dashboard/portofolio/gibs.jpg`}
+              src={otherUser.profilePicture || `/profile.jpg`}
               width={40}
               height={50}
               className="rounded-full"
               alt="Profile Picture"
             />
             <div className="flex flex-col">
-              <p>Gibran Fasha</p>
-              <p>CEO of Gijax</p>
+              <p>{otherUser.fullName}</p>
+              <p className="line-clamp-1">{otherUser.description}</p>
             </div>
           </div>
 
           <div className="h-80 md:max-h-80 overflow-y-auto py-3 px-2 md:px-10 flex w-full">
-            <div className="w-full h-fit flex gap-4 flex-col">
-              {data.map((messageData, index) => {
-                if (messageData.type === "in") {
-                  return <Chatin key={index} message={messageData.message} />;
-                } else if (messageData.type === "out") {
-                  return <Chatout key={index} message={messageData.message} />;
-                }
-                return null; // Handle other types if needed
-              })}
+            {hasNextPage && (
+              <div className="flex justify-center">
+                {isFetchingNextPage ? (
+                  <Loader />
+                ) : (
+                  <button
+                    onClick={() => fetchNextPage()}
+                    className="text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 text-xs my-4 dark:hover:text-zinc-300 transition"
+                  >
+                    Load previous messages
+                  </button>
+                )}
+              </div>
+            )}
+            <div className="w-full h-fit flex gap-4 flex-col-reverse">
+              {data?.pages?.map((group, i) => (
+                <Fragment key={i}>
+                  {group.items.map((message: MessageWithUser) => {
+                    if (message.user.id === user.id) {
+                      return (
+                        <Chatout
+                          key={message.id}
+                          id={message.id}
+                          currentUser={user}
+                          user={message.user}
+                          content={message.content}
+                          deleted={message.deleted}
+                          socketUrl={socketUrl}
+                          socketQuery={socketQuery}
+                        />
+                      )
+                    } else {
+                      return (
+                        <Chatin
+                          key={message.id}
+                          id={message.id}
+                          currentUser={user}
+                          user={message.user}
+                          content={message.content}
+                          deleted={message.deleted}
+                          socketUrl={socketUrl}
+                          socketQuery={socketQuery}
+                        />
+                      )
+                    }
+                  })}
+                </Fragment>
+              ))}
               <div ref={bottomRef} className="pt-1" />
             </div>
           </div>
@@ -136,7 +210,7 @@ export default function Chat() {
               color="#34EE30"
               fill="#34EE30"
               className="cursor-pointer text-3xl"
-              onClick={handleSendMessage}
+              onClick={() => {onSubmit()}}
             />
           </div>
         </div>

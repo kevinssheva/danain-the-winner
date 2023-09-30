@@ -1,9 +1,10 @@
-import { NextApiRequest } from "next";
+import { NextApiRequest, NextApiResponse } from "next";
 import { User } from "@prisma/client";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth/next";
 import { NextApiResponseServerIo } from "@/types";
 import { prisma } from "@/app/lib/prisma";
+import { currentProfilePages } from "@/app/lib/currentProfile";
 
 export default async function handler(
   req: NextApiRequest,
@@ -14,8 +15,8 @@ export default async function handler(
   }
 
   try {
-    const session = await getServerSession(authOptions);
-    const { content, fileUrl } = req.body;
+    const session = await currentProfilePages(req, req, res);
+    const { content } = await req.body;
     const { conversationId } = req.query;
     
     if (!session) {
@@ -37,12 +38,12 @@ export default async function handler(
         OR: [
           {
             userOne: {
-              id: (session.user as User).id,
+              id: session.id,
             }
           },
           {
             userTwo: {
-              id: (session.user as User).id,
+              id: session.id,
             }
           }
         ]
@@ -57,7 +58,7 @@ export default async function handler(
       return res.status(404).json({ message: "Conversation not found" });
     }
 
-    const user = conversation.userOne.id === (session.user as User).id ? conversation.userOne : conversation.userTwo
+    const user = conversation.userOne.id === session.id ? conversation.userOne : conversation.userTwo
 
     if (!user) {
       return res.status(404).json({ message: "Member not found" });
@@ -66,7 +67,6 @@ export default async function handler(
     const message = await prisma.message.create({
       data: {
         content,
-        fileUrl,
         conversationId: conversationId as string,
         userId: user.id,
       },

@@ -5,6 +5,8 @@ import { Inter, Montserrat, Poppins } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import "react-quill/dist/quill.snow.css";
 import ToasterContext from "./context/ToasterContext";
+import { SocketProvider } from "./context/socketProvider";
+import { QueryProvider } from "./context/queryProvider";
 
 const neuropolitical = localFont({
   src: "./../../public/fonts/neuropolitical.otf",
@@ -47,8 +49,12 @@ export default function RootLayout({
       <body
         className={`${neuropolitical.variable} ${inter.variable} ${montserrat.variable} ${poppins.variable}`}
       >
-        <ToasterContext />
-        {children}
+        <SocketProvider>
+          <QueryProvider>
+            <ToasterContext />
+            {children}
+          </QueryProvider>
+        </SocketProvider>
       </body>
     </html>
   );
