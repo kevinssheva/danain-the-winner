@@ -8,7 +8,7 @@ import {redirect} from "next/navigation";
 
 const LogoutModal = () => {
   const handleSignOut = async () => {
-    await signOut();
+    await signOut({ callbackUrl: "/"});
     redirect("/");
   };
 
