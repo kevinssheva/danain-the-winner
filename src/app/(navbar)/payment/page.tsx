@@ -17,7 +17,7 @@ const Page = async ({ searchParams }: { searchParams?: { [key: string]: string |
     redirect("/login");
   }
 
-  const { data: companyData } = await axios.get(process.env.NEXT_PUBLIC_WEB_URL + `/api/v1/company/${searchParams?.CId}`);
+  const { data: companyData } = await axios.get(`/api/v1/company/${searchParams?.CId}`);
   // const { data: transactionData } = await axios.get(process.env.NEXT_PUBLIC_WEB_URL + `/api/v1/transaction/${searchParams?.CId}/${searchParams?.UId}`);
 
   const { company }: { company: Company } = companyData;
