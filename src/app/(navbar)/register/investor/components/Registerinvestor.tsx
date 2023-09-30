@@ -152,7 +152,7 @@ export default function Registerinvestor() {
         width={209}
         height={500}
         alt="Danain"
-        className="w-[48%] lg:w-1/4 self-center lg:animate-inverseFloat"
+        className="w-[48%] lg:w-1/4 self-center animate-inverseFloat"
       />
     </div>
   );

@@ -36,7 +36,7 @@ export default function Register() {
         width={474}
         height={513}
         alt="Register"
-        className="w-[60%] md:w-1/3 self-center lg:animate-inverseFloat"
+        className="w-[60%] md:w-1/3 self-center animate-inverseFloat"
       />
     </div>
   );
