@@ -10,7 +10,7 @@ import LogoutModal from "@/components/Modal/LogoutModal";
 import useLogoutModal from "@/app/hooks/useLogoutModal";
 
 interface SidebarProps {
-  role: string;
+  role: string | undefined;
 }
 
 export default function Sidebar(props: SidebarProps) {
@@ -24,23 +24,23 @@ export default function Sidebar(props: SidebarProps) {
   };
 
   const sidebarItems =
-    props.role === "investor"
+    props.role === "INVESTOR"
       ? [
-          { label: "Dashboard", type: "home" },
-          { label: "Portfolio", type: "portofolio" },
-          { label: "Calculator Simulation", type: "calculator" },
-          { label: "Chatting", type: "chat" },
-          { label: "Profile", type: "profile" },
-          { label: "Logout", type: "logout" },
-        ]
+        { label: "Dashboard", type: "home" },
+        { label: "Portfolio", type: "portofolio" },
+        { label: "Calculator Simulation", type: "calculator" },
+        { label: "Chatting", type: "chat" },
+        { label: "Profile", type: "profile" },
+        { label: "Logout", type: "logout" },
+      ]
       : [
-          { label: "Dashboard", type: "home" },
-          { label: "Company Profile", type: "companyprofile" },
-          { label: "Investors", type: "investors" },
-          { label: "Chatting", type: "chat" },
-          { label: "Profile", type: "profile" },
-          { label: "Sign out", type: "logout" },
-        ];
+        { label: "Dashboard", type: "home" },
+        { label: "Company Profile", type: "companyprofile" },
+        { label: "Investors", type: "investors" },
+        { label: "Chatting", type: "chat" },
+        { label: "Profile", type: "profile" },
+        { label: "Sign out", type: "logout" },
+      ];
   return (
     <>
       <div className="fixed md:static z-50 py-8 md:py-0 px-[5%] overflow-hidden">

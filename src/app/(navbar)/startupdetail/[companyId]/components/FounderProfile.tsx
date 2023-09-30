@@ -9,7 +9,7 @@ const FounderProfile = ({
   description,
   instagram,
   linkedIn,
-  cv
+  cv,
 }: {
   name: string;
   imageURL?: string;
@@ -22,11 +22,13 @@ const FounderProfile = ({
     <div className="w-full">
       <div className="flex items-center my-10 z-20">
         <div className="flex-1 border-b-2 border-white"></div>
-        <h1 className="px-7 text-4xl font-bold">Meet Our Founder</h1>
+        <h1 className="px-3 md:px-7 text-2xl lg:text-4xl font-bold">
+          Meet Our Founder
+        </h1>
         <div className="flex-1 border-b-2 border-white"></div>
       </div>
-      <div className="w-full flex items-start gap-10">
-        <div className="w-1/3 aspect-[354/394] relative">
+      <div className="w-full flex flex-col md:flex-row items-start gap-10">
+        <div className="w-full max-w-lg aspect-[354/394] relative">
           <div className="w-full h-full relative rounded-md overflow-hidden">
             <Image
               src={imageURL ?? "/profile.jpg"}
@@ -61,25 +63,29 @@ const FounderProfile = ({
           )}
         </div>
         <div className="flex-1 flex flex-col ">
-          <h1 className="font-poppins font-semibold text-6xl leading-tight">
-            <span className="text-5xl font-light">Hello, I&apos;m</span>
+          <h1 className="font-poppins font-semibold text-4xl md:text-6xl leading-tight">
+            <span className="text-3xl md:text-5xl font-light">Hello, I'm</span>
             <br /> {name}
           </h1>
-          <p className="font-montserrat text-xl mt-5">
+          <p className="font-montserrat text-lg md:text-xl mt-5">
             {description ?? "No Description Yet"}
           </p>
-          <div className="flex items-center gap-4 mt-4">
-            <button className="bg-[#1019FF] text-white px-10 py-3 rounded-md font-semibold font-poppins">
+          <div className="flex items-center gap-4 mt-4 flex-wrap">
+            <button className="bg-[#1019FF] text-white px-5 md:px-10 py-3 rounded-md font-semibold font-poppins text-sm md:text-base">
               Say Hello!
             </button>
-            {cv ? (<button
-              onClick={() => window.open(cv)}
-              className="bg-white border-[1px] border-[#1019FF] text-[#1019FF] px-8 py-3 rounded-md font-semibold font-poppins flex items-center gap-3"
-            >
-              <AiOutlineDownload color="blue" fill="blue" size={24} />
-              Download CV
-            </button>) : (
-              <p className="font-montserrat text-lg">No CV file download available.</p>
+            {cv ? (
+              <button
+                onClick={() => window.open(cv)}
+                className="bg-white border-[1px] border-[#1019FF] text-[#1019FF] px-8 py-3 rounded-md font-semibold font-poppins flex items-center gap-3"
+              >
+                <AiOutlineDownload color="blue" fill="blue" size={24} />
+                Download CV
+              </button>
+            ) : (
+              <p className="font-montserrat text-sm md:text-lg">
+                No CV file download available.
+              </p>
             )}
           </div>
         </div>
