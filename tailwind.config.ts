@@ -12,6 +12,7 @@ const config: Config = {
         neuro: ["var(--font-neuropolitical)"],
         montserrat: ["var(--font-montserrat)"],
         inter: ["var(--font-inter)"],
+        poppins: ["var(--font-poppins)"],
       },
       colors: {
         background: "#090B32",
@@ -34,11 +35,20 @@ const config: Config = {
             transform: "translateY(10px)",
           },
         },
+        elongate: {
+          "0%, 100%": {
+            transform: "scaleX(1)",
+          },
+          "50%": {
+            transform: "scaleX(1.05)",
+          },
+        },
         // You can define more custom keyframe animations here
       },
       animation: {
         float: "float 3s ease-in-out infinite",
         inverseFloat: "inverseFloat 3s ease-in-out infinite",
+        elongate: "elongate 3s ease-in-out infinite",
         // You can define more custom animation here
       },
     },

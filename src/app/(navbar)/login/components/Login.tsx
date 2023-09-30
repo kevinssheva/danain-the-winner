@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function Login() {
   const router = useRouter();
@@ -23,9 +24,10 @@ export default function Login() {
       });
 
       if (res?.error) {
-        throw new Error(res.error); // Bisa diganti pake toast.error("Invalid credentials");
+        toast.error(res.error);
+        throw new Error(res.error);
       } else {
-        /* Toast Success */
+        toast.success("Login success!");
         router.push('/');
       }
     } catch (error) {
@@ -51,7 +53,7 @@ export default function Login() {
 
   return (
     <div className="py-10 lg:py-20 px-8 lg:px-24 flex flex-col lg:flex-row-reverse justify-center lg:justify-between">
-      <Image src="/login/gambar.svg" width={689} height={500} alt="Danain" className="w-[60%] md:w-1/3 self-center" />
+      <Image src="/login/gambar.svg" width={689} height={500} alt="Danain" className="w-[60%] md:w-1/3 self-center md:animate-inverseFloat" />
 
       <div className="px-0 py-10">
         <h1 className="font-neuro text-3xl lg:text-5xl mb-2">Login</h1>

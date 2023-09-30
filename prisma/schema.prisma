@@ -7,123 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id                     String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  fullName               String
-  email                  String         @unique
-  password               String
-  role                   UserRole
-  description            String?
-  profilePicture         String?
-  lastLogin              DateTime       @default(now())
-  createdAt              DateTime       @default(now())
-  updatedAt              DateTime       @updatedAt
-  instagram              String?
-  linkedIn               String?
-  cv                     String?
-  company                Company?
-  conversationsInitiated Conversation[] @relation("UserOne")
-  conversationsReceived  Conversation[] @relation("UserTwo")
-  messages               Message[]
-  questions              Question[]
-  transactions           Transaction[]
-}
-
-model Company {
-  id                 String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  companyName        String
-  companyPlace       String?
-  companyDescription String?
-  pitchDeck          String?
-  tagline            String?
-  coverPhoto         String?
-  videoProfile       String?
-  pitchDescription   String?
-  minRaise           String?
-  money              String?
-  website            String?
-  instagram          String?
-  linkedin           String?
-  createdAt          DateTime      @default(now())
-  updatedAt          DateTime      @updatedAt
-  userId             String        @unique @db.Uuid
-  user               User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  questions          Question[]
-  transactions       Transaction[]
-  categories         Category[]    @relation("CategoryToCompany")
-
-  @@index([userId])
-}
-
-model Category {
-  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name      String
-  color     String    @default("#000000")
-  companies Company[] @relation("CategoryToCompany")
-}
-
-model Conversation {
-  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userOneId String    @db.Uuid
-  userTwoId String    @db.Uuid
-  userOne   User      @relation("UserOne", fields: [userOneId], references: [id], onDelete: Cascade)
-  userTwo   User      @relation("UserTwo", fields: [userTwoId], references: [id], onDelete: Cascade)
-  messages  Message[]
-
-  @@unique([userOneId, userTwoId])
-  @@index([userTwoId])
-}
-
-model Message {
-  id             String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  content        String
-  fileUrl        String?
-  userId         String       @db.Uuid
-  conversationId String       @db.Uuid
-  deleted        Boolean      @default(false)
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime     @updatedAt
-  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
-  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([userId])
-  @@index([conversationId])
-}
-
-model Transaction {
-  id             String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  paymentMethod  PaymentMethod
-  amount         String
-  totalAmount    String
-  status         TransactionStatus
-  bankName       String?
-  accountType    AccountType?
-  accountName    String?
-  accountNumber  String?
-  cardNumber     String?
-  expirationDate String?
-  userId         String            @db.Uuid
-  companyId      String            @db.Uuid
-  createdAt      DateTime          @default(now())
-  updatedAt      DateTime          @updatedAt
-  company        Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  user           User              @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([userId])
-  @@index([companyId])
-}
-
-model Question {
-  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  question  String
-  userId    String   @db.Uuid
-  companyId String   @db.Uuid
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
 enum UserRole {
   INVESTOR
   FOUNDER
@@ -140,7 +23,154 @@ enum AccountType {
   SAVING
 }
 
+model User {
+  id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  fullName       String
+  email          String   @unique
+  password       String
+  role           UserRole
+  description    String?
+  profilePicture String?
+  cv             String?
+
+  lastLogin DateTime @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  company   Company?
+  instagram String?
+  linkedIn  String?
+
+  transactions Transaction[]
+
+  conversationsInitiated Conversation[] @relation("UserOne")
+  conversationsReceived  Conversation[] @relation("UserTwo")
+
+  messages  Message[]
+  questions Question[]
+
+  @@index([id])
+}
+
+model Company {
+  id                 String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  companyName        String
+  companyPlace       String?
+  companyDescription String?
+  pitchDeck          String?
+  tagline            String?
+
+  coverPhoto       String?
+  videoProfile     String?
+  pitchDescription String?
+  minRaise         String? // min kalo mau invest
+  money            String? // yang dibutuhin
+  website          String?
+  instagram        String?
+  linkedin         String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+
+  transactions Transaction[]
+  categories   Category[]
+  questions    Question[]
+
+  @@unique([userId])
+  @@index([userId])
+}
+
+model Category {
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name      String
+  color     String    @default("#000000")
+  companies Company[]
+}
+
+model Conversation {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
+  userOneId String @db.Uuid
+  userOne   User   @relation("UserOne", fields: [userOneId], references: [id], onDelete: Cascade)
+
+  userTwoId String @db.Uuid
+  userTwo   User   @relation("UserTwo", fields: [userTwoId], references: [id], onDelete: Cascade)
+
+  messages Message[]
+
+  @@unique([userOneId, userTwoId])
+  @@index([userTwoId])
+}
+
+model Message {
+  id      String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  content String  @db.Text
+  fileUrl String? @db.Text
+
+  userId String @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  conversationId String       @db.Uuid
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  deleted Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([conversationId])
+}
+
 enum TransactionStatus {
   ACTIVE
   INACTIVE
+}
+
+model Transaction {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
+  paymentMethod PaymentMethod
+  amount        String
+  totalAmount   String
+  status        TransactionStatus @default(ACTIVE)
+
+  bankName      String?
+  accountType   AccountType?
+  accountName   String?
+  accountNumber String?
+
+  cardNumber     String?
+  expirationDate String?
+
+  userId String @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  companyId String  @db.Uuid
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([companyId])
+}
+
+model Question {
+  id       String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  question String
+
+  userId String @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  companyId String  @db.Uuid
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([companyId])
 }

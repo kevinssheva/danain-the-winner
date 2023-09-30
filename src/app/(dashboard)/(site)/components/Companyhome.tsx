@@ -1,56 +1,36 @@
 "use client";
 import Image from "next/image";
 import Button from "@/components/Button";
-import {useRouter} from "next/navigation"
-import { prisma } from "@/app/lib/prisma";
-import { User } from "@prisma/client";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { getServerSession } from "next-auth/next";
-import { redirect } from "next/navigation";
+import { Company, Transaction, User } from "@prisma/client";
+import { useRouter } from "next/navigation";
 
-export default async function Companyhome() {
-  const router = useRouter()
-  const session = await getServerSession(authOptions);
-
-  const company = await prisma.company.findFirst({
-    where: {
-      userId: (session?.user as User).id,
-    },
-    include: {
-      user: true,
-      transaction: true
-    }
-  });
-
-  if(!company) {
-    redirect("/")
-  }
+export default function Companyhome({ company }: { company: Company | null | undefined & { transactions: Transaction } & { user: User } | null | undefined}) {
+  const router = useRouter();
 
   const formatAmountInRupiah = (amount: string) => {
     const parsedAmount = parseInt(amount, 10);
-  
+
     if (isNaN(parsedAmount)) {
       return 'Invalid Amount';
     }
-  
+
     const formattedAmount = new Intl.NumberFormat('id-ID', {
       style: 'currency',
       currency: 'IDR',
     }).format(parsedAmount);
-  
+
     return formattedAmount;
   }
 
-  const totalAmount = company?.transaction.reduce((sum, transaction) => {
+  const totalAmount = company?.transactions?.reduce((sum: number, transaction: Transaction) => {
     const transactionAmount = parseInt(transaction.amount, 10);
-    
+
     if (!isNaN(transactionAmount)) {
       return (sum + transactionAmount);
     } else {
       return sum;
     }
   }, 0);
-
   return (
     <>
       <div className="flex flex-col lg:flex-row gap-4">
@@ -73,7 +53,7 @@ export default async function Companyhome() {
               <p className="text-lg lg:text-2xl text-[#8C89B4]">
                 Funds Collected
               </p>
-              <h1 className="text-lg lg:text-3xl font-bold">{formatAmountInRupiah(totalAmount.toString())}</h1>
+              <h1 className="text-lg lg:text-3xl font-bold">{formatAmountInRupiah(totalAmount?.toString())}</h1>
             </div>
             <Image
               src={"/dashboard/investor/wallet2.svg"}
@@ -95,7 +75,7 @@ export default async function Companyhome() {
               <div className="flex flex-col gap-4">
                 <p className="text-[#8C89B4]">Welcome back,</p>
 
-                <h1 className="text-2xl font-bold">{company.user.fullName}</h1>
+                <h1 className="text-2xl font-bold">{company?.user?.fullName}</h1>
                 <p className="text-[#8C89B4]">
                   Glad to see you again! <br />
                   Ask me anything.
@@ -105,7 +85,7 @@ export default async function Companyhome() {
                 text="See Your Investors"
                 isPrimary={true}
                 fullWidth={true}
-                onClick={() => {router.push("/dashboard/investors")}}
+                onClick={() => { router.push("/dashboard/investor") }}
               />
             </div>
             <Image
@@ -132,7 +112,7 @@ export default async function Companyhome() {
               text="Chat Now!"
               isPrimary={true}
               fullWidth={true}
-              onClick={() => {router.push("/dashboard/chat")}}
+              onClick={() => { router.push("/dashboard/chat") }}
             />
           </div>
           <Image
@@ -176,7 +156,7 @@ export default async function Companyhome() {
             text="Coming Soon"
             isPrimary={true}
             fullWidth={true}
-            onClick={() => {}}
+            onClick={() => { }}
           />
         </div>
 
@@ -194,11 +174,17 @@ export default async function Companyhome() {
               industry. Lorem Ipsum has been the
             </p>
 
-            <Button isPrimary={true} fullWidth={true} text="Complete Now" onClick={() => {router.push("/dashboard/profile")}} />
+            <Button isPrimary={true} fullWidth={true} text="Complete Now" onClick={() => { router.push("/dashboard/profile") }} />
           </div>
 
-          <Image src={"/dashboard/investor/welcomeinv.svg"} width={235} height={500} alt="Complete" className="self-center"/>
+          <Image src={"/dashboard/investor/welcomeinv.svg"} width={235} height={500} alt="Complete" className="self-center" />
         </div>
+        <Button
+          text="Coming Soon"
+          isPrimary={true}
+          fullWidth={true}
+          onClick={() => { }}
+        />
       </div>
     </>
   );

@@ -97,7 +97,7 @@ export default function Chat() {
                 "radial-gradient(231% 135.8% at 0.9% 2.98%, rgba(255, 255, 255, 0.40) 0%, rgba(0, 0, 0, 0.00) 100%);",
             }}
           >
-            <FaArrowLeft className="cursor-pointer" />
+            {/* <FaArrowLeft className="cursor-pointer" /> */}
             <Image
               src={`/dashboard/portofolio/gibs.jpg`}
               width={40}

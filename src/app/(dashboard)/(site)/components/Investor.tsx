@@ -18,7 +18,7 @@ export default async function Investor() {
       userId: (session?.user as User).id,
     },
   });
-  console.log(company)
+  
   if (!company) {
     return <div>Company not found</div>;
   }
@@ -31,6 +31,21 @@ export default async function Investor() {
       user: true,
     }
   });
+
+  const formatAmountInRupiah = (amount: string) => {
+    const parsedAmount = parseInt(amount, 10);
+
+    if (isNaN(parsedAmount)) {
+      return 'Invalid Amount';
+    }
+
+    const formattedAmount = new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+    }).format(parsedAmount);
+
+    return formattedAmount;
+  }
 
   return (
     <div className="px-[5%] md:pl-80 md:pr-12 md:py-14 py-20 z-50">
@@ -59,7 +74,7 @@ export default async function Investor() {
                   />
                 </td>
                 <td className="px-8">{item.user.fullName}</td>
-                <td className="px-8">{item.amount}</td>
+                <td className="px-8">{formatAmountInRupiah(item.amount)}</td>
                 <td className="px-8">{item.createdAt.toLocaleDateString()}</td>
                 <td className="px-8">
                   <div className="bg-[#D9D9D9] flex rounded-xl justify-center items-center-lg gap-4 px-4 py-2">

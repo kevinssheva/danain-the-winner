@@ -1,18 +1,24 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
+import { hash } from "bcryptjs"
 
 async function main() {
-    // const companies = await prisma.company.createMany({
+    // const users = await prisma.user.createMany({
     //     data: [
     //         {
-    //             companyName: "Apple",
-    //             pitchDescription: "Apple Inc. is an American multinational technology company headquartered in Cupertino, California, that designs, develops, and sells consumer electronics, computer software, and online services.",
-    //             coverPhoto: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/1720px-Apple_logo_black.svg.png",
-    //             website: "https://www.apple.com/",
-    //             companyPlace: "1 Apple Park Way, Cupertino, CA 95014, United States",
-    //         },
-    //     ]
-    // });
+    //             fullName: "John Doe",
+    //             email: "johndoe@gmail.com",
+    //             password: await hash("password", 10), // password
+    //             role: "FOUNDER",
+    //             company: {
+    //                 create: {
+    //                     companyName: "Apple",
+    //                     pitchDescription: "Apple Inc. is an American multinational technology company headquartered in Cupertino, California, that designs, develops, and sells consumer electronics, computer software, and online services.",
+    //                     coverPhoto: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/1720px-Apple_logo_black.svg.png",
+    //                     website: "https://www.apple.com/",
+    //                     companyPlace: "1 Apple Park Way, Cupertino, CA 95014, United States",
+    //                 },
+    //             },
 
     const categories = await prisma.category.createMany({
         data: [

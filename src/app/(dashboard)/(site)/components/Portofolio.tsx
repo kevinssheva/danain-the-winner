@@ -13,7 +13,6 @@ interface Session {
 export default async function Portofolio() {
   const session = await getServerSession(authOptions) as Session;
 
-  console.log(session.user)
   const portofolio = await prisma.transaction.findMany({
     where: {
       userId: (session?.user as User).id,
@@ -22,8 +21,6 @@ export default async function Portofolio() {
       company: true,
     }
   });
-
-  console.log(portofolio)
 
   const formatAmountInRupiah = (amount: string) => {
     const parsedAmount = parseInt(amount, 10);

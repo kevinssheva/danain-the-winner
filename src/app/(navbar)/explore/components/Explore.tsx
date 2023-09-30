@@ -5,11 +5,13 @@ import Filter from "./Filter";
 import ListCompany from "./ListCompany";
 import Search from "./Search";
 import Sort from "./Sort";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import fetcher from "@/app/lib/fetcher";
 import useSWR from "swr";
+import Loader from "@/components/Loader";
+import { Transaction } from "@prisma/client";
 
-const Explore = () => {
+const Explore = ({ transactions }: { transactions: Transaction[] }) => {
   const [showSort, setShowSort] = useState(false);
   const [renderSort, setRenderSort] = useState(false);
   const router = useRouter();
@@ -55,23 +57,32 @@ const Explore = () => {
     <div className="container mx-auto my-20 z-20">
       <Search setQueryExplore={setQuery} />
       <div className="mt-5 mb-10">
-        <Filter
-          toogleClose={handleClose}
-          toogleOpen={handleOpen}
-          showSort={showSort}
-          setCategoryExplore={setCategory}
-        />
+        <div>
+          <Filter
+            toogleClose={handleClose}
+            toogleOpen={handleOpen}
+            showSort={showSort}
+            setCategoryExplore={setCategory}
+          />
+        </div>
         <div
           className={`${showSort ? "scale-y-100" : "scale-y-0"} ${renderSort ? "block" : "hidden"
             } transition duration-300 origin-top`}
         >
-          <Sort isShow setMinPriceExplore={setMinPrice} setMaxPriceExplore={setMaxPrice} setSortExplore={setSort} />
+          <Sort
+            isShow
+            setMinPriceExplore={setMinPrice}
+            setMaxPriceExplore={setMaxPrice}
+            setSortExplore={setSort}
+          />
         </div>
       </div>
-      {data?.filteredCompanies?.length > 0 ?
-        <ListCompany filteredCompanies={data?.filteredCompanies} minPrice={minPrice} maxPrice={maxPrice} sort={sort} /> :
+      {data && data?.filteredCompanies?.length > 0 ?
+        <ListCompany filteredCompanies={data?.filteredCompanies} transactions={transactions} minPrice={minPrice} maxPrice={maxPrice} sort={sort} /> :
         isLoading ?
-          <div className="text-center">Loading...</div> :
+          <div className="flex justify-center items-center h-[50vh]">
+            <Loader />
+          </div> :
           error ?
             <div className="text-center">Error</div> :
             <div className="text-center">No Company Available.</div>

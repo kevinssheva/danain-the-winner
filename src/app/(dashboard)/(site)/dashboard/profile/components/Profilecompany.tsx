@@ -11,6 +11,8 @@ import { MdAddPhotoAlternate } from "react-icons/md";
 import { FaInstagram, FaLinkedin } from "react-icons/fa6";
 import Button from "@/components/Button";
 import dynamic from "next/dynamic";
+import fetcher from "@/app/lib/fetcher";
+import useSWR from "swr";
 import axios from "axios";
 
 export default function Profilecompany() {
@@ -27,6 +29,16 @@ export default function Profilecompany() {
   const [instagram, setInstagram] = useState("");
   const [linkedin, setLinkedin] = useState("");
   const [pitchdesc, setPitchdesc] = useState("");
+  const [photo, setPhoto] = useState("");
+  const [pitchDeck, setPitchDeck] = useState("");
+  const [pitchDeckFile, setPitchDeckFile] = useState<File | null>(null);
+  const [photoFile, setPhotoFile] = useState<File | null>(null);
+
+  const { data, error, isLoading } = useSWR(
+    process.env.NEXT_PUBLIC_WEB_URL +
+    `/api/v1/dashboard/company/profile`,
+    fetcher
+  );
 
   const listCategory = [
     "Sport",
@@ -44,32 +56,25 @@ export default function Profilecompany() {
   ];
 
   useEffect(() => {
-    const getCompany = async () => {
-      try {
-        const company = await axios.get("/api/v1/dashboard/company/profile")
-
-        console.log(company)
-        setName(company.data.company.companyName || '');
-        setAddress(company.data.company.companyPlace || '');
-        setTagline(company.data.company.tagline || '');
-        setFounder(company.data.company.user.fullName || '');
-        setVideo(company.data.company.videoProfile || '');
-        setMinimum(company.data.company.minimum || '');
-        setMaximum(company.data.company.money || '');
-        setCategory(company.data.company.categories || []);
-        setWebsite(company.data.company.website || '');
-        setInstagram(company.data.company.instagram || '');
-        setLinkedin(company.data.company.linkedin || '');
-        setPitchdesc(company.data.company.pitchDescription || '');
-
-        console.log(category)
-      } catch (err) {
-        console.log(err)
-      }
+    if (data) {
+      setName(data.company.companyName || '');
+      setAddress(data.company.companyPlace || '');
+      setTagline(data.company.tagline || '');
+      setFounder(data.company.user.fullName || '');
+      setVideo(data.company.videoProfile || '');
+      setMinimum(data.company.minimum || '');
+      setMaximum(data.company.money || '');
+      setCategory(data.company.categories || []);
+      setWebsite(data.company.website || '');
+      setInstagram(data.company.instagram || '');
+      setLinkedin(data.company.linkedin || '');
+      setPitchdesc(data.company.pitchDescription || '');
+      setPhoto(data.company.coverPhoto || '')
+      setPitchDeck(data.company.pitchDeck || '')
     }
+  }, [data])
 
-    getCompany();
-  }, [])
+  if (isLoading) return <div>Loading...</div>
 
   const handleCheckboxChange = (e: any) => {
     const value = e.target.value;
@@ -80,6 +85,57 @@ export default function Profilecompany() {
       setCategory(category.filter((c) => c !== value));
     }
   };
+
+  const handlePitchDeckUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files && event.target.files[0];
+    if (file) {
+      setPitchDeckFile(file);
+    }
+  };
+
+  const handlePhotoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files && event.target.files[0];
+    if (file) {
+      setPhotoFile(file);
+    }
+  }
+
+  const handleSubmit = async () => {
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('address', address);
+    formData.append('tagline', tagline);
+    formData.append('founder', founder);
+    formData.append('video', video);
+    formData.append('minimum', minimum);
+    formData.append('maximum', maximum);
+    formData.append('instagram', instagram);
+    formData.append('linkedin', linkedin);
+    formData.append('website', website);
+    formData.append('pitchdesc', pitchdesc);
+    formData.append('category', JSON.stringify(category));
+    if (photoFile) {
+      formData.append('coverPhoto', photoFile)
+    }
+
+    if (pitchDeckFile) {
+      formData.append('pitchDeck', pitchDeckFile)
+    }
+
+    try {
+      const response = await axios.patch("/api/v1/dashboard/company/profile", formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+
+      if (response.status === 200) {
+        alert("Profile updated successfully!")
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
     <div className="px-[5%] md:pl-80 md:pr-12 md:py-14 py-20 z-50 text-white">
@@ -94,7 +150,7 @@ export default function Profilecompany() {
       >
         <div>
           <p className="text-[#A0AEC0] text-sm md:text-base">Welcome back,</p>
-          <h1 className="text-3xl md:text-5xl font-semibold">Kevin Lie</h1>
+          <h1 className="text-3xl md:text-5xl font-semibold">{data.company.companyName}</h1>
           <p className="text-[#A0AEC0] text-sm md:text-base mb-8">
             Glad to see you again! <br />
             Ask me anything.
@@ -136,16 +192,23 @@ export default function Profilecompany() {
 
           <div className="">
             <label>Pitch Deck</label>
-            <div className="flex items-center justify-center w-full">
+            <div className="items-center justify-center w-full">
+              <a
+                href={pitchDeck}
+                className="underline text-blue-500 hover:text-blue-700"
+                target="_blank"
+                rel="noopener noreferrer">
+                {pitchDeck.split("/").pop()}
+              </a>
               <label
                 htmlFor="dropzone-file"
                 className="input-bg-startup flex flex-col items-center justify-center w-full h-32 border border-gray-300 rounded-lg cursor-pointer"
               >
                 <div className="flex flex-col gap-4 items-center justify-center pt-5 pb-6">
-                  <p className="text-[#D8D8D8]">Please upload your file</p>
+                  {pitchDeckFile ? <p className="text-[#D8D8D8]">{pitchDeckFile.name}</p> : <p className="text-[#D8D8D8]">Please upload your file</p>}
                   <BsFillFileEarmarkArrowUpFill className="text-5xl" />
                 </div>
-                <input id="dropzone-file" type="file" className="hidden" />
+                <input id="dropzone-file" type="file" className="hidden" onChange={handlePitchDeckUpload}/>
               </label>
             </div>
           </div>
@@ -172,17 +235,28 @@ export default function Profilecompany() {
 
           <div className="">
             <label>Cover Photo</label>
-            <div className="flex items-center justify-center w-full">
+            <div className="items-center justify-center w-full">
+              <a
+                href={photo}
+                className="underline text-blue-500 hover:text-blue-700"
+                target="_blank"
+                rel="noopener noreferrer">
+                {photo.split("/").pop()}
+              </a>
               <label
                 htmlFor="dropzone-file"
                 className="input-bg-startup flex flex-col items-center justify-center w-full border border-gray-300 rounded-lg cursor-pointer"
               >
                 <div className="flex flex-col gap-4 items-center justify-center pt-5 pb-6">
-                  <p className="text-[#D8D8D8]">Please upload your photo</p>
-                  <p>1200 x 675 pixels {"(suggested)"}</p>
-                  <MdAddPhotoAlternate className="text-5xl" />
+                  {photoFile ? <p className="text-[#D8D8D8]">{photoFile.name}</p> : (
+                    <>
+                      <p className="text-[#D8D8D8]">Please upload your photo</p>
+                      <p>1200 x 675 pixels {"(suggested)"}</p>
+                      <MdAddPhotoAlternate className="text-5xl" />
+                    </>
+                  )}
                 </div>
-                <input id="dropzone-file" type="file" className="hidden" />
+                <input id="dropzone-file" type="file" className="hidden" onChange={handlePhotoUpload}/>
               </label>
             </div>
           </div>
@@ -307,7 +381,7 @@ export default function Profilecompany() {
         </div>
       </div>
       <div className="flex justify-center items-center mt-16">
-        <Button text="Submit" isPrimary={true} onClick={() => { }} />
+        <Button text="Submit" isPrimary={true} onClick={() => { handleSubmit() }} />
       </div>
     </div>
   );

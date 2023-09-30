@@ -1,10 +1,18 @@
 import Explore from "./components/Explore";
 import Image from "next/image";
+import axios from "axios";
+import { Transaction } from "@prisma/client";
 
-const Page = () => {
+const Page = async () => {
+  const { data: transactionData } = await axios.get(
+    process.env.NEXT_PUBLIC_WEB_URL + `/api/v1/transaction`
+  );
+
+  const { transactions }: { transactions: Transaction[] } = transactionData;
+
   return (
     <div className="bg-background px-[7%] relative overflow-hidden min-h-screen py-20 z-10">
-      <Explore />
+      <Explore transactions={transactions}/>
       <div className="absolute w-[90rem] -top-[30vh] -right-[30%] -z-10">
         <Image
           src={"/explore/background/Glow-1.svg"}

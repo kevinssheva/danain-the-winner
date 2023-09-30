@@ -5,15 +5,30 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth/next";
 import { prisma } from "@/app/lib/prisma";
 import { User } from "@prisma/client";
+import { redirect } from "next/navigation";
 
 export default async function Page() {
   const session = await getServerSession(authOptions);
 
+  if (!session) {
+    redirect("/login");
+  }
+
   const user = await prisma.user.findFirst({
     where: {
-        id: (session?.user as User).id,
+      id: (session?.user as User)?.id,
     },
-});
+  });
+
+  const company = await prisma.company.findFirst({
+    where: {
+      userId: (session?.user as User)?.id,
+    },
+    include: {
+      user: true,
+      transactions: true
+    }
+  });
 
   return (
     <div className="bg-background min-h-screen">
@@ -28,9 +43,9 @@ export default async function Page() {
       <div className="h-full min-h-screen bg-none md:bg-[url('/dashboard/investor/glowatas.svg')] bg-no-repeat bg-right-top">
         <div className="h-full min-h-screen bg-[url('/dashboard/investor/glowtengah.svg')] bg-no-repeat">
           <div className="h-full min-h-screen bg-none md:bg-[url('/dashboard/investor/glowbawah.svg')] bg-no-repeat bg-right-bottom">
-          <div className="h-full min-h-screen bg-[url('/dashboard/investor/kotakkiri.svg')] bg-no-repeat bg-left-bottom">
-            <Home user={user}/>
-          </div>
+            <div className="h-full min-h-screen bg-[url('/dashboard/investor/kotakkiri.svg')] bg-no-repeat bg-left-bottom">
+              <Home user={user} company={company} />
+            </div>
           </div>
         </div>
       </div>
