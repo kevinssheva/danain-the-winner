@@ -21,7 +21,7 @@ const LegalStuff: React.FC<LegalStuffProps> = ({
       <div className="w-full max-w-md glass rounded-xl">
         <ul className="text-xs md:text-sm flex flex-col gap-5 p-5">
           <li>
-            I've read the Investor FAQ. I understand startups are risky and can
+            I&apos;ve read the Investor FAQ. I understand startups are risky and can
             afford to lose my entire investment.
           </li>
 
@@ -48,7 +48,7 @@ const LegalStuff: React.FC<LegalStuffProps> = ({
           </li>
 
           <li>
-            I understand that if I'm an accredited investor I may be
+            I understand that if I&apos;m an accredited investor I may be
             transitioned into a concurrent Reg D.
           </li>
         </ul>
