@@ -37,21 +37,21 @@ const AskQuestion = ({
         <Button text="Send" onClick={handleAddQuestion} isPrimary isGradient />
       </div>
       <div className="w-full flex flex-col py-5">
-        <div className="font-montserrat text-xl mb-2 ml-auto inline-block">
+        <div className="font-montserrat text-base md:text-xl mb-2 ml-auto inline-block">
           Sort by Latest
         </div>
         <div className="w-full flex-col gap-4 flex">
           {sortedQuestions?.map((item: any, index) => (
-            <div key={index} className="glass px-6 py-3 rounded-2xl">
-              <div className="flex justify-between mb-2">
-                <p className="font-semibold font-poppins text-xl">
+            <div key={index} className="glass px-4 md:px-6 py-3 rounded-2xl">
+              <div className="flex justify-between mb-2 items-center">
+                <p className="font-semibold font-poppins text-base md:text-xl">
                   {item.user.fullName}
                 </p>
-                <p className="text-sm text-gray-400">
+                <p className="text-xs md:text-sm text-gray-400 text-right">
                   {formatDistanceToNow(new Date(item.createdAt))} ago
                 </p>
               </div>
-              <p className="text-base font-montserrat">{item.question}</p>
+              <p className="text-sm md:text-base font-montserrat">{item.question}</p>
             </div>
           ))}
         </div>

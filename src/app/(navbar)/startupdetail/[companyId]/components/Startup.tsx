@@ -59,16 +59,16 @@ export default function Startup({
 
   return (
     <div className="py-20 container mx-auto z-20">
-      <h1 className="text-4xl font-bold">{company.companyName}</h1>
-      <p className="text-xl font-normal mb-12 opacity-80 font-montserrat">
+      <h1 className="text-3xl md:text-4xl font-bold">{company.companyName}</h1>
+      <p className="text-base md:text-xl font-normal mb-12 opacity-80 font-montserrat">
         {company.tagline}
       </p>
 
-      <div className="flex mb-6 w-full max-w-2xl relative">
+      <div className="flex mb-6 w-full max-w-2xl relative overflow-x-auto">
         {menuData.map((item, index) => (
           <button
             key={index}
-            className={`flex-1 text-center cursor-pointer z-20 py-3 px-4 rounded-xl font-inter font-medium text-lg`}
+            className={`w-1/4 text-center cursor-pointer z-20 py-3 rounded-xl font-inter font-medium text-sm md:text-lg`}
             onClick={() => setMenu(index)}
           >
             {item}
@@ -82,7 +82,7 @@ export default function Startup({
         />
       </div>
 
-      <div className="w-full flex gap-5 justify-start items-start">
+      <div className="w-full flex flex-col lg:flex-row gap-5 justify-start items-start">
         {menu === 0 && (
           <Overview description={company.companyDescription ?? "Not Yet"} />
         )}
@@ -119,17 +119,26 @@ export default function Startup({
 
       {menu === 2 && (
         <div className="w-full flex flex-col gap-4 items-start mt-10">
-          <h1 className="font-semibold font-poppins text-3xl">Description</h1>
-          <p className="font-montserrat text-lg">{company.pitchDescription ?? "No pitch description available."}</p>
+          <h1 className="font-semibold font-poppins text-2xl md:text-3xl">Description</h1>
+          <p className="font-montserrat text-base md:text-lg">
+            {company.pitchDescription ?? "No pitch description available."}
+          </p>
           {company.pitchDeck ? (
             <button
-              onClick={() => window.open(company.pitchDeck ? company.pitchDeck : "404notfound")}
-              className="bg-white border-[1px] border-[#1019FF] text-[#1019FF] px-4 py-3 rounded-md font-semibold font-poppins flex items-center gap-3"
+              onClick={() =>
+                window.open(
+                  company.pitchDeck ? company.pitchDeck : "404notfound"
+                )
+              }
+              className="bg-white border-[1px] border-[#1019FF] text-[#1019FF] px-4 py-2 md:py-3 rounded-md font-semibold font-poppins flex items-center gap-3 text-sm md:text-base"
             >
               <AiOutlineDownload color="blue" fill="blue" size={24} />
               Download Pitch Deck
-            </button>) : (
-            <p className="font-montserrat text-lg">No pitch deck file download available.</p>
+            </button>
+          ) : (
+            <p className="font-montserrat text-lg">
+              No pitch deck file download available.
+            </p>
           )}
         </div>
       )}
