@@ -3,7 +3,7 @@
 import Button from "@/components/Button";
 import Image from "next/image";
 
-const GetStarted = () => {
+const GetStarted = ({ isLogin }: { isLogin?: boolean }) => {
   return (
     <div className="flex-1 w-full bg-gradient-to-b from-[#2F338A] to-[#07092A] to-[150%] py-8 rounded-t-[2.5rem] shadow-[0_-20px_50px_-15px_rgba(0,0,0,0.9)] relative">
       <div className="container mx-auto flex flex-col gap-8 items-center z-20 px-[5%] lg:px-0">
@@ -18,17 +18,20 @@ const GetStarted = () => {
             Danain, Where Startups and Investors Collide
           </p>
           <p className="font-montserrat text-lg">
-            ini kalimat ajakan gitu deskripsi dikit
+            Discover unique opportunities with us! Join now to find the
+            investors or startups you're looking for.
           </p>
         </div>
         <div className="z-20">
-          <Button
-            text="Create Account"
-            onClick={() => {}}
-            isPrimary
-            isBig
-            isGradient
-          />
+          {!isLogin && (
+            <Button
+              text="Create Account"
+              onClick={() => {}}
+              isPrimary
+              isBig
+              isGradient
+            />
+          )}
         </div>
         <div className="w-full z-20">
           <div className="border-b-2 w-full mb-2"></div>

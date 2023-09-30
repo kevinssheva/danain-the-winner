@@ -1,13 +1,21 @@
+import { getServerSession } from "next-auth";
 import Description from "./components/Description";
 import GetStarted from "./components/GetStarted";
 import Image from "next/image";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { UserSession } from "@/components/UserFetcher";
 
-const Page = () => {
+interface Session {
+  user: UserSession | undefined;
+}
+
+const Page = async () => {
+  const session = (await getServerSession(authOptions)) as Session;
   return (
     <div className="bg-background relative overflow-hidden min-h-screen pt-20 z-10">
       <div className="min-h-screen flex flex-col gap-12 z-20">
         <Description />
-        <GetStarted />
+        <GetStarted isLogin={!!session} />
       </div>
       <div className="absolute w-[40rem] top-0 left-0 -z-10">
         <Image
