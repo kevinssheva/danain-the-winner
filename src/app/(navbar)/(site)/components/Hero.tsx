@@ -5,8 +5,11 @@ import Button from "@/components/Button";
 import RegistrationModal from "@/components/Modal/RegistrationModal";
 import Image from "next/image";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
-const Hero = ({ role }: { role: string}) => {
+const Hero = ({ role, userId }: { role: string, userId: string | undefined }) => {
+  const router = useRouter();
+
   const isUnregistered = role === "UNREGISTERED";
   const registrationModal = useRegistrationModal();
 
@@ -18,7 +21,7 @@ const Hero = ({ role }: { role: string}) => {
 
   return (
     <>
-      <RegistrationModal />
+      <RegistrationModal role={role} userId={userId} />
       <div className="min-h-screen relative container mx-auto py-20">
         <div className="w-full flex flex-col lg:flex-row justify-around gap-10 items-center">
           <div
@@ -35,7 +38,7 @@ const Hero = ({ role }: { role: string}) => {
               Seamlessly connecting visionary businesses with eager investors.
               Empowering growth and fostering innovation together
             </p>
-            <Button text="GET STARTED" onClick={() => {}} isBig />
+            <Button text="GET STARTED" onClick={() => { router.push("/register") }} isBig />
           </div>
           <Image
             src={"/landing/CryptoHero.svg"}

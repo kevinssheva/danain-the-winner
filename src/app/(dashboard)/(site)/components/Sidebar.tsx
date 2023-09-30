@@ -104,7 +104,7 @@ export default function Sidebar(props: SidebarProps) {
               <p className="my-2">Account Pages</p>
 
               {sidebarItems.slice(-2).map((item) => (
-                <li key={item.type}>
+                <li key={item.type} className="cursor-pointer">
                   <a
                     onClick={() => {
                       if (item.type === "logout") {

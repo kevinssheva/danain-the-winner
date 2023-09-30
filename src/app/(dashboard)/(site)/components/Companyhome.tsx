@@ -1,10 +1,15 @@
 "use client";
 import Image from "next/image";
 import Button from "@/components/Button";
-import { Company, Transaction, User } from "@prisma/client";
+import { Company, User, Transaction } from "@prisma/client";
 import { useRouter } from "next/navigation";
 
-export default function Companyhome({ company }: { company: Company | null | undefined & { transactions: Transaction } & { user: User } | null | undefined}) {
+interface CompanyWithTransactions extends Company {
+  transactions: Transaction[];
+  user: User;
+}
+
+export default function Companyhome({ company }: { company: CompanyWithTransactions }) {
   const router = useRouter();
 
   const formatAmountInRupiah = (amount: string) => {
