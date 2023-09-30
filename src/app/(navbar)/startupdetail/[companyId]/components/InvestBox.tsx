@@ -1,6 +1,7 @@
 "use client";
 
 import Button from "@/components/Button";
+import { Company } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
@@ -9,13 +10,13 @@ const InvestBox = ({
   moneyNeeded,
   investorCount,
   userId,
-  companyId,
+  company,
 }: {
   moneyRaised: number;
   moneyNeeded: number;
   investorCount: number;
   userId: string | undefined;
-  companyId: string;
+  company: Company;
 }) => {
   const router = useRouter();
 
@@ -38,7 +39,7 @@ const InvestBox = ({
     if (!userId) return toast.error("You must login first!");
 
     // redirect to /payment with companyid and userid
-    router.push(`/payment?CId=${companyId}&UId=${userId}`);
+    router.push(`/payment?CId=${company.id}&UId=${userId}`);
   };
 
   const percentage = (moneyRaised / moneyNeeded) * 100;
@@ -84,7 +85,7 @@ const InvestBox = ({
             isPrimary
             isGradient
           />
-          <Button text="Chat" onClick={() => {}} isBig />
+          <Button text="Chat" onClick={() => {router.push(`../dashboard/chat/${company.userId}`)}} isBig />
         </div>
       </div>
     </div>
