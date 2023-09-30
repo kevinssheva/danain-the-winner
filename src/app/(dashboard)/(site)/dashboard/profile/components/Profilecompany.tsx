@@ -178,7 +178,7 @@ export default function Profilecompany() {
       >
         <div>
           <p className="text-[#A0AEC0] text-sm md:text-base">Welcome back,</p>
-          <h1 className="text-3xl md:text-5xl font-semibold">{data.company.companyName}</h1>
+          <h1 className="text-3xl md:text-5xl font-semibold">{data?.company?.companyName}</h1>
           <p className="text-[#A0AEC0] text-sm md:text-base mb-8">
             Glad to see you again! <br />
             Ask me anything.
