@@ -103,7 +103,7 @@ export default function Profileinvestor() {
 
         <div className="">
           <Image
-            src={"/dashboard/portofolio/gibs.jpg"}
+            src={"/profile.jpg"}
             width={80}
             height={80}
             alt="Ava"
