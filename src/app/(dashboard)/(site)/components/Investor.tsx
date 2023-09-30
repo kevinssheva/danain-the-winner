@@ -20,7 +20,7 @@ export default async function Investor() {
   });
   
   if (!company) {
-    return <div>Company not found</div>;
+    return <div className="pl-80 text-xl">Company not found</div>;
   }
 
   const portofolio = await prisma.transaction.findMany({

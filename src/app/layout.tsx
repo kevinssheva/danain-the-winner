@@ -43,6 +43,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <link rel="icon" href="/logo.svg" />
       <body
         className={`${neuropolitical.variable} ${inter.variable} ${montserrat.variable} ${poppins.variable}`}
       >

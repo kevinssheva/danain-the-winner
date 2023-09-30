@@ -113,7 +113,7 @@ export default function Sidebar(props: SidebarProps) {
                         window.location.href = `/dashboard/${item.type.toLowerCase()}`;
                       }
                     }}
-                    className={`flex items-center py-3 px-4 rounded-xl ${
+                    className={`flex cursor-pointer items-center py-3 px-4 rounded-xl ${
                       pathName === `/dashboard/${item.type.toLowerCase()}`
                         ? "bg-gray-700"
                         : "bg-none"

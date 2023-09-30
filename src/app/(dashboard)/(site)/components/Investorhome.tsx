@@ -1,11 +1,11 @@
-"use client"
+"use client";
 import Image from "next/image";
 import Button from "@/components/Button";
 import { useRouter } from "next/navigation";
 import { User } from "@prisma/client";
 
 export default function Investorhome({ user }: { user: User | null }) {
-  const router = useRouter()
+  const router = useRouter();
 
   return (
     <>
@@ -32,7 +32,9 @@ export default function Investorhome({ user }: { user: User | null }) {
                 text="See Your Portofolio"
                 isPrimary={true}
                 fullWidth={true}
-                onClick={() => { router.push("/dashboard/portofolio") }}
+                onClick={() => {
+                  router.push("/dashboard/portofolio");
+                }}
               />
             </div>
             <Image
@@ -46,15 +48,20 @@ export default function Investorhome({ user }: { user: User | null }) {
           <div className="bg-[#1A1F37] self-center w-full lg:w-[80%] max-w-xl py-16 flex flex-col-reverse lg:flex-row gap-4 px-6 rounded-xl">
             <div className="flex flex-col text-justify justify-between">
               <p className="text-[#8C89B4] mb-4 lg:mb-0">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the {"industry's"} standard dummy
-                text ever.
+                Unlock a world of investment opportunities with our cutting-edge
+                chat feature that seamlessly connects investors and companies.
+                <br />
+                <br /> Discover a platform designed to foster meaningful
+                dialogues and facilitate informed investment decisions. Engage
+                with a diverse network of businesses.
               </p>
               <Button
                 text="Chat Now!"
                 isPrimary={true}
                 fullWidth={true}
-                onClick={() => { router.push("dashboard/chat") }}
+                onClick={() => {
+                  router.push("dashboard/chat");
+                }}
               />
             </div>
             <Image
@@ -102,7 +109,9 @@ export default function Investorhome({ user }: { user: User | null }) {
               text="Use feature"
               isPrimary={true}
               fullWidth={false}
-              onClick={() => { router.push("/dashboard/calculator") }}
+              onClick={() => {
+                router.push("/dashboard/calculator");
+              }}
             />
           </div>
         </div>
@@ -125,17 +134,18 @@ export default function Investorhome({ user }: { user: User | null }) {
             className="self-center"
           />
           <p className="text-[#A0AEC0] text-justify">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci
-            corporis sequi cum. Suscipit nam, tempore facilis dignissimos
-            sapiente aspernatur eveniet quisquam quas laboriosam possimus illum
-            et voluptates corporis ea ipsum.s
+            Explore a diverse range of startups and find the perfect fit for
+            your investment portfolio. We have a wide range of startups from
+            various industries and sectors. Find the perfect fit for your investment portfolio.
           </p>
           <div className="flex justify-end">
             <Button
               text="Explore Now"
               isPrimary={true}
               fullWidth={false}
-              onClick={() => { router.push("/explore") }}
+              onClick={() => {
+                router.push("/explore");
+              }}
             />
           </div>
         </div>
