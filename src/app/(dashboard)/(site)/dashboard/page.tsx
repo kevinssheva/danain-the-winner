@@ -1,8 +1,20 @@
 import Image from "next/image";
 import Sidebar from "../components/Sidebar";
 import Home from "../components/Home";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth/next";
+import { prisma } from "@/app/lib/prisma";
+import { User } from "@prisma/client";
 
-export default function Page() {
+export default async function Page() {
+  const session = await getServerSession(authOptions);
+
+  const user = await prisma.user.findFirst({
+    where: {
+        id: (session?.user as User).id,
+    },
+});
+
   return (
     <div className="bg-background min-h-screen">
       <Image
@@ -17,7 +29,7 @@ export default function Page() {
         <div className="h-full min-h-screen bg-[url('/dashboard/investor/glowtengah.svg')] bg-no-repeat">
           <div className="h-full min-h-screen bg-none md:bg-[url('/dashboard/investor/glowbawah.svg')] bg-no-repeat bg-right-bottom">
           <div className="h-full min-h-screen bg-[url('/dashboard/investor/kotakkiri.svg')] bg-no-repeat bg-left-bottom">
-            <Home />
+            <Home user={user}/>
           </div>
           </div>
         </div>

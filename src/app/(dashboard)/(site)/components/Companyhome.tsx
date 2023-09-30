@@ -1,10 +1,55 @@
 "use client";
 import Image from "next/image";
 import Button from "@/components/Button";
-import {useRouter} from "next/navigation"
+import {useRouter} from "next/navigation";
+import { prisma } from "@/app/lib/prisma";
+import { User } from "@prisma/client";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth/next";
+import { redirect } from "next/navigation";
 
-export default function Companyhome() {
+export default async function Companyhome() {
+  const session = await getServerSession(authOptions);
   const router = useRouter()
+
+  const company = await prisma.company.findFirst({
+    where: {
+      userId: (session?.user as User).id,
+    },
+    include: {
+      user: true,
+      transaction: true
+    }
+  });
+
+  if(!company) {
+    redirect("/")
+  }
+
+  const formatAmountInRupiah = (amount: string) => {
+    const parsedAmount = parseInt(amount, 10);
+  
+    if (isNaN(parsedAmount)) {
+      return 'Invalid Amount';
+    }
+  
+    const formattedAmount = new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+    }).format(parsedAmount);
+  
+    return formattedAmount;
+  }
+
+  const totalAmount = company?.transaction.reduce((sum, transaction) => {
+    const transactionAmount = parseInt(transaction.amount, 10);
+    
+    if (!isNaN(transactionAmount)) {
+      return (sum + transactionAmount);
+    } else {
+      return sum;
+    }
+  }, 0);
   return (
     <>
       <div className="flex flex-col lg:flex-row gap-4">
@@ -27,7 +72,7 @@ export default function Companyhome() {
               <p className="text-lg lg:text-2xl text-[#8C89B4]">
                 Funds Collected
               </p>
-              <h1 className="text-lg lg:text-3xl font-bold">{"$632.000"}</h1>
+              <h1 className="text-lg lg:text-3xl font-bold">{formatAmountInRupiah(totalAmount.toString())}</h1>
             </div>
             <Image
               src={"/dashboard/investor/wallet2.svg"}
@@ -49,7 +94,7 @@ export default function Companyhome() {
               <div className="flex flex-col gap-4">
                 <p className="text-[#8C89B4]">Welcome back,</p>
 
-                <h1 className="text-2xl font-bold">Kevin Lie</h1>
+                <h1 className="text-2xl font-bold">{company.user.fullName}</h1>
                 <p className="text-[#8C89B4]">
                   Glad to see you again! <br />
                   Ask me anything.
@@ -86,6 +131,7 @@ export default function Companyhome() {
               text="Chat Now!"
               isPrimary={true}
               fullWidth={true}
+              onClick={() => { }}
               onClick={() => {router.push("/dashboard/chat")}}
             />
           </div>
@@ -153,6 +199,12 @@ export default function Companyhome() {
 
           <Image src={"/dashboard/investor/welcomeinv.svg"} width={235} height={500} alt="Complete" className="self-center"/>
         </div>
+        <Button
+          text="Coming Soon"
+          isPrimary={true}
+          fullWidth={true}
+          onClick={() => { }}
+        />
       </div>
     </>
   );

@@ -6,8 +6,8 @@ import RegistrationModal from "@/components/Modal/RegistrationModal";
 import Image from "next/image";
 import { useEffect } from "react";
 
-const Hero = () => {
-  const isUnregistered = true;
+const Hero = ({ role }: { role: string}) => {
+  const isUnregistered = role === "UNREGISTERED";
   const registrationModal = useRegistrationModal();
 
   useEffect(() => {

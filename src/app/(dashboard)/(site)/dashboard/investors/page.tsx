@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Investor from "../../components/Investor";
 
-export default function Portopage() {
+export default async function Portopage() {
   return (
     <div className="bg-background h-[250vh]">
       <Image
