@@ -1,34 +1,42 @@
-import ChatEmpty from "./components/ChatEmpty";
-import { prisma } from "@/app/lib/prisma";
+import Chat from "../components/Chat";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth/next";
-import { Conversation, User } from "@prisma/client";
 import { UserSession } from "@/components/UserFetcher";
+import { getOrCreateConversation } from "@/app/lib/conversation";
 import { redirect } from "next/navigation";
+import { prisma } from "@/app/lib/prisma";
 
 interface Session {
   user: UserSession | undefined;
 }
 
-export default async function Portopage() {
+export default async function Portopage({ params }: { params: { userId: string } }) {
   const session = await getServerSession(authOptions) as Session;
 
   if (!session.user) {
-    redirect("/login")
+    return redirect("/login")
   }
-  const conversation = await prisma.conversation.findMany({
+
+  const currentUser = await prisma.user.findUnique({
     where: {
-      OR: [
-        { userOneId: session.user.id },
-        { userTwoId: session.user.id },
-      ]
-    },
-    include: {
-      userOne: true,
-      userTwo: true
+      id: session.user.id,
     }
   });
-  
+
+  if (!currentUser) {
+    return redirect("/login")
+  }
+
+  const conversation = await getOrCreateConversation(session.user?.id, params.userId);
+
+  if (!conversation) {
+    return redirect(`/dashboard/chat`);
+  }
+
+  const { userOne, userTwo } = conversation;
+
+  const otherUser = userOne.id === session.user.id ? userTwo : userOne;
+
   return (
     <div className="bg-background h-full min-h-screen overflow-hidden">
       <div className="bg-[url('/dashboard/portofolio/kotakkanan.svg')] h-full min-h-screen bg-no-repeat bg-right">
@@ -37,7 +45,21 @@ export default async function Portopage() {
             <div className="bg-[url('/dashboard/portofolio/kotakatas.svg')] h-full min-h-screen bg-no-repeat bg-right-top">
               <div className="bg-none md:bg-[url('/dashboard/portofolio/glowatas.svg')] h-full min-h-screen bg-no-repeat bg-right-top">
                 <div className="bg-none md:bg-[url('/dashboard/portofolio/glowkanan.svg')] h-full min-h-screen bg-no-repeat bg-right-bottom">
-                  <ChatEmpty conversation={conversation} userId={session?.user?.id}/>
+                  <Chat
+                    user={currentUser}
+                    otherUser={otherUser}
+                    chatId={conversation.id}
+                    apiUrl="/api/v1/message"
+                    paramKey="conversationId"
+                    paramValue={conversation.id}
+                    socketUrl="/api/socket/messages"
+                    socketQuery={{
+                      conversationId: conversation.id,
+                    }}
+                    query={{ 
+                      conversationId: conversation.id,
+                     }}
+                  />
                 </div>
               </div>
             </div>
