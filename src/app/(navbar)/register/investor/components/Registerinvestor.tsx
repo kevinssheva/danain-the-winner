@@ -101,7 +101,7 @@ export default function Registerinvestor() {
               <div className="flex flex-col gap-2">
                 <label>Fullname</label>
                 <input
-                  className={`border border-opacity-0 rounded-full py-4 px-8 gradient-background`}
+                  className={`border border-opacity-0 rounded-2xl py-4 px-8 gradient-background`}
                   type="text"
                   placeholder="Enter your Fullname"
                   onChange={(e) =>
@@ -113,7 +113,7 @@ export default function Registerinvestor() {
               <div className="flex flex-col gap-2">
                 <label>Email</label>
                 <input
-                  className={`border border-opacity-0 rounded-full py-4 px-8 gradient-background`}
+                  className={`border border-opacity-0 rounded-2xl py-4 px-8 gradient-background`}
                   type="text"
                   placeholder="Enter your email"
                   onChange={(e) => setData({ ...data, email: e.target.value })}
@@ -123,7 +123,7 @@ export default function Registerinvestor() {
             <div className="flex flex-col w-80 gap-2 mb-8">
               <label>Password</label>
               <input
-                className={`border border-opacity-0 rounded-full py-4 px-8 gradient-background`}
+                className={`border border-opacity-0 rounded-2xl py-4 px-8 gradient-background`}
                 type="password"
                 placeholder="Enter your password"
                 onChange={(e) => setData({ ...data, password: e.target.value })}
@@ -152,7 +152,7 @@ export default function Registerinvestor() {
         width={209}
         height={500}
         alt="Danain"
-        className="w-[48%] lg:w-1/4 self-center"
+        className="w-[48%] lg:w-1/4 self-center lg:animate-inverseFloat"
       />
     </div>
   );

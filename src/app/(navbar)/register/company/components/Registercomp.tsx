@@ -162,7 +162,7 @@ export default function Registercomp() {
         width={209}
         height={200}
         alt="Danain"
-        className="w-1/2 lg:w-[25%]"
+        className="w-1/2 lg:w-[25%] lg:animate-inverseFloat"
       />
     </div>
   );
