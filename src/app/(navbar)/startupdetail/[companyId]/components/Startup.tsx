@@ -113,7 +113,7 @@ export default function Startup({
           moneyRaised={moneyRaised}
           investorCount={investorCount}
           userId={session?.user?.id}
-          companyId={company.id}
+          company={company}
         />
       </div>
       {menu === 0 && (
