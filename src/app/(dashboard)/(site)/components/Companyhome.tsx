@@ -179,12 +179,6 @@ export default function Companyhome({ company }: { company: Company | null | und
 
           <Image src={"/dashboard/investor/welcomeinv.svg"} width={235} height={500} alt="Complete" className="self-center" />
         </div>
-        <Button
-          text="Coming Soon"
-          isPrimary={true}
-          fullWidth={true}
-          onClick={() => { }}
-        />
       </div>
     </>
   );

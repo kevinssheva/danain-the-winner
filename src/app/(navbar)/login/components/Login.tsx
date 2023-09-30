@@ -76,7 +76,7 @@ export default function Login() {
 
         <div className="flex gap-8 my-4 items-center justify-center">
           <div className="bg-white h-[2px] w-[50%]"></div>
-          <p className="text-center">ORz</p>
+          <p className="text-center">OR</p>
           <div className="bg-white h-[2px] w-[50%]"></div>
         </div>
 
