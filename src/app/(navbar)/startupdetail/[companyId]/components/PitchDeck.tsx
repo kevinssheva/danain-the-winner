@@ -1,4 +1,4 @@
-const PitchDeck = () => {
+const PitchDeck = ({ link }: { link?: string }) => {
   return (
     <div className="flex-1">
       <div className="w-full overflow-hidden aspect-[796/450] rounded-lg bg-black"></div>

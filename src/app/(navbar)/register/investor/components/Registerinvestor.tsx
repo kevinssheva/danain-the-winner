@@ -6,6 +6,7 @@ import Authbutton from "@/components/Authbutton";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
+import toast from "react-hot-toast";
 
 export default function Registerinvestor() {
   const router = useRouter();
@@ -39,9 +40,10 @@ export default function Registerinvestor() {
         });
 
         if (loginResponse?.error) {
-          throw new Error(loginResponse.error); // Bisa diganti pake toast.error("Invalid credentials");
+          toast.error(loginResponse.error);
+          throw new Error(loginResponse.error);
         } else {
-          /* Toast Success */
+          toast.success("Register success!");
           router.push("/");
         }
       }

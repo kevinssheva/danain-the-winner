@@ -31,6 +31,7 @@ model User {
   role           UserRole
   description    String?
   profilePicture String?
+  cv             String?
 
   lastLogin DateTime @default(now())
   createdAt DateTime @default(now())
@@ -47,6 +48,8 @@ model User {
 
   messages  Message[]
   questions Question[]
+
+  @@index([id])
 }
 
 model Company {
@@ -60,8 +63,8 @@ model Company {
   coverPhoto       String?
   videoProfile     String?
   pitchDescription String?
-  minRaise         String?
-  money            String?
+  minRaise         String? // min kalo mau invest
+  money            String? // yang dibutuhin
   website          String?
   instagram        String?
   linkedin         String?
@@ -131,8 +134,9 @@ model Transaction {
   id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 
   paymentMethod PaymentMethod
+  amount        String
   totalAmount   String
-  status        TransactionStatus
+  status        TransactionStatus @default(ACTIVE)
 
   bankName      String?
   accountType   AccountType?
@@ -167,4 +171,6 @@ model Question {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([companyId])
 }

@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Company, Question } from "@prisma/client";
+import { Company, Question, User } from "@prisma/client";
 import { UserSession } from "@/components/UserFetcher";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -11,13 +11,15 @@ import VideoProfile from "./VideoProfile";
 import PitchDeck from "./PitchDeck";
 import AskQuestion from "./AskQuestion";
 import FounderProfile from "./FounderProfile";
+import toast from "react-hot-toast";
 
 interface Session {
   user: UserSession | null | undefined;
 }
 
-interface CompanyWithQuestions extends Company {
+interface CompanyExtends extends Company {
   questions?: Question[];
+  user: User;
 }
 
 const menuData = ["Overview", "Video Profile", "Pitch Deck", "Ask a Question"];
@@ -25,29 +27,33 @@ const menuData = ["Overview", "Video Profile", "Pitch Deck", "Ask a Question"];
 export default function Startup({
   company,
   session,
+  moneyRaised,
+  investorCount,
 }: {
-  company: CompanyWithQuestions;
+  company: CompanyExtends;
   session: Session;
+  moneyRaised: number;
+  investorCount: number;
 }) {
   const [menu, setMenu] = useState(0);
   const [question, setQuestion] = useState("");
   const router = useRouter();
-  const { user } = session;
 
   const handleAddQuestion = async () => {
-    if (!user) return alert("You must login first.");
+    if (!session?.user) return toast.error("You must login first!");
 
     const res = await axios.post(
       process.env.NEXT_PUBLIC_WEB_URL + `/api/v1/question/${company.id}`,
       {
         question,
-        userId: user.id,
+        userId: session?.user?.id,
       }
     );
 
     if (res.status == 201) {
       setQuestion("");
       router.refresh();
+      toast.success("Question added!");
     }
   };
 
@@ -61,6 +67,7 @@ export default function Startup({
       <div className="flex mb-6 w-full max-w-2xl relative">
         {menuData.map((item, index) => (
           <button
+            key={index}
             className={`flex-1 text-center cursor-pointer z-20 py-3 px-4 rounded-xl font-inter font-medium text-lg`}
             onClick={() => setMenu(index)}
           >
@@ -79,8 +86,8 @@ export default function Startup({
         {menu === 0 && (
           <Overview description={company.companyDescription ?? "Not Yet"} />
         )}
-        {menu === 1 && <VideoProfile />}
-        {menu === 2 && <PitchDeck />}
+        {menu === 1 && <VideoProfile link={company.videoProfile || ""} />}
+        {menu === 2 && <PitchDeck link={company.pitchDeck || ""} />}
         {menu === 3 && (
           <AskQuestion
             questionList={company.questions}
@@ -92,39 +99,38 @@ export default function Startup({
           />
         )}
         <InvestBox
-          moneyNeeded={4000000}
-          moneyRaised={3000000}
-          investorCount={10}
+          moneyNeeded={Number(company.money)}
+          moneyRaised={moneyRaised}
+          investorCount={investorCount}
+          userId={session?.user?.id}
+          companyId={company.id}
         />
       </div>
       {menu === 0 && (
         <FounderProfile
-          name="John Doe"
-          imageURL="/profile.jpg"
-          description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui labore
-        dolores aspernatur accusantium in quis animi neque recusandae
-        perferendis hic harum natus ipsa voluptates minus corrupti, repellat
-        odit nulla commodi, libero dolore? Blanditiis asperiores nemo ea,"
-          instagram="https://www.instagram.com"
-          linkedIn="https://www.linkedin.com"
+          name={company.user.fullName}
+          imageURL={company.user.profilePicture ?? "/profile.jpg"}
+          description={company.user.description ?? "No Description Yet"}
+          instagram={company.user.instagram ?? ""}
+          linkedIn={company.user.linkedIn ?? ""}
+          cv={company.user.cv ?? ""}
         />
       )}
 
       {menu === 2 && (
         <div className="w-full flex flex-col gap-4 items-start mt-10">
           <h1 className="font-semibold font-poppins text-3xl">Description</h1>
-          <p className="font-montserrat text-lg">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui labore
-            dolores aspernatur accusantium in quis animi neque recusandae
-            perferendis hic harum natus ipsa voluptates minus corrupti, repellat
-            odit nulla commodi, libero dolore? Blanditiis asperiores nemo ea,
-            dolor vero, quas quidem ullam deleniti autem fugiat explicabo
-            placeat. Repudiandae sed quaerat officiis!
-          </p>
-          <button className="bg-white border-[1px] border-[#1019FF] text-[#1019FF] px-4 py-3 rounded-md font-semibold font-poppins flex items-center gap-3">
-            <AiOutlineDownload color="blue" fill="blue" size={24} />
-            Download Pitch Deck
-          </button>
+          <p className="font-montserrat text-lg">{company.pitchDescription ?? "No pitch description available."}</p>
+          {company.pitchDeck ? (
+            <button
+              onClick={() => window.open(company.pitchDeck ? company.pitchDeck : "404notfound")}
+              className="bg-white border-[1px] border-[#1019FF] text-[#1019FF] px-4 py-3 rounded-md font-semibold font-poppins flex items-center gap-3"
+            >
+              <AiOutlineDownload color="blue" fill="blue" size={24} />
+              Download Pitch Deck
+            </button>) : (
+            <p className="font-montserrat text-lg">No pitch deck file download available.</p>
+          )}
         </div>
       )}
     </div>

@@ -52,7 +52,7 @@ const PaymentType: React.FC<PaymentTypeProps> = ({
         </div>
       </div>
       <Input
-        name="bankName"
+        name="ownerName"
         placeholder="Account Name"
         value={bankData.ownerName}
         onChange={handleBankDataChange}
@@ -83,7 +83,7 @@ const PaymentType: React.FC<PaymentTypeProps> = ({
       />
       <Input
         name="expirationDate"
-        placeholder="Account Number"
+        placeholder="MM/YY"
         value={creditData.expirationDate}
         onChange={handleCreditDataChange}
       />
