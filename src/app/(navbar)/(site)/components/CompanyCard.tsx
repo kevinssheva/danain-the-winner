@@ -10,6 +10,7 @@ interface CompanyCardProps {
   companyImage?: string;
   ownerImage?: string;
   price?: string;
+  totalInvestors?: number;
   categories?: CategoryInterface[];
 }
 
@@ -55,6 +56,7 @@ const CompanyCard: React.FC<CompanyCardProps> = ({
   companyImage,
   ownerImage,
   price,
+  totalInvestors,
   categories,
 }) => {
   const [imageLoadedCP, setImageLoadedCP] = useState(false);
@@ -154,8 +156,9 @@ const CompanyCard: React.FC<CompanyCardProps> = ({
         <div className="absolute -bottom-full w-full px-4 left-0 group-hover:bottom-0 transition-all">
           <div className="border-b-[1px] border-white" />
           <p className="text-sm sm:text-base font-bold font-montserrat my-3">
-            Rp{price && formatNumber(price)}{" "}
-            <span className="font-normal">Valuation Cap</span>
+            Rp {price && formatNumber(String(price))}{" "}
+            <span className="font-normal">Money Raised</span><br />
+            <span className="font-light text-gray-400 text-sm tracking-tight font-poppins">from {totalInvestors} investors</span>
           </p>
         </div>
       </div>

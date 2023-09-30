@@ -64,7 +64,7 @@ const FounderProfile = ({
         </div>
         <div className="flex-1 flex flex-col ">
           <h1 className="font-poppins font-semibold text-4xl md:text-6xl leading-tight">
-            <span className="text-3xl md:text-5xl font-light">Hello, I'm</span>
+            <span className="text-3xl md:text-5xl font-light">Hello, I&apos;m</span>
             <br /> {name}
           </h1>
           <p className="font-montserrat text-lg md:text-xl mt-5">

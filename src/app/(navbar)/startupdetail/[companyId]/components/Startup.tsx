@@ -135,7 +135,7 @@ export default function Startup({
           <p className="font-montserrat text-base md:text-lg">
             {company.pitchDescription ?? "No pitch description available."}
           </p>
-          {company.pitchDeck ? (
+          {/* {company.pitchDeck ? (
             <button
               onClick={() =>
                 window.open(
@@ -151,7 +151,7 @@ export default function Startup({
             <p className="font-montserrat text-lg">
               No pitch deck file download available.
             </p>
-          )}
+          )} */}
         </div>
       )}
     </div>

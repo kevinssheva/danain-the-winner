@@ -1,6 +1,17 @@
 import { prisma } from "@/app/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
+export async function GET(req: NextRequest) {
+    try {
+        const transactions = await prisma.transaction.findMany();
+
+        return NextResponse.json({ message: "Transactions successfully retrieved", transactions }, { status: 200 });
+    } catch (error) {
+        console.error("Error retrieving transactions:", error);
+        return NextResponse.json({ error: "Error retrieving transactions" }, { status: 500 });
+    }
+}
+
 export async function POST(req: NextRequest) {
     const body = await req.json();
 
