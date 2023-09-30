@@ -48,13 +48,13 @@ export default function Profilefounder() {
 
   useEffect(() => {
     if (data) {
-      setFullname(data.user.fullName);
-      setEmail(data.user.email);
-      setDescription(data.user.description);
-      setInstagram(data.user.instagram);
-      setLinkedin(data.user.linkedIn);
-      setCv(data.user.cv);
-      setProfilePicture(data.user.profilePicture);
+      setFullname(data?.user?.fullName);
+      setEmail(data?.user?.email);
+      setDescription(data?.user?.description);
+      setInstagram(data?.user?.instagram);
+      setLinkedin(data?.user?.linkedIn);
+      setCv(data?.user?.cv);
+      setProfilePicture(data?.user?.profilePicture);
     }
   }, [data]);
 
@@ -133,7 +133,7 @@ export default function Profilefounder() {
 
         <div className="">
           <Image
-            src={profilePicture ?? ''}
+            src={"/dashboard/portofolio/gibs.jpg"}
             width={80}
             height={80}
             alt="Ava"
@@ -200,7 +200,7 @@ export default function Profilefounder() {
               <Input
                 placeholder="Please enter your username"
                 name="ig"
-                value={instagram.split("/").pop() ?? ''}
+                value={instagram?.split("/").pop() ?? ''}
                 onChange={(e) => setInstagram(e.target.value)}
                 icon={FaInstagram}
               />
@@ -211,7 +211,7 @@ export default function Profilefounder() {
               <Input
                 placeholder="Please enter your username"
                 name="ig"
-                value={linkedin.split("/").pop() ?? ''}
+                value={linkedin?.split("/").pop() ?? ''}
                 onChange={(e) => setLinkedin(e.target.value)}
                 icon={FaLinkedin}
               />
@@ -227,7 +227,7 @@ export default function Profilefounder() {
                 className="underline text-blue-500 hover:text-blue-700"
                 target="_blank"
                 rel="noopener noreferrer">
-                {cv.split("/").pop()}
+                {cv?.split("/").pop()}
               </a>
               <label
                 htmlFor="dropzone-file"
