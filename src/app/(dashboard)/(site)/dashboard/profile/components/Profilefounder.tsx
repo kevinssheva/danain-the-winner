@@ -48,13 +48,13 @@ export default function Profilefounder() {
 
   useEffect(() => {
     if (data) {
-      setFullname(data.user.fullName);
-      setEmail(data.user.email);
-      setDescription(data.user.description);
-      setInstagram(data.user.instagram);
-      setLinkedin(data.user.linkedIn);
-      setCv(data.user.cv);
-      setProfilePicture(data.user.profilePicture);
+      setFullname(data?.user?.fullName);
+      setEmail(data?.user?.email);
+      setDescription(data?.user?.description);
+      setInstagram(data?.user?.instagram);
+      setLinkedin(data?.user?.linkedIn);
+      setCv(data?.user?.cv);
+      setProfilePicture(data?.user?.profilePicture);
     }
   }, [data]);
 
@@ -133,7 +133,7 @@ export default function Profilefounder() {
 
         <div className="">
           <Image
-            src={profilePicture ?? ''}
+            src={"/dashboard/portofolio/gibs.jpg"}
             width={80}
             height={80}
             alt="Ava"
