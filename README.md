@@ -89,3 +89,25 @@ Through Danain, we aim to unlock doors for sustainable business growth and produ
 ### User
 - `PATCH /v1/user/{userid}`
   - **Description:** Update user details.
+
+
+#Run Locally
+To run locally, follow these steps :
+- Download this repo as zip
+- Add the env with this :
+DATABASE_URL=""
+
+NEXTAUTH_URL="http://localhost:3000"
+NEXTAUTH_SECRET=""
+
+GOOGLE_CLIENT_ID=""
+GOOGLE_CLIENT_SECRET=""
+
+FACEBOOK_CLIENT_ID=""
+FACEBOOK_CLIENT_SECRET=""
+
+NEXT_PUBLIC_WEB_URL="http://localhost:3000"
+
+- Open the terminal
+- "npm i"
+- "npm run dev"
