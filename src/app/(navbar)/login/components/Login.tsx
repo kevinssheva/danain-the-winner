@@ -29,6 +29,7 @@ export default function Login() {
       } else {
         toast.success("Login success!");
         router.push('/');
+        router.refresh()
       }
     } catch (error) {
       console.error(error);

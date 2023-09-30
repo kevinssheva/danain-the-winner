@@ -45,6 +45,7 @@ export default function Registerinvestor() {
         } else {
           toast.success("Register success!");
           router.push("/");
+          router.refresh();
         }
       }
     } catch (error) {
