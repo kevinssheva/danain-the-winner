@@ -43,6 +43,7 @@ export default function Registercomp() {
         } else {
           toast.success("Register success!");
           router.push('/');
+          router.refresh();
         }
       }
     } catch (error) {

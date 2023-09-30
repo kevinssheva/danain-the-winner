@@ -1,7 +1,16 @@
 import Image from "next/image";
 import Register from "./components/Register";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth/next";
+import { redirect } from "next/navigation";
 
-export default function RegisterPage() {
+export default async function RegisterPage() {
+  const session = await getServerSession(authOptions);
+
+  if (session) {
+    redirect("/");
+  }
+
   return (
     <div className="bg-background min-h-screen lg:max-h-screen w-full overflow-hidden">
       <Image
