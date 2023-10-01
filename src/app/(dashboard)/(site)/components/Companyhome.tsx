@@ -20,7 +20,7 @@ export default function Companyhome({
     const parsedAmount = parseInt(amount, 10);
 
     if (isNaN(parsedAmount)) {
-      return "Rp 1.999.999.999";
+      return "Rp 0";
     }
 
     const formattedAmount = new Intl.NumberFormat("id-ID", {

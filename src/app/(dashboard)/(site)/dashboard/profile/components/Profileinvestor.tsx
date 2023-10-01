@@ -109,7 +109,7 @@ export default function Profileinvestor() {
             width={80}
             height={80}
             alt="Ava"
-            className="absolute right-6 sm:right-12 rounded-full"
+            className="absolute right-6 sm:right-12 rounded-full w-20 aspect-square object-cover"
           />
           <div>
             <Image
