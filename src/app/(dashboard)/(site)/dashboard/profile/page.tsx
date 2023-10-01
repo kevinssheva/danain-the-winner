@@ -16,7 +16,7 @@ export default async function Portopage() {
   const role = session?.user?.role ?? '';
 
   return (
-    <div className="bg-background h-[275vh]">
+    <div className="bg-background min-h-screen">
       <div className="bg-[url('/dashboard/portofolio/kotakkanan.svg')] h-full bg-no-repeat bg-right">
         <div className="bg-[url('/dashboard/portofolio/kotakbawah.svg')] h-full bg-no-repeat bg-left-bottom">
           <div className="bg-[url('/dashboard/portofolio/glowbawah.svg')] h-full bg-no-repeat bg-left">

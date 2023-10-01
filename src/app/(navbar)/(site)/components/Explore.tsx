@@ -7,13 +7,15 @@ import Link from "next/link";
 const dataCompany = [
   {
     id: "1cadb159-10a5-4205-9458-f3507e188a34",
-    name: "Tech Innovators Inc.",
+    name: "ANGIN",
+    headline:
+      "Elevating Dreams, Empowering Entrepreneurs: ANGIN Your Partner in Progress",
     description:
-      "Tech Innovators Inc. is a cutting-edge technology company specializing in AI-driven solutions for businesses. Our mission is to transform industries through innovation, offering scalable AI products that enhance productivity and decision-making.",
+      "ANGIN, short for Angel Investment Network Indonesia, is a startup that originated as a project within a USAID-funded nonprofit entity named GEPI (Global Entrepreneurship Program Indonesia) in 2011. In 2016, it transitioned into a for-profit venture, becoming a key player in Indonesia's entrepreneurial ecosystem. Over the years, ANGIN has grown to become the largest investor network in Indonesia, supporting more than 35 startups and collaborating with prominent clients such as UNDP and OXFAM. Their mission centers around supporting Indonesia's economic development by investing in emerging entrepreneurs and introducing best practices in early-stage investments. ANGIN is committed to expanding its impact beyond investments through services like ANGIN Advisory and equity crowdfunding.",
     companyImage:
-      "https://media.licdn.com/dms/image/D4D03AQEa_46hlyHlFQ/profile-displayphoto-shrink_800_800/0/1681820178413?e=2147483647&v=beta&t=Ggbp71w2oQP8wEnr3FSvOujPcvyJSrmhTFNfT28S3TU",
+      "https://www.angin.id/wp-content/uploads/2021/12/ANGIN-Indonesia-Women-Fund-3.png",
     ownerImage:
-      "https://danain-win.s3.ap-southeast-1.amazonaws.com/profilePicture/1696008969933-OSKM.jpg",
+      "https://i.pinimg.com/564x/48/fc/4f/48fc4f9c1017917339ac9964a961da80.jpg",
     price: "50000000",
     totalInvestors: 5,
     categories: [
@@ -31,11 +33,15 @@ const dataCompany = [
   },
   {
     id: "300cab27-811a-4525-9bf3-9719859ac619",
-    name: "GreenEco Solutions",
+    name: "ecoearth Solution",
+    headline:
+      "sustainability-focused company dedicated to providing eco-friendly products and services",
     description:
       "GreenEco Solutions is a sustainability-focused company dedicated to providing eco-friendly products and services. Our range includes energy-efficient solutions, renewable energy installations, and green building technologies, all aimed at reducing our carbon footprint.",
-    companyImage: "/landing/company_1.jpg",
-    ownerImage: "/profile.jpg",
+    companyImage:
+      "https://i.pinimg.com/564x/55/80/a0/5580a07d7143f09e58f40ac8c95dc549.jpg",
+    ownerImage:
+      "https://i.pinimg.com/564x/f6/a5/ef/f6a5efe005d1b19539af6ffb56e90a97.jpg",
     price: "100000000",
     totalInvestors: 5,
     categories: [
@@ -54,10 +60,14 @@ const dataCompany = [
   {
     id: "428cc642-a89b-4abd-8e32-1bbf0baac0a0",
     name: "HealthTech Pro",
+    headline:
+      "enabling healthcare providers to deliver more efficient and patient-centric services",
     description:
       "HealthTech Pro is a leading healthcare technology company on a mission to improve patient care through digital innovation. We develop state-of-the-art health management platforms, enabling healthcare providers to deliver more efficient and patient-centric services.",
-    companyImage: "/landing/company_1.jpg",
-    ownerImage: "/profile.jpg",
+    companyImage:
+      "https://i.pinimg.com/564x/cc/d0/ec/ccd0ec92f5520eff0eadb570fd0b6e11.jpg",
+    ownerImage:
+      "https://i.pinimg.com/564x/ed/be/52/edbe521d14d0e1ff5201f8bbca431374.jpg",
     price: "100000000",
     totalInvestors: 7,
     categories: [
@@ -102,7 +112,7 @@ const Explore = () => {
           <Button
             text="Explore More Startup"
             isPrimary
-            onClick={() => { }}
+            onClick={() => {}}
             isGradient
             isBig
           />

@@ -40,7 +40,7 @@ export default function Sidebar(props: SidebarProps) {
   return (
     <>
       <LogoutModal />
-      <div className="fixed md:static z-50 py-8 md:py-0 px-[5%] overflow-hidden">
+      <div className="fixed left-0 top-0 bottom-0 z-[70] py-8 my-1 px-[5%] overflow-hidden w-[22rem]">
         <MenuIcon isOpen={open} handleToggle={() => setOpen((prev) => !prev)} />
 
         <aside
