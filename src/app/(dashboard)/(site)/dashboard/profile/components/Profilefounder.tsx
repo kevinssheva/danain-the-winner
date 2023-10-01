@@ -12,6 +12,8 @@ import fetcher from "@/app/lib/fetcher";
 import useSWR from "swr";
 import axios from "axios";
 import Loader from "@/components/Loader";
+import Link from "next/link";
+import { HiCursorClick } from "react-icons/hi";
 
 export default function Profilefounder() {
   const { data, error, isLoading } = useSWR(
@@ -133,7 +135,7 @@ export default function Profilefounder() {
 
         <div className="">
           <Image
-            src={"/dashboard/portofolio/gibs.jpg"}
+            src={profilePicture || "/dashboard/portofolio/gibs.jpg"}
             width={80}
             height={80}
             alt="Ava"
@@ -220,23 +222,30 @@ export default function Profilefounder() {
 
           <div className="mt-4 md:mt-0 w-full">
             <label>CV</label>
-            <div className=" items-center justify-center w-full">
-              <a
-                href={cv}
-
-                className="underline text-blue-500 hover:text-blue-700"
-                target="_blank"
-                rel="noopener noreferrer">
-                {cv?.split("/").pop()}
-              </a>
+            <div className="items-center justify-center w-full">
+              {cv && (
+                <Link
+                  href={cv}
+                  className="bg-white text-black font-bold px-4 py-2 rounded-md flex items-center gap-2 w-1/2 my-1"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <HiCursorClick fill="black" color="black" /> Current File
+                </Link>
+              )}
               <label
                 htmlFor="dropzone-file"
                 className="input-bg-startup flex flex-col items-center justify-center w-full h-36 border border-gray-300 rounded-lg cursor-pointer"
               >
                 <div className="flex flex-col gap-2 items-center justify-center pt-5 pb-6">
-                  <p className="text-white">Please upload your CV file</p>
-                  <p className="text-[#D8D8D8]">format .pdf</p>
-
+                  {cvFile ? (
+                    <p className="text-white">{cvFile.name}</p>
+                  ) : (
+                    <>
+                      <p className="text-white">Please upload your CV file</p>
+                      <p className="text-[#D8D8D8]">format .pdf</p>
+                    </>
+                  )}
                   <BsFillFileEarmarkArrowUpFill className="text-5xl" />
                 </div>
                 <input id="dropzone-file" type="file" className="hidden" onChange={handleFileInputChange} />

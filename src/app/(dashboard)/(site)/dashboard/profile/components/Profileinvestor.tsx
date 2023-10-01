@@ -30,6 +30,7 @@ export default function Profileinvestor() {
   const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
   const [description, setDescription] = useState("");
+  const [picture, setPicture] = useState("");
   const [oldpassword, setOldpassword] = useState("");
   const [newpassword, setNewpassword] = useState("");
   const [confirmnewpassword, setConfirmnewpassword] = useState("");
@@ -40,6 +41,7 @@ export default function Profileinvestor() {
       setFullname(data.user.fullName);
       setEmail(data.user.email);
       setDescription(data.user.description);
+      setPicture(data.user.profilePicture)
     }
   }, [data]);
   
@@ -103,7 +105,7 @@ export default function Profileinvestor() {
 
         <div className="">
           <Image
-            src={"/profile.jpg"}
+            src={picture || "/profile.jpg"}
             width={80}
             height={80}
             alt="Ava"
