@@ -8,6 +8,7 @@ interface ButtonProps {
   icon?: IconType;
   onClick: () => void;
   isBig?: boolean;
+  disabled?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -18,10 +19,12 @@ const Button: React.FC<ButtonProps> = ({
   icon: Icon,
   onClick,
   isBig,
+  disabled,
 }) => {
   return (
     <button
       className={`
+       ${disabled && "opacity-50 cursor-not-allowed hover:scale-100 hover:shadow-none"}
         ${fullWidth && "w-full"}
         ${
           isGradient

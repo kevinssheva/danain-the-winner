@@ -50,7 +50,7 @@ const Payment = ({ session, company, companyId, userId }: PaymentProps) => {
                 </div>
                 <PaymentForm companyId={companyId} userId={userId} minRaise={company.minRaise} />
             </div>
-            <div className="hidden lg:block absolute w-[34rem] top-0 right-[5%] z-[15]">
+            <div className="hidden lg:block absolute w-[34rem] bottom-[10%] right-[5%] z-[15]">
                 <Image
                     src={"/payment/Illustration.svg"}
                     width={100}

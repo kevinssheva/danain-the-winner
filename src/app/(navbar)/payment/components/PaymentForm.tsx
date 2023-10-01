@@ -11,6 +11,7 @@ import Complete from "./Complete";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import Button from "@/components/Button";
 
 interface PaymentFormProps {
   companyId: string | string[] | undefined;
@@ -126,7 +127,6 @@ const PaymentForm = ({ companyId, userId, minRaise }: PaymentFormProps) => {
     }
   };
 
-
   return (
     <div className="w-full my-10 z-20 pl-[8%] pr-[5%] md:px-0">
       <ul className="list-decimal flex flex-col gap-10">
@@ -186,13 +186,24 @@ const PaymentForm = ({ companyId, userId, minRaise }: PaymentFormProps) => {
         <Complete amount={amount} />
 
         {/* PAYMENT BUTTON */}
-        <button
+        <div className="w-full max-w-md">
+          <Button
+            text="COMPLETE INVESTMENT"
+            onClick={handleInvestment}
+            isPrimary
+            isGradient
+            fullWidth
+            isBig
+            disabled={!isLegalChecked}
+          />
+        </div>
+        {/* <button
           className="w-full md:w-1/3 py-3 rounded-xl bg-[#0038FF] text-white font-bold text-lg md:text-xl font-montserrat"
           disabled={!isLegalChecked}
           onClick={handleInvestment}
         >
           COMPLETE INVESTMENT
-        </button>
+        </button> */}
       </ul>
     </div>
   );
