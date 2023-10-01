@@ -10,6 +10,7 @@ import fetcher from "@/app/lib/fetcher";
 import useSWR from "swr";
 import axios from "axios";
 import Loader from "@/components/Loader";
+import toast from "react-hot-toast";
 
 export default function Profileinvestor() {
   const { data, error, isLoading } = useSWR(
@@ -44,9 +45,9 @@ export default function Profileinvestor() {
       setPicture(data.user.profilePicture)
     }
   }, [data]);
-  
+
   const fileInputRef = useRef<HTMLInputElement>(null);
-  
+
   if (isLoading) return (<div className="flex justify-center items-center h-screen"><Loader /></div>);
 
 
@@ -85,8 +86,8 @@ export default function Profileinvestor() {
         }
       })
 
-      if(response.status === 200) {
-        alert("Profile updated successfully")
+      if (response.status === 200) {
+        toast.success("Profile Updated");
       }
     } catch (err) {
       console.log(err);
@@ -206,7 +207,7 @@ export default function Profileinvestor() {
               reset();
             }}
           />
-          <Button text="Save Changes" isPrimary={true} onClick={() => {handleSubmit()}} />
+          <Button text="Save Changes" isPrimary={true} onClick={() => { handleSubmit() }} />
         </div>
       </div>
     </div>

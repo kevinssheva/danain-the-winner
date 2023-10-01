@@ -14,6 +14,7 @@ import axios from "axios";
 import Loader from "@/components/Loader";
 import Link from "next/link";
 import { HiCursorClick } from "react-icons/hi";
+import toast from "react-hot-toast";
 
 export default function Profilefounder() {
   const { data, error, isLoading } = useSWR(
@@ -116,7 +117,7 @@ export default function Profilefounder() {
       })
 
       if (response.status === 200) {
-        alert("Profile updated successfully")
+        toast.success("Profile updated successfully");
       }
     } catch (err) {
       console.log(err);
