@@ -207,7 +207,7 @@ const Navbar = ({ user }: NavbarProps) => {
                 </Link>
               </li>
             ))}
-            {userMenu.map((item) => (
+            {user && userMenu.map((item) => (
               <li
                 key={item.name}
                 className={`${
@@ -224,9 +224,11 @@ const Navbar = ({ user }: NavbarProps) => {
                 </Link>
               </li>
             ))}
+            { user &&
             <li onClick={handleSignOut} className="text-xl font-montserrat">
               Logout
             </li>
+            }
           </ul>
           {user ? (
             <div className="border-2 border-white px-5 py-2 rounded-full group bg-background">
