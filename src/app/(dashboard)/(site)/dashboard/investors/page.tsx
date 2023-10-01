@@ -3,14 +3,14 @@ import Investor from "../../components/Investor";
 
 export default async function Portopage() {
   return (
-    <div className="bg-background h-[250vh]">
-      <Image
+    <div className="bg-background min-h-screen overflow-hidden">
+      {/* <Image
         src="/dashboard/portofolio/kotakkanan.svg"
         width={720}
         height={1080}
         alt="kotakatas"
         className="absolute top-[50%] right-0"
-      />
+      /> */}
       {/* <Image
         src="/dashboard/portofolio/glowatas.svg"
         width={720}

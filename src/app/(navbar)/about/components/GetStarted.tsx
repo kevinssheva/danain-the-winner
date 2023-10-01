@@ -19,7 +19,7 @@ const GetStarted = ({ isLogin }: { isLogin?: boolean }) => {
           </p>
           <p className="font-montserrat text-lg">
             Discover unique opportunities with us! Join now to find the
-            investors or startups you're looking for.
+            investors or startups you&apos;re looking for.
           </p>
         </div>
         <div className="z-20">

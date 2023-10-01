@@ -2,14 +2,20 @@
 
 import CompanyCard from "../../(site)/components/CompanyCard";
 import Pagination from "@/components/Pagination/Pagination";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import Link from 'next/link';
+import Link from "next/link";
 import { Transaction } from "@prisma/client";
 
 const postPerPage = 12;
 
-const ListCompany = ({ filteredCompanies, transactions, minPrice, maxPrice, sort }: any) => {
+const ListCompany = ({
+  filteredCompanies,
+  transactions,
+  minPrice,
+  maxPrice,
+  sort,
+}: any) => {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(1);
   const [startupData, setStartupData] = useState([]);
@@ -67,7 +73,11 @@ const ListCompany = ({ filteredCompanies, transactions, minPrice, maxPrice, sort
 
     // Filter by price range and sort by totalMoneyEarned
     const filteredAndSortedCompanies = mergedStartupData
-      .filter((company: any) => company.totalMoneyEarned >= minPrice && company.totalMoneyEarned <= maxPrice)
+      .filter(
+        (company: any) =>
+          company.totalMoneyEarned >= minPrice &&
+          company.totalMoneyEarned <= maxPrice
+      )
       .sort((a: any, b: any) => {
         if (sort === "HIGHEST") {
           return b.totalMoneyEarned - a.totalMoneyEarned;
@@ -79,25 +89,34 @@ const ListCompany = ({ filteredCompanies, transactions, minPrice, maxPrice, sort
     setStartupData(filteredAndSortedCompanies);
   }, [filteredCompanies, transactions, minPrice, maxPrice, sort]);
 
+  const showedCompanies = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * postPerPage;
+    const lastPageIndex = firstPageIndex + postPerPage;
+
+    return startupData.slice(firstPageIndex, lastPageIndex);
+  }, [startupData, currentPage]);
+
   return (
     <div className="w-full flex flex-col items-center gap-10">
       <div className="w-full flex flex-wrap justify-center gap-10">
-        {startupData.length > 0 ? startupData.map((company: any) => (
-          <Link key={company.id} href={`/startupdetail/${company.id}`}>
-            <CompanyCard
-              name={company.companyName}
-              headline={company.tagline}
-              description={company.companyDescription}
-              companyImage={company.coverPhoto}
-              ownerImage={company.user.profilePicture}
-              price={company.totalMoneyEarned}
-              totalInvestors={company.totalInvestors}
-              categories={company.categories}
-            />
-          </Link>
-        )) :
+        {showedCompanies.length > 0 ? (
+          showedCompanies.map((company: any) => (
+            <Link key={company.id} href={`/startupdetail/${company.id}`}>
+              <CompanyCard
+                name={company.companyName}
+                headline={company.tagline}
+                description={company.companyDescription}
+                companyImage={company.coverPhoto}
+                ownerImage={company.user.profilePicture}
+                price={company.totalMoneyEarned}
+                totalInvestors={company.totalInvestors}
+                categories={company.categories}
+              />
+            </Link>
+          ))
+        ) : (
           <div className="text-center">No Company Available.</div>
-        }
+        )}
       </div>
       <Pagination
         totalDataCount={filteredCompanies.length || 0}
