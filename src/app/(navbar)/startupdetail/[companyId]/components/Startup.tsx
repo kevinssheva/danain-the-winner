@@ -118,6 +118,7 @@ export default function Startup({
       </div>
       {menu === 0 && (
         <FounderProfile
+          id={company.user.id}
           name={company.user.fullName}
           imageURL={company.user.profilePicture ?? "/profile.jpg"}
           description={company.user.description ?? "No Description Yet"}

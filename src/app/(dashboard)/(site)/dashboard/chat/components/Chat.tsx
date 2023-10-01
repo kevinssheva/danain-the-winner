@@ -120,7 +120,7 @@ export default function Chat({
         {/* <ChatBar  /> */}
 
         <div
-          className="rounded-xl p-10 md:w-2/3 flex flex-col justify-between"
+          className="rounded-xl p-10 md:w-full flex flex-col justify-between"
           style={{
             background: "rgba(255, 255, 255, 0.09);",
           }}
@@ -146,7 +146,7 @@ export default function Chat({
             </div>
           </div>
 
-          <div className="h-80 md:max-h-80 overflow-y-auto py-3 px-2 md:px-10 flex w-full">
+          <div className="h-80 md:max-h-80 overflow-y-auto py-3 px-2 md:px-10 w-full">
             {hasNextPage && (
               <div className="flex justify-center">
                 {isFetchingNextPage ? (
@@ -154,7 +154,7 @@ export default function Chat({
                 ) : (
                   <button
                     onClick={() => fetchNextPage()}
-                    className="text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 text-xs my-4 dark:hover:text-zinc-300 transition"
+                    className="text-white hover:text-zinc-400 dark:text-zinc-400 text-xs my-4 dark:hover:text-zinc-300 transition"
                   >
                     Load previous messages
                   </button>

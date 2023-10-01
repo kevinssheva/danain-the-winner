@@ -96,7 +96,7 @@ export default function Companyhome({
                 isPrimary={true}
                 fullWidth={true}
                 onClick={() => {
-                  router.push("/dashboard/investor");
+                  router.push("/dashboard/investors");
                 }}
               />
             </div>
@@ -193,7 +193,7 @@ export default function Companyhome({
               fullWidth={true}
               text="Complete Now"
               onClick={() => {
-                router.push("/dashboard/profile");
+                router.push("/dashboard/companyprofile");
               }}
             />
           </div>

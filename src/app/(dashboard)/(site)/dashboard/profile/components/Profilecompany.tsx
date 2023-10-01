@@ -18,8 +18,10 @@ import Loader from "@/components/Loader";
 import Link from "next/link";
 import { HiCursorClick } from "react-icons/hi";
 import { deconvertCategoryName } from "@/app/(navbar)/(site)/components/CompanyCard";
+import { useRouter } from "next/navigation";
 
 export default function Profilecompany() {
+  const router = useRouter()
   const ReactQuill = useMemo(
     () => dynamic(() => import("react-quill"), { ssr: false }),
     []
@@ -185,7 +187,7 @@ export default function Profilecompany() {
           </p>
 
           <p className="font-bold mb-2">Complete your profile now!</p>
-          <BsArrowRightCircleFill className="text-3xl cursor-pointer" />
+          <BsArrowRightCircleFill className="text-3xl cursor-pointer" onClick={() => router.push('/dashboard/profile')}/>
         </div>
         <Image
           src={"/dashboard/coin.svg"}
@@ -234,7 +236,7 @@ export default function Profilecompany() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <HiCursorClick fill="black" color="black" /> Current Files
+                  <HiCursorClick fill="black" color="black" /> Current File
                 </Link>
               )}
               <label
@@ -294,7 +296,7 @@ export default function Profilecompany() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <HiCursorClick fill="black" color="black" /> Current Files
+                <HiCursorClick fill="black" color="black" /> Current File
               </Link>
               <label
                 htmlFor="dropzone-photo-file"

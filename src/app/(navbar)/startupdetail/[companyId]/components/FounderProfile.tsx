@@ -1,9 +1,12 @@
+"use client"
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { AiOutlineInstagram, AiOutlineDownload } from "react-icons/ai";
 import { FaLinkedinIn } from "react-icons/fa";
 
 const FounderProfile = ({
+  id,
   name,
   imageURL,
   description,
@@ -11,6 +14,7 @@ const FounderProfile = ({
   linkedIn,
   cv,
 }: {
+  id: string
   name: string;
   imageURL?: string;
   description?: string;
@@ -18,6 +22,7 @@ const FounderProfile = ({
   linkedIn?: string;
   cv?: string;
 }) => {
+  const router = useRouter()
   return (
     <div className="w-full">
       <div className="flex items-center my-10 z-20">
@@ -71,7 +76,7 @@ const FounderProfile = ({
             {description ?? "No Description Yet"}
           </p>
           <div className="flex items-center gap-4 mt-4 flex-wrap">
-            <button className="bg-[#1019FF] text-white px-5 md:px-10 py-3 rounded-md font-semibold font-poppins text-sm md:text-base">
+            <button onClick={() => (router.push(`/dashboard/chat/${id}`))} className="bg-[#1019FF] text-white px-5 md:px-10 py-3 rounded-md font-semibold font-poppins text-sm md:text-base">
               Say Hello!
             </button>
             {cv ? (

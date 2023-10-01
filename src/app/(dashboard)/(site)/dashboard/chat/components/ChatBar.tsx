@@ -24,7 +24,7 @@ export default function ChatBar({ conversation, userId }: { conversation: (Conve
 
     return (
         <div
-            className="rounded-xl backdrop-blur-3xl p-6 md:w-1/3"
+            className="rounded-xl backdrop-blur-3xl p-6 md:w-full"
             style={{
                 background:
                     "linear-gradient(127deg, rgba(6, 11, 40, 0.74) 28.26%, rgba(10, 14, 35, 0.71) 91.2%);",
@@ -42,7 +42,7 @@ export default function ChatBar({ conversation, userId }: { conversation: (Conve
                                     src={user?.profilePicture || `/dashboard/portofolio/gibs.jpg`}
                                     width={50}
                                     height={50}
-                                    className="rounded-full"
+                                    className="rounded-full overflow-hidden w-16 aspect-square object-cover"
                                     alt="Profile Picture"
                                 />
                                 <p>{user?.fullName}</p>

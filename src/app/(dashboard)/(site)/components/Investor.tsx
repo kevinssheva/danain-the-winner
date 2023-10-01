@@ -66,11 +66,11 @@ export default async function Investor() {
               <tr key={index} className="border-b border-[#FDFDFD] h-28">
                 <td className="justify-center flex h-28">
                   <Image
-                    src={item.user.profilePicture ?? ''}
+                    src={item.user.profilePicture ?? '/profile.jpg'}
                     width={50}
                     height={50}
                     alt={`row${index + 1}`}
-                    className="self-center rounded-full object-cover"
+                    className="self-center object-cover rounded-full overflow-hidden w-16 aspect-square"
                   />
                 </td>
                 <td className="px-8">{item.user.fullName}</td>

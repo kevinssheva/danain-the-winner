@@ -55,13 +55,6 @@ export default function Chat({ conversation, userId }: { conversation: (Conversa
 
       <div className="flex flex-col md:flex-row gap-8">
         <ChatBar conversation={conversation} userId={userId}/>       
-
-        <div
-          className="rounded-xl p-10 md:w-2/3 flex flex-col justify-between"
-          style={{
-            background: "rgba(255, 255, 255, 0.09);",
-          }}
-        />
       </div>
     </div>
   );
