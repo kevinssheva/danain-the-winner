@@ -19,6 +19,7 @@ import Link from "next/link";
 import { HiCursorClick } from "react-icons/hi";
 import { deconvertCategoryName } from "@/app/(navbar)/(site)/components/CompanyCard";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function Profilecompany() {
   const router = useRouter()
@@ -160,7 +161,7 @@ export default function Profilecompany() {
       );
 
       if (response.status === 200) {
-        alert("Profile updated successfully!");
+        toast.success("Profile updated!");
       }
     } catch (err) {
       console.log(err);
