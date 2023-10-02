@@ -186,7 +186,7 @@ const PaymentForm = ({ companyId, userId, minRaise }: PaymentFormProps) => {
         <Complete amount={amount} />
 
         {/* PAYMENT BUTTON */}
-        <div className="w-full max-w-md">
+        <div className="w-full max-w-md z-20">
           <Button
             text="COMPLETE INVESTMENT"
             onClick={handleInvestment}
